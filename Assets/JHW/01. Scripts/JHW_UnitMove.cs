@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class JHW_UnitMove : MonoBehaviour
 {
-    JHW_UnitInfo unit;
+    JHW_UnitInfo unitinfo;
 
     void Start()
     {
-        unit =GetComponent<JHW_UnitInfo>();
+        unitinfo = GetComponent<JHW_UnitInfo>();
     }
 
     void Update()
@@ -17,8 +17,8 @@ public class JHW_UnitMove : MonoBehaviour
     }
 
 
-    void UnitMove()
+    public void UnitMove() // 매시간 앞으로 이동하는 코드
     {
-        transform.position += transform.forward * unit.moveSpeed * Time.deltaTime;
+        transform.position += transform.forward * unitinfo.moveSpeed * Time.deltaTime;
     }
 }

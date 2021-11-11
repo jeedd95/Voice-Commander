@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c38001c1cb1854c94bc002bf90345c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEnemy: 0
   unitName: RifleMan
   unitScale: small
   attackType: normal

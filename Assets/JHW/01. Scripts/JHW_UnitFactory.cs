@@ -23,7 +23,7 @@ public class JHW_UnitFactory : MonoBehaviour
         }
     }
 
-    void CreateUnit()
+    public void CreateUnit()
     {
         int randomNum = Random.Range(0, 2); // 3개중에 하나를 선택해서 생성
         int randomNum2 = Random.Range(0, 9); // 9개 중에 하나를 선택해서 생성

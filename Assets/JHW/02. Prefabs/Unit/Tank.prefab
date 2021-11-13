@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5803413859438278969}
   - component: {fileID: 5803413859438278968}
-  - component: {fileID: 3023762678067862293}
-  - component: {fileID: 2785056545103956906}
+  - component: {fileID: -7986787917205129833}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -48,8 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 0
   unitName: Tank
-  unitScale: large
-  attackType: explosive
+  unitScale: 2
+  attackType: 1
   canGroundAttack: 1
   canSkyAttack: 0
   isAirForce: 0
@@ -62,7 +61,7 @@ MonoBehaviour:
   price: 10
   populationLimit: 2
   exp: 20
---- !u!114 &3023762678067862293
+--- !u!114 &-7986787917205129833
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,19 +70,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5803413859438278971}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c9a6f7073317343a71ba7981854f8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2785056545103956906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5803413859438278971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7014da2c2d74a5b44b4d601797dc2556, type: 3}
+  m_Script: {fileID: 11500000, guid: 45b49c7a3e3048b4f915ba667e8b8261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5803413859764692292

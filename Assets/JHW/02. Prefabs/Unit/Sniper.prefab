@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8764322059170051151}
   - component: {fileID: 8764322059170051152}
-  - component: {fileID: 6176684992851065857}
-  - component: {fileID: -9038597045524114272}
+  - component: {fileID: -4085771954843242004}
   m_Layer: 0
   m_Name: Sniper
   m_TagString: Untagged
@@ -48,8 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 0
   unitName: Sniper
-  unitScale: small
-  attackType: concussive
+  unitScale: 0
+  attackType: 2
   canGroundAttack: 1
   canSkyAttack: 0
   isAirForce: 0
@@ -62,7 +61,7 @@ MonoBehaviour:
   price: 10
   populationLimit: 2
   exp: 20
---- !u!114 &6176684992851065857
+--- !u!114 &-4085771954843242004
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,19 +70,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8764322059170051153}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c9a6f7073317343a71ba7981854f8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-9038597045524114272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8764322059170051153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7014da2c2d74a5b44b4d601797dc2556, type: 3}
+  m_Script: {fileID: 11500000, guid: 45b49c7a3e3048b4f915ba667e8b8261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8764322060169150336

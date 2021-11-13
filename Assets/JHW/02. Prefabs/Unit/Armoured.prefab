@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4955062035706630002}
   - component: {fileID: 4955062035706630003}
-  - component: {fileID: -8298984271789762677}
-  - component: {fileID: 1419620285265308222}
+  - component: {fileID: -8712778871140618858}
   m_Layer: 0
   m_Name: Armoured
   m_TagString: Untagged
@@ -48,8 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 0
   unitName: Armoured
-  unitScale: middle
-  attackType: normal
+  unitScale: 1
+  attackType: 0
   canGroundAttack: 1
   canSkyAttack: 1
   isAirForce: 0
@@ -62,7 +61,7 @@ MonoBehaviour:
   price: 10
   populationLimit: 3
   exp: 20
---- !u!114 &-8298984271789762677
+--- !u!114 &-8712778871140618858
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,19 +70,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4955062035706630000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c9a6f7073317343a71ba7981854f8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1419620285265308222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4955062035706630000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7014da2c2d74a5b44b4d601797dc2556, type: 3}
+  m_Script: {fileID: 11500000, guid: 45b49c7a3e3048b4f915ba667e8b8261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4955062036624080462

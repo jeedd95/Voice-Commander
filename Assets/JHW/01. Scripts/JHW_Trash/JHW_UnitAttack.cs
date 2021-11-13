@@ -17,10 +17,6 @@ public class JHW_UnitAttack : MonoBehaviour
     {
         UnitAttack();
     }
-    void FindEnemy() //나와 적대적인 애를 찾는 코드
-    {
-
-    }
 
     void UnitAttack()
     {

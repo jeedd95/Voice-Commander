@@ -105,8 +105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3635000194616479914}
   - component: {fileID: 3635000194616479917}
-  - component: {fileID: 547026116533696213}
-  - component: {fileID: 3004583346166600366}
+  - component: {fileID: -8489519529440304241}
   m_Layer: 0
   m_Name: Helicopter
   m_TagString: Untagged
@@ -143,8 +142,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 0
   unitName: 'Helicopter '
-  unitScale: large
-  attackType: normal
+  unitScale: 2
+  attackType: 0
   canGroundAttack: 1
   canSkyAttack: 1
   isAirForce: 1
@@ -157,7 +156,7 @@ MonoBehaviour:
   price: 10
   populationLimit: 2
   exp: 20
---- !u!114 &547026116533696213
+--- !u!114 &-8489519529440304241
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,18 +165,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3635000194616479916}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c9a6f7073317343a71ba7981854f8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3004583346166600366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3635000194616479916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7014da2c2d74a5b44b4d601797dc2556, type: 3}
+  m_Script: {fileID: 11500000, guid: 45b49c7a3e3048b4f915ba667e8b8261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

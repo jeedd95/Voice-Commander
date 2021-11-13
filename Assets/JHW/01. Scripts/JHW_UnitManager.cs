@@ -11,7 +11,7 @@ public class JHW_UnitManager : MonoBehaviour
     public GameObject[] Bullet; //총알
     public GameObject FirePos; //발사 포지션
     int bulletnum; //총알의 번호
-    float currentTime;
+    bool isfire; // 공격상태인지 아닌지
 
     enum State // 유닛 상태머신
     {
@@ -43,11 +43,10 @@ public class JHW_UnitManager : MonoBehaviour
 
             case State.Attack:
                 UnitAttack();
-                currentTime += Time.deltaTime;
-                if(currentTime>(1f/unitinfo.attackSpeed))
+                if(isfire==false)
                 {
-                    CreateBullet();
-                    currentTime = 0f;
+                    isfire = true;
+                    StartCoroutine(CreateBullet());
                 }
                 break;
 
@@ -79,17 +78,51 @@ public class JHW_UnitManager : MonoBehaviour
 
         switch (gameObject.name) // 유닛에 따라 다른 총알을 쓰도록
         {
-            case "RifleMan(Clone)":
+            case "RifleMan(Clone)" :
                 bulletnum = 0;
                 break;
+            case "Scout(Clone)":
+                bulletnum = 0;
+                break;
+            case "Sniper(Clone)":
+                bulletnum = 0;
+                break;
+            case "Artillery(Clone)":
+                bulletnum = 1;
+                break;
+            case "Heavy Weapon(Clone)":
+                bulletnum = 0;
+                break;
+            case "Armoured(Clone)":
+                bulletnum = 0;
+                break;
+            case "Tank(Clone)":
+                bulletnum = 1;
+                break;
+            case "Helicopter(Clone)":
+                bulletnum = 2;
+                break;
+            case "Raptor(Clone)":
+                bulletnum = 2;
+                break;
+        }
+
+        if(Vector3.Distance(gameObject.transform.position,
+            GameObject.FindWithTag("Enemy").transform.position) > unitinfo.attackRange * 0.1f)
+        {
+            state = State.Move;
         }
     }
 
-    void CreateBullet() // 일정시간마다 총알을 생성(공격속도)
+    IEnumerator CreateBullet() // 일정시간마다 총알을 생성(공격속도)
     {
+        yield return new WaitForSeconds(100/unitinfo.attackSpeed);
+
         GameObject bullet = GameObject.Instantiate(Bullet[bulletnum]);
         bullet.transform.position = FirePos.transform.position; //총알의 위치를 발사 위치랑 일치
         bullet.transform.up = FirePos.transform.forward; //총알의 방향을 발사 방향이랑 일치
+
+        isfire = false;
     }
 
     void UnitDie()

@@ -125,6 +125,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3325334712857355327}
+  - {fileID: 7483147608858477213}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -150,7 +151,7 @@ MonoBehaviour:
   damage: 10
   health: 100
   moveSpeed: 5
-  attackSpeed: 3.3
+  attackSpeed: 66.6
   attackRange: 800
   coolDown: 10
   price: 10
@@ -168,3 +169,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b49c7a3e3048b4f915ba667e8b8261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Bullet:
+  - {fileID: 7732385021513877985, guid: c77447f5c88f7dd47bb3684c872fcbee, type: 3}
+  - {fileID: 7732385021513877985, guid: 66b0af378b50b48468122a0a36944080, type: 3}
+  - {fileID: 7732385021513877985, guid: fabbfaa46cf1f1044966704d463f4c3f, type: 3}
+  FirePos: {fileID: 6750816147189487928}
+--- !u!1 &6750816147189487928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7483147608858477213}
+  m_Layer: 0
+  m_Name: FirePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7483147608858477213
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750816147189487928}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.609, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3325334713315684542}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

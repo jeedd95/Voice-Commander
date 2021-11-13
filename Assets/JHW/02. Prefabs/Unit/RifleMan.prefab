@@ -181,7 +181,7 @@ MonoBehaviour:
   damage: 10
   health: 50
   moveSpeed: 10
-  attackSpeed: 10
+  attackSpeed: 200
   attackRange: 500
   coolDown: 25
   price: 0
@@ -201,6 +201,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bullet:
   - {fileID: 7732385021513877985, guid: c77447f5c88f7dd47bb3684c872fcbee, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 7732385021513877985, guid: 66b0af378b50b48468122a0a36944080, type: 3}
+  - {fileID: 7732385021513877985, guid: fabbfaa46cf1f1044966704d463f4c3f, type: 3}
   FirePos: {fileID: 1160509258545006453}

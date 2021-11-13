@@ -582,7 +582,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1392582339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -621,8 +621,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 1
   unitName: RifleMan
-  unitScale: small
-  attackType: normal
+  unitScale: 0
+  attackType: 0
   canGroundAttack: 1
   canSkyAttack: 1
   isAirForce: 0
@@ -1290,8 +1290,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 1
   unitName: RifleMan
-  unitScale: small
-  attackType: normal
+  unitScale: 0
+  attackType: 0
   canGroundAttack: 1
   canSkyAttack: 1
   isAirForce: 0

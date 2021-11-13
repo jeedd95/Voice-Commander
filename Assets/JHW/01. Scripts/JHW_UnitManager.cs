@@ -11,6 +11,7 @@ public class JHW_UnitManager : MonoBehaviour
     public GameObject[] Bullet; //총알
     public GameObject FirePos; //발사 포지션
     int bulletnum; //총알의 번호
+    float currentTime;
 
     enum State // 유닛 상태머신
     {
@@ -21,7 +22,6 @@ public class JHW_UnitManager : MonoBehaviour
     }
     State state;
 
-    // Start is called before the first frame update
     void Start()
     {
         unitinfo = GetComponent<JHW_UnitInfo>();
@@ -29,7 +29,6 @@ public class JHW_UnitManager : MonoBehaviour
         state = State.Move; // 초기 상태
     }
 
-    // Update is called once per frame
     void Update()
     {
         switch (state)
@@ -44,6 +43,12 @@ public class JHW_UnitManager : MonoBehaviour
 
             case State.Attack:
                 UnitAttack();
+                currentTime += Time.deltaTime;
+                if(currentTime>(1f/unitinfo.attackSpeed))
+                {
+                    CreateBullet();
+                    currentTime = 0f;
+                }
                 break;
 
             case State.Die:
@@ -68,26 +73,23 @@ public class JHW_UnitManager : MonoBehaviour
         transform.position += transform.forward * unitinfo.moveSpeed * Time.deltaTime;
     }
 
-    void UnitAttack() // 공격하는 코드 + 총알 생성
+    void UnitAttack()
     {
+        transform.LookAt(GameObject.FindWithTag("Enemy").transform);  //유닛이 사거리 안에 들어온 적을 바라보게함
+
         switch (gameObject.name) // 유닛에 따라 다른 총알을 쓰도록
         {
             case "RifleMan(Clone)":
                 bulletnum = 0;
                 break;
         }
-        StartCoroutine(CreateBullet());
     }
 
-    IEnumerator CreateBullet() // 일정시간마다 총알을 생성(공격속도)
+    void CreateBullet() // 일정시간마다 총알을 생성(공격속도)
     {
-
-        transform.LookAt(GameObject.FindWithTag("Enemy").transform);  //유닛이 사거리 안에 들어온 적을 바라보게함
         GameObject bullet = GameObject.Instantiate(Bullet[bulletnum]);
         bullet.transform.position = FirePos.transform.position; //총알의 위치를 발사 위치랑 일치
         bullet.transform.up = FirePos.transform.forward; //총알의 방향을 발사 방향이랑 일치
-        yield return new WaitForSecondsRealtime(2f);
-
     }
 
     void UnitDie()

@@ -53,7 +53,6 @@ public class JHW_UnitManager : MonoBehaviour
             case State.Die:
                 break;
         }
-        print(state);
     }
 
     void UnitDetect() // 사거리 안에 enemy태그를 가진 적이있으면 공격상태로 가는 코드
@@ -62,7 +61,6 @@ public class JHW_UnitManager : MonoBehaviour
         if (Vector3.Distance(gameObject.transform.position,
             GameObject.FindWithTag("Enemy").transform.position) <= unitinfo.attackRange * 0.1f)
         {
-            print("사거리 이내 적 포착");
             state = State.Attack;
         }
     }
@@ -114,11 +112,10 @@ public class JHW_UnitManager : MonoBehaviour
         }
     }
 
-    IEnumerator CreateBullet() // 일정시간마다 총알을 생성(공격속도)
+    IEnumerator CreateBullet() // 일정시간마다 총알을 생성
     {
-        yield return new WaitForSeconds(100/unitinfo.attackSpeed);
-
-        GameObject bullet = GameObject.Instantiate(Bullet[bulletnum]);
+        yield return new WaitForSeconds(100/unitinfo.attackSpeed); //공격속도에 따른 주기
+        GameObject bullet = GameObject.Instantiate(Bullet[bulletnum]); //유닛에 따라 다른 총알쓰기
         bullet.transform.position = FirePos.transform.position; //총알의 위치를 발사 위치랑 일치
         bullet.transform.up = FirePos.transform.forward; //총알의 방향을 발사 방향이랑 일치
 

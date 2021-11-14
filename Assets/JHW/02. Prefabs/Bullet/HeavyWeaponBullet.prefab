@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 1280519062761736856}
   - component: {fileID: -7727292938883870703}
   m_Layer: 0
-  m_Name: RifleBullet
-  m_TagString: Untagged
+  m_Name: HeavyWeaponBullet
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2db97ed5c9954df46bcd9d1b212a6396, type: 2}
+  - {fileID: 2100000, guid: 1633c4e01b222474fb68d8fb8d9236ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -109,4 +109,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9deebc37f17a444695eae6331ceb957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnitInfo: {fileID: 2439739687132637641, guid: 6ad7dd4cdb9d7c643833f14232c30fab, type: 3}
+  Wall: {fileID: 7510769286803180991, guid: 1aaf6fea74d78a340906e252d105b398, type: 3}

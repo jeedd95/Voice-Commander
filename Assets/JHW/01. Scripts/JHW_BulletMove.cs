@@ -6,7 +6,6 @@ public class JHW_BulletMove : MonoBehaviour
 {
     float speed=50;
 
-    //public GameObject UnitInfo;
     JHW_UnitInfo unitInfo;
 
     private void Start()
@@ -17,5 +16,13 @@ public class JHW_BulletMove : MonoBehaviour
     void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Wall"))
+        {
+            Destroy(gameObject); //º®¿¡ ºÎµúÈ÷¸é ÃÑ¾Ë »èÁ¦
+        }
     }
 }

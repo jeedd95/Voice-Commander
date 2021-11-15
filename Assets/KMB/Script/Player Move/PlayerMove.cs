@@ -3,11 +3,11 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Policies;
 
-public enum Team
-{
-    Army = 0,
-    Enemy = 1
-}
+//public enum Team
+//{
+//    Army = 0,
+//    Enemy = 1
+//}
 
 public class PlayerMove : Agent
 {

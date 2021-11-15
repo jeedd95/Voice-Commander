@@ -2,12 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum UnitScale
+{
+    small,
+    middle,
+    large
+}
+public enum AttackType
+{
+    normal,
+    explosive,
+    concussive,
+    fixedDamage
+}
+
 public class JHW_UnitInfo : MonoBehaviour
 {
     public bool isEnemy; //우리팀인지 적팀인지
     public string unitName; //이름
-    public string unitScale; //크기(소형,중형,대형) 
-    public string attackType; //공격 타입(일반,폭발,진탕,고정)
+    public UnitScale unitScale; //크기(소형,중형,대형) 
+    public AttackType attackType; //공격 타입(일반,폭발,진탕,고정)
     public bool canGroundAttack; //대지
     public bool canSkyAttack; //대공
     public bool isAirForce; //공중 유닛인지

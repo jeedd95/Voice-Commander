@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3952128103108389090
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8181109232764614778}
+  m_Layer: 0
+  m_Name: FirePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8181109232764614778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3952128103108389090}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7224525890855782956}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7224525890855783378
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,8 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7224525890855782956}
   - component: {fileID: 7224525890855783379}
-  - component: {fileID: 4007345990236385082}
-  - component: {fileID: 2907467835935615878}
+  - component: {fileID: 7773764136207462545}
   m_Layer: 0
   m_Name: Heavy Weapon
   m_TagString: Untagged
@@ -31,6 +60,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7224525891540293986}
+  - {fileID: 8181109232764614778}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48,21 +78,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 0
   unitName: Heavy Weapon
-  unitScale: small
-  attackType: normal
+  unitScale: 0
+  attackType: 2
   canGroundAttack: 1
   canSkyAttack: 0
   isAirForce: 0
   damage: 10
   health: 100
   moveSpeed: 5
-  attackSpeed: 16.5
+  attackSpeed: 66.6
   attackRange: 500
   coolDown: 10
   price: 10
   populationLimit: 1
   exp: 20
---- !u!114 &4007345990236385082
+--- !u!114 &7773764136207462545
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,21 +101,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7224525890855783378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c9a6f7073317343a71ba7981854f8f, type: 3}
+  m_Script: {fileID: 11500000, guid: 45b49c7a3e3048b4f915ba667e8b8261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2907467835935615878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7224525890855783378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7014da2c2d74a5b44b4d601797dc2556, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  Bullet:
+  - {fileID: 7732385021513877985, guid: c77447f5c88f7dd47bb3684c872fcbee, type: 3}
+  - {fileID: 7732385021513877985, guid: 66b0af378b50b48468122a0a36944080, type: 3}
+  - {fileID: 7732385021513877985, guid: fabbfaa46cf1f1044966704d463f4c3f, type: 3}
+  FirePos: {fileID: 3952128103108389090}
 --- !u!1 &7224525891540293985
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2030699502266368397}
   - component: {fileID: 2030699502266368396}
-  - component: {fileID: -8636948490688361183}
-  - component: {fileID: -591279878843945001}
+  - component: {fileID: 3565129255294036550}
   m_Layer: 0
   m_Name: Scout
   m_TagString: Untagged
@@ -31,6 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2030699502745810111}
+  - {fileID: 7532057416315984849}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48,21 +48,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 0
   unitName: Scout
-  unitScale: small
-  attackType: concussive
+  unitScale: 1
+  attackType: 2
   canGroundAttack: 1
   canSkyAttack: 0
   isAirForce: 0
   damage: 5
   health: 50
   moveSpeed: 25
-  attackSpeed: 6.6
+  attackSpeed: 133.3
   attackRange: 250
   coolDown: 10
   price: 10
   populationLimit: 1
   exp: 5
---- !u!114 &-8636948490688361183
+--- !u!114 &3565129255294036550
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,21 +71,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2030699502266368399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c9a6f7073317343a71ba7981854f8f, type: 3}
+  m_Script: {fileID: 11500000, guid: 45b49c7a3e3048b4f915ba667e8b8261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-591279878843945001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2030699502266368399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7014da2c2d74a5b44b4d601797dc2556, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  Bullet:
+  - {fileID: 7732385021513877985, guid: c77447f5c88f7dd47bb3684c872fcbee, type: 3}
+  - {fileID: 7732385021513877985, guid: 66b0af378b50b48468122a0a36944080, type: 3}
+  - {fileID: 7732385021513877985, guid: fabbfaa46cf1f1044966704d463f4c3f, type: 3}
+  FirePos: {fileID: 8382426391402097833}
 --- !u!1 &2030699502745810110
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,3 +174,33 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &8382426391402097833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7532057416315984849}
+  m_Layer: 0
+  m_Name: FirePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7532057416315984849
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8382426391402097833}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2030699502266368397}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

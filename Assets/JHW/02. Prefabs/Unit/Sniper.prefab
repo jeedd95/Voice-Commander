@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3629617558459755908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1425684159771213585}
+  m_Layer: 0
+  m_Name: FirePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1425684159771213585
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3629617558459755908}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8764322059170051151}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8764322059170051153
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,8 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8764322059170051151}
   - component: {fileID: 8764322059170051152}
-  - component: {fileID: 6176684992851065857}
-  - component: {fileID: -9038597045524114272}
+  - component: {fileID: -4085771954843242004}
   m_Layer: 0
   m_Name: Sniper
   m_TagString: Untagged
@@ -31,6 +60,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8764322060169150399}
+  - {fileID: 1425684159771213585}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48,21 +78,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 0
   unitName: Sniper
-  unitScale: small
-  attackType: concussive
+  unitScale: 0
+  attackType: 2
   canGroundAttack: 1
   canSkyAttack: 0
   isAirForce: 0
   damage: 20
   health: 50
   moveSpeed: 10
-  attackSpeed: 3.3
+  attackSpeed: 66.6
   attackRange: 1200
   coolDown: 10
   price: 10
   populationLimit: 2
   exp: 20
---- !u!114 &6176684992851065857
+--- !u!114 &-4085771954843242004
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,21 +101,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8764322059170051153}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c9a6f7073317343a71ba7981854f8f, type: 3}
+  m_Script: {fileID: 11500000, guid: 45b49c7a3e3048b4f915ba667e8b8261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-9038597045524114272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8764322059170051153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7014da2c2d74a5b44b4d601797dc2556, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  Bullet:
+  - {fileID: 7732385021513877985, guid: c77447f5c88f7dd47bb3684c872fcbee, type: 3}
+  - {fileID: 7732385021513877985, guid: 66b0af378b50b48468122a0a36944080, type: 3}
+  - {fileID: 7732385021513877985, guid: fabbfaa46cf1f1044966704d463f4c3f, type: 3}
+  FirePos: {fileID: 3629617558459755908}
 --- !u!1 &8764322060169150336
 GameObject:
   m_ObjectHideFlags: 0

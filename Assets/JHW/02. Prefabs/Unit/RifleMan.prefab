@@ -201,6 +201,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bullet:
   - {fileID: 7732385021513877985, guid: c77447f5c88f7dd47bb3684c872fcbee, type: 3}
-  - {fileID: 7732385021513877985, guid: 66b0af378b50b48468122a0a36944080, type: 3}
+  - {fileID: 7732385021513877985, guid: 3cdb4af0f60f2c74babc58feafbf9c6c, type: 3}
   - {fileID: 7732385021513877985, guid: fabbfaa46cf1f1044966704d463f4c3f, type: 3}
+  - {fileID: 7732385021513877985, guid: 66b0af378b50b48468122a0a36944080, type: 3}
+  - {fileID: 7732385021513877985, guid: b3b15720a9da5384895509eb303aec8e, type: 3}
+  - {fileID: 7732385021513877985, guid: b81923ba79f6c3c409ad5798132b92f3, type: 3}
+  - {fileID: 7732385021513877985, guid: 15c006af6f78394438650bf822c8e96d, type: 3}
+  - {fileID: 7732385021513877985, guid: 82eca8c4afdb3744ba63ae094ec83845, type: 3}
+  - {fileID: 7732385021513877985, guid: b8b59ffecf06aad4195dcdaa16f94342, type: 3}
   FirePos: {fileID: 1160509258545006453}

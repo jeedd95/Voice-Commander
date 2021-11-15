@@ -70,6 +70,11 @@ public class JHW_UnitManager : MonoBehaviour
         transform.position += transform.forward * unitinfo.moveSpeed * Time.deltaTime;
     }
 
+    void UnitHide()
+    {
+
+    }
+
     void UnitAttack()
     {
         transform.LookAt(GameObject.FindWithTag("Enemy").transform);  //유닛이 사거리 안에 들어온 적을 바라보게함
@@ -80,28 +85,28 @@ public class JHW_UnitManager : MonoBehaviour
                 bulletnum = 0;
                 break;
             case "Scout(Clone)":
-                bulletnum = 0;
+                bulletnum = 1;
                 break;
             case "Sniper(Clone)":
-                bulletnum = 0;
+                bulletnum = 2;
                 break;
             case "Artillery(Clone)":
-                bulletnum = 1;
+                bulletnum = 3;
                 break;
             case "Heavy Weapon(Clone)":
-                bulletnum = 0;
+                bulletnum = 4;
                 break;
             case "Armoured(Clone)":
-                bulletnum = 0;
+                bulletnum = 5;
                 break;
             case "Tank(Clone)":
-                bulletnum = 1;
+                bulletnum = 6;
                 break;
             case "Helicopter(Clone)":
-                bulletnum = 2;
+                bulletnum = 7;
                 break;
             case "Raptor(Clone)":
-                bulletnum = 2;
+                bulletnum = 8;
                 break;
         }
 

@@ -20,9 +20,10 @@ public class JHW_BulletMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Wall"))
+        if(other.CompareTag("Wall") || other.CompareTag("Enemy"))
         {
             Destroy(gameObject); //벽에 부딪히면 총알 삭제
         }
+        
     }
 }

@@ -1,0 +1,66 @@
+{
+    "Soccer_AI": {
+        "checkpoints": [
+            {
+                "steps": 499000,
+                "file_path": "results\\Soccer_01\\Soccer_AI\\Soccer_AI-499000.onnx",
+                "reward": null,
+                "creation_time": 1636699289.5668507,
+                "auxillary_file_paths": [
+                    "results\\Soccer_01\\Soccer_AI\\Soccer_AI-499000.pt"
+                ]
+            },
+            {
+                "steps": 999000,
+                "file_path": "results\\Soccer_01\\Soccer_AI\\Soccer_AI-999000.onnx",
+                "reward": null,
+                "creation_time": 1636699657.8606336,
+                "auxillary_file_paths": [
+                    "results\\Soccer_01\\Soccer_AI\\Soccer_AI-999000.pt"
+                ]
+            },
+            {
+                "steps": 1499000,
+                "file_path": "results\\Soccer_01\\Soccer_AI\\Soccer_AI-1499000.onnx",
+                "reward": null,
+                "creation_time": 1636699999.7561193,
+                "auxillary_file_paths": [
+                    "results\\Soccer_01\\Soccer_AI\\Soccer_AI-1499000.pt"
+                ]
+            },
+            {
+                "steps": 1999000,
+                "file_path": "results\\Soccer_01\\Soccer_AI\\Soccer_AI-1999000.onnx",
+                "reward": null,
+                "creation_time": 1636700363.1487334,
+                "auxillary_file_paths": [
+                    "results\\Soccer_01\\Soccer_AI\\Soccer_AI-1999000.pt"
+                ]
+            },
+            {
+                "steps": 2176000,
+                "file_path": "results\\Soccer_01\\Soccer_AI\\Soccer_AI-2176000.onnx",
+                "reward": null,
+                "creation_time": 1636700481.8333883,
+                "auxillary_file_paths": [
+                    "results\\Soccer_01\\Soccer_AI\\Soccer_AI-2176000.pt"
+                ]
+            }
+        ],
+        "elo": 1200.0,
+        "final_checkpoint": {
+            "steps": 2176000,
+            "file_path": "results\\Soccer_01\\Soccer_AI.onnx",
+            "reward": null,
+            "creation_time": 1636700481.8333883,
+            "auxillary_file_paths": [
+                "results\\Soccer_01\\Soccer_AI\\Soccer_AI-2176000.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.27.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

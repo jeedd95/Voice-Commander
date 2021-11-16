@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using UnityEngine.AI;
 
 public class JHW_UnitManager : MonoBehaviour
 {
     JHW_UnitInfo unitinfo;
-
-    GameObject EnemyTarget;
+    GameObject enemyTarget;
+    NavMeshAgent navAgent;
 
     public GameObject[] Bullet; //총알
     public GameObject FirePos; //발사 포지션
     int bulletnum; //총알의 번호
     bool isfire; // 공격상태인지 아닌지
+    public GameObject enemyCommand; //적의 기지
 
     enum State // 유닛 상태머신
     {
@@ -22,13 +25,18 @@ public class JHW_UnitManager : MonoBehaviour
     }
     State state;
 
+    public GameObject neareastObject; //유닛이 공격을 시작했을때 가장 가까운 적
+
     void Start()
     {
         unitinfo = GetComponent<JHW_UnitInfo>();
+        navAgent = GetComponent<NavMeshAgent>();
+
+        navAgent.Warp(transform.position);
 
         state = State.Move; // 초기 상태
-    }
 
+    }
     void Update()
     {
         switch (state)
@@ -38,36 +46,89 @@ public class JHW_UnitManager : MonoBehaviour
                 UnitDetect();
                 break;
 
+            case State.Attack:
+                if (UnitAttack()==false)
+                {
+                    if (isfire == false)
+                    {
+                        isfire = true;
+                        StartCoroutine("CreateBullet");
+                    }
+                }
+                break;
+
             case State.Hide:
                 break;
 
-            case State.Attack:
-                UnitAttack();
-                if(isfire==false)
-                {
-                    isfire = true;
-                    StartCoroutine(CreateBullet());
-                }
-                break;
 
             case State.Die:
                 break;
         }
     }
 
+    float currentTime;
+    float detectTime = 0.01f; //감지시간
     void UnitDetect() // 사거리 안에 enemy태그를 가진 적이있으면 공격상태로 가는 코드
     {
-
-        if (Vector3.Distance(gameObject.transform.position,
-            GameObject.FindWithTag("Enemy").transform.position) <= unitinfo.attackRange * 0.1f)
+        currentTime += Time.deltaTime;
+        if (currentTime > detectTime)
         {
-            state = State.Attack;
+            currentTime = 0;
+            neareastObject = FindNearestObjectzByTag("Enemy");
+
+            //가장 가까운 오브젝트가 있고 거리가 공격 사거리 안에 있으면
+            if (neareastObject != null && Vector3.Distance(gameObject.transform.position,
+                neareastObject.transform.position) <= unitinfo.attackRange)
+            {
+                state = State.Attack;
+                isfire = false;
+            }
         }
     }
 
-    void UnitMove() // 전진 이동 하는 코드
+    public GameObject FindNearestObjectzByTag(string tag) //가장 가까운 오브젝트 찾기
     {
-        transform.position += transform.forward * unitinfo.moveSpeed * Time.deltaTime;
+        int layer = 1 << LayerMask.NameToLayer("EnemyTeam");
+        var cols = Physics.OverlapSphere(transform.position, unitinfo.attackRange, layer);
+
+        float dist = float.MaxValue;
+        int chooseIndex = -1;
+        for (int i = 0; i < cols.Length; i++)
+        {
+            float temp = Vector3.Distance(transform.position, cols[i].transform.position);
+            if (temp < dist)
+            {
+                dist = temp;
+                chooseIndex = i;
+            }
+        }
+
+        if (chooseIndex == -1) //사거리 안에 있는 적이 없음
+        {
+            return null;
+        }
+
+        return cols[chooseIndex].gameObject;
+
+        //return cols.OrderBy(obj =>
+        //{
+        //    return Vector3.Distance(transform.position, obj.transform.position);
+        //}).FirstOrDefault().gameObject;
+
+        //var objects = GameObject.FindGameObjectsWithTag(tag).ToList();
+        //return objects.OrderBy(obj =>
+        //{
+        //    return Vector3.Distance(transform.position, obj.transform.position);
+        //})
+        //.FirstOrDefault(); //List의 첫번째 요소를 반환, 비어있으면 null을 반환
+    }
+
+    void UnitMove() // nav mesh를 이용하여 인식한 적 방향으로 가는 코드
+    {
+        //// transform.position += transform.forward * unitinfo.moveSpeed * Time.deltaTime; //앞으로만 가는 코드
+        Vector3 offset = enemyCommand.transform.position;
+        navAgent.SetDestination(offset);
+        transform.LookAt(Vector3.right);
     }
 
     void UnitHide()
@@ -75,13 +136,21 @@ public class JHW_UnitManager : MonoBehaviour
 
     }
 
-    void UnitAttack()
+
+    bool UnitAttack()
     {
-        transform.LookAt(GameObject.FindWithTag("Enemy").transform);  //유닛이 사거리 안에 들어온 적을 바라보게함
+        navAgent.SetDestination(transform.position);
+
+        //유닛이 사거리 안에 들어온 적을 바라보게함
+        if (neareastObject != null)
+        {
+            transform.LookAt(neareastObject.transform);
+        }
+        //transform.LookAt(GameObject.FindWithTag("Enemy").transform);
 
         switch (gameObject.name) // 유닛에 따라 다른 총알을 쓰도록
         {
-            case "RifleMan(Clone)" :
+            case "RifleMan(Clone)":
                 bulletnum = 0;
                 break;
             case "Scout(Clone)":
@@ -110,19 +179,31 @@ public class JHW_UnitManager : MonoBehaviour
                 break;
         }
 
-        if(Vector3.Distance(gameObject.transform.position,
-            GameObject.FindWithTag("Enemy").transform.position) > unitinfo.attackRange * 0.1f)
+        // 사거리 안에 적이 없거나 (=가장 가까운 적이 있고= 나와 적의 거리가 사거리보다 멀때)움직이는 상태로 만듬
+        if (neareastObject == null || (/*neareastObject != null &&*/ Vector3.Distance(gameObject.transform.position,
+            neareastObject.transform.position) > unitinfo.attackRange))
         {
             state = State.Move;
+            StopCoroutine("CreateBullet");
+            return true;
         }
+
+        return false;
     }
 
     IEnumerator CreateBullet() // 일정시간마다 총알을 생성
     {
-        yield return new WaitForSeconds(100/unitinfo.attackSpeed); //공격속도에 따른 주기
+        yield return new WaitForSeconds(100 / unitinfo.attackSpeed); //공격속도에 따른 주기
+
+        if (neareastObject == null)
+            yield break;
+
         GameObject bullet = GameObject.Instantiate(Bullet[bulletnum]); //유닛에 따라 다른 총알쓰기
         bullet.transform.position = FirePos.transform.position; //총알의 위치를 발사 위치랑 일치
-        bullet.transform.up = FirePos.transform.forward; //총알의 방향을 발사 방향이랑 일치
+        Vector3 dir = neareastObject.transform.position - FirePos.transform.position;
+        dir.Normalize();
+        bullet.transform.up = dir; //총알의 방향을 발사 방향이랑 일치
+        bullet.GetComponent<JHW_BulletMove>().SetCreator(this);// 총알에게 나(총알을 쏜놈)를 알려주고싶다.
 
         isfire = false;
     }

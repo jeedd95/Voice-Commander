@@ -8,13 +8,12 @@ public class JHW_Wall : MonoBehaviour
 
     void Start()
     {
-        wallHp = 1000f;
+        wallHp = 100f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        print(wallHp);
         WallDamaged();
     }
 

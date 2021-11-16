@@ -8,14 +8,9 @@ public class JHW_UnitFactory : MonoBehaviour
     public Transform[] EnemyCreatePoint; //적팀 생성 포인트 3개
 
     public GameObject[] Units; //유닛 프리팹들
-    JHW_UnitInfo unitInfo;
 
     void Start()
     {
-        for (int i = 0; i < 8; i++)
-        {
-            unitInfo =  Units[i].GetComponent<JHW_UnitInfo>();
-        }
     }
 
     void Update()
@@ -35,13 +30,16 @@ public class JHW_UnitFactory : MonoBehaviour
         Transform mcp = MyCreatePoint[randomNum]; // 1~3번 생성포인트 중에 하나 생성
         SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
 
-        if (unitInfo.isEnemy == true) //만약 유닛이 적군이라면 글로벌 좌표의 왼쪽으로 간다
-        {
-            SelectUnit.transform.forward = Vector3.left; 
-        }
-        if (unitInfo.isEnemy == false) //만약 유닛이 우리팀이라면 글로벌 좌표의 오른쪽으로 간다
-        {
-            SelectUnit.transform.forward = Vector3.right; 
-        }
+        //// 유닛의 고개를 오른쪽으로 할건지 왼쪽으로 할건지 정하는 코드
+        //JHW_UnitInfo unitInfo = SelectUnit.GetComponent<JHW_UnitInfo>();
+
+        //if (unitInfo.isEnemy == true) //만약 유닛이 적군이라면 글로벌 좌표의 왼쪽으로 간다
+        //{
+        //    SelectUnit.transform.forward = Vector3.left;
+        //}
+        //if (unitInfo.isEnemy == false) //만약 유닛이 우리팀이라면 글로벌 좌표의 오른쪽으로 간다
+        //{
+        //    SelectUnit.transform.forward = Vector3.right;
+        //}
     }
 }

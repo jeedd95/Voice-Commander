@@ -31,10 +31,11 @@ public class JHW_UnitInfo : MonoBehaviour
     public float moveSpeed; //이동속도
     public float attackSpeed; //공격속도
     public float attackRange; //사거리
-    //public float accuracyRate; //명중률
+    public float accuracyRate; //명중률
     public int coolDown; //쿨타임
     public int price; //가격
     public int populationLimit; //인구 제한
     public int exp; //경험치
+    public int score; //점수
 }
 

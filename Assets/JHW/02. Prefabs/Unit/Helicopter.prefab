@@ -185,10 +185,12 @@ MonoBehaviour:
   moveSpeed: 15
   attackSpeed: 133.3
   attackRange: 100
+  accuracyRate: 70
   coolDown: 10
   price: 10
   populationLimit: 2
   exp: 20
+  score: 2500
 --- !u!114 &-8489519529440304241
 MonoBehaviour:
   m_ObjectHideFlags: 0

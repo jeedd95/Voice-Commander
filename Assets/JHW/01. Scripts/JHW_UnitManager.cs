@@ -87,7 +87,7 @@ public class JHW_UnitManager : MonoBehaviour
         }
     }
 
-    public GameObject FindNearestObjectzByLayer(string layer) //가장 가까운 오브젝트 태그로 찾기
+    public GameObject FindNearestObjectzByLayer(string layer) //가장 가까운 오브젝트 레이어로 찾기
     {
         int layerMask = 1 << LayerMask.NameToLayer(layer);
         var cols = Physics.OverlapSphere(transform.position, unitinfo.attackRange, layerMask); //공격 사거리 안에있는 적 인식
@@ -226,6 +226,11 @@ public class JHW_UnitManager : MonoBehaviour
         if (unitinfo.health <= 0)
         {
             Destroy(unitinfo.gameObject);
+            if(unitinfo.isEnemy==true)
+            {
+                JHW_GameManager.instance.Score += unitinfo.score;
+                print("죽은 유닛 :" + unitinfo.gameObject + "얻은점수 : " + unitinfo.score);
+            }
         }
     }
 

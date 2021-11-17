@@ -17,7 +17,7 @@ public class JHW_Wall : MonoBehaviour
         WallDamaged();
     }
 
-    void WallDamaged() //벽의 hp가 0이하로 되면 벽 삭제
+    public void WallDamaged() //벽의 hp가 0이하로 되면 벽 삭제
     {
         if(wallHp <=0)
         {
@@ -25,11 +25,11 @@ public class JHW_Wall : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-       if(other.CompareTag("Bullet"))
-        {
-            wallHp -= 10;
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //   if(other.CompareTag("Bullet"))
+    //    {
+    //        wallHp -= 10;
+    //    }
+    //}
 }

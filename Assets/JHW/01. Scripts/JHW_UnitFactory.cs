@@ -19,27 +19,42 @@ public class JHW_UnitFactory : MonoBehaviour
         {
             CreateUnit();
         }
+
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            CreateUnit2();
+        }
     }
 
-    public void CreateUnit()
+    public void CreateUnit() //아군을 생성하는 코드
     {
         int randomNum = Random.Range(0, 3); // 3개중에 하나를 선택해서 생성
         int randomNum2 = Random.Range(0, 9); // 9개 중에 하나를 선택해서 생성
 
         GameObject SelectUnit = Instantiate(Units[randomNum2]); // 1~9번까지의 유닛중에 하나 생성
+        SelectUnit.GetComponent<JHW_UnitInfo>().isEnemy=false; //아군이다
+        SelectUnit.tag = "Player";
+        SelectUnit.layer = LayerMask.NameToLayer("PlayerTeam");
+        Collider col = SelectUnit.GetComponentInChildren<Collider>();
+        col.gameObject.tag = SelectUnit.tag;
+        col.gameObject.layer = SelectUnit.layer;
         Transform mcp = MyCreatePoint[randomNum]; // 1~3번 생성포인트 중에 하나 생성
         SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
+    }
 
-        //// 유닛의 고개를 오른쪽으로 할건지 왼쪽으로 할건지 정하는 코드
-        //JHW_UnitInfo unitInfo = SelectUnit.GetComponent<JHW_UnitInfo>();
+    public void CreateUnit2() //적을 생성하는 코드
+    {
+        int randomNum = Random.Range(0, 3); // 3개중에 하나를 선택해서 생성
+        int randomNum2 = Random.Range(0, 9); // 9개 중에 하나를 선택해서 생성
 
-        //if (unitInfo.isEnemy == true) //만약 유닛이 적군이라면 글로벌 좌표의 왼쪽으로 간다
-        //{
-        //    SelectUnit.transform.forward = Vector3.left;
-        //}
-        //if (unitInfo.isEnemy == false) //만약 유닛이 우리팀이라면 글로벌 좌표의 오른쪽으로 간다
-        //{
-        //    SelectUnit.transform.forward = Vector3.right;
-        //}
+        GameObject SelectUnit = Instantiate(Units[randomNum2]); // 1~9번까지의 유닛중에 하나 생성
+        SelectUnit.GetComponent<JHW_UnitInfo>().isEnemy = true; //적이다
+        SelectUnit.tag = "Enemy";
+        SelectUnit.layer = LayerMask.NameToLayer("EnemyTeam");
+        Collider col = SelectUnit.GetComponentInChildren<Collider>();
+        col.gameObject.tag = SelectUnit.tag;
+        col.gameObject.layer = SelectUnit.layer;
+        Transform mcp = EnemyCreatePoint[randomNum]; // 1~3번 생성포인트 중에 하나 생성
+        SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
     }
 }

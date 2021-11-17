@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3325334712857355324}
   - component: {fileID: 3325334712857355325}
   - component: {fileID: 3325334712857355326}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: -1771461163752211348}
   - component: {fileID: 5872296453823699896}
   - component: {fileID: 4009172533403518893}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Artillery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,6 +182,7 @@ MonoBehaviour:
   - {fileID: 7732385021513877985, guid: 82eca8c4afdb3744ba63ae094ec83845, type: 3}
   - {fileID: 7732385021513877985, guid: b8b59ffecf06aad4195dcdaa16f94342, type: 3}
   FirePos: {fileID: 6750816147189487928}
+  TeamCommand: {fileID: 8146030571281266687, guid: e7e27fd7d1615ed4cb59eccd3dd8512c, type: 3}
   enemyCommand: {fileID: 8283047153395507706, guid: 3849ca7fb7c99824bb4302725f61b4a7, type: 3}
   neareastObject: {fileID: 0}
 --- !u!54 &5872296453823699896
@@ -231,7 +232,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7483147608858477213}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: FirePos
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}

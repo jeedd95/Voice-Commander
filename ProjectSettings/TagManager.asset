@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Wall
   - Bullet
+  - PlayerCommand
+  - EnemyCommand
   layers:
   - Default
   - TransparentFX
@@ -17,10 +19,10 @@ TagManager:
   - PlayerTeam
   - 
   - EnemyTeam
-  - 
-  - 
-  - 
-  - 
+  - PlayerBullet
+  - EnemyBullet
+  - PlayerCommand
+  - EnemyCommand
   - 
   - 
   - 

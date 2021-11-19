@@ -57,7 +57,7 @@ MonoBehaviour:
   isAirForce: 0
   damage: 5
   health: 50
-  moveSpeed: 25
+  moveSpeed: 30
   attackSpeed: 133.3
   attackRange: 100
   accuracyRate: 40
@@ -119,7 +119,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 999
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0

@@ -6,8 +6,8 @@ using UnityEngine.AI;
 
 public class JHW_UnitManager : MonoBehaviour
 {
-    JHW_UnitInfo unitinfo;
-    GameObject enemyTarget;
+    public JHW_UnitInfo unitinfo;
+   // GameObject enemyTarget;
     NavMeshAgent navAgent;
 
     public GameObject[] Bullet; //총알
@@ -17,16 +17,17 @@ public class JHW_UnitManager : MonoBehaviour
     public GameObject TeamCommand; //우리의 기지
     public GameObject enemyCommand; //적의 기지
 
-    enum State // 유닛 상태머신
+   public enum State // 유닛 상태머신
     {
         Move,
         Hide,
         Attack,
         Die
     }
-    State state;
+    public State state;
 
     public GameObject neareastObject; //유닛이 공격을 시작했을때 가장 가까운 적
+    public GameObject neareastWall; //유닛과 가장 가까운 엄폐물
 
     void Start()
     {
@@ -40,6 +41,7 @@ public class JHW_UnitManager : MonoBehaviour
     }
     void Update()
     {
+        print(state);
         UnitDie();
 
         switch (state)
@@ -61,6 +63,7 @@ public class JHW_UnitManager : MonoBehaviour
                 break;
 
             case State.Hide:
+                UnitHide();
                 break;
         }
     }
@@ -91,7 +94,7 @@ public class JHW_UnitManager : MonoBehaviour
     {
         int layerMask = 1 << LayerMask.NameToLayer(layer);
         var cols = Physics.OverlapSphere(transform.position, unitinfo.attackRange, layerMask); //공격 사거리 안에있는 적 인식
-
+        if(layer=="Wall") cols = Physics.OverlapSphere(transform.position, 500, layerMask); // 엄폐물을 찾을때는 전범위로 인식
         float dist = float.MaxValue;
         int chooseIndex = -1;
         for (int i = 0; i < cols.Length; i++)
@@ -139,18 +142,30 @@ public class JHW_UnitManager : MonoBehaviour
             offset = TeamCommand.transform.position;
             transform.LookAt(Vector3.left);
         }
-        navAgent.SetDestination(offset);
+
+        if (navAgent.isOnNavMesh) navAgent.SetDestination(offset); // 각자의 적진으로 이동
     }
 
     void UnitHide()
     {
+        neareastWall = FindNearestObjectzByLayer("Wall");
+        Vector3 target = neareastWall.transform.position;
+        if(unitinfo.isEnemy==false) // 플레이어 팀일때 벽의 왼쪽으로 숨음
+        {
+            navAgent.SetDestination(new Vector3(target.x-5,target.y,target.z));
+        }
+        //if(unitinfo.isEnemy==true)
+        //{
+        //    navAgent.SetDestination(new Vector3(target.x + 5, target.y, target.z));
+        //}
 
     }
 
 
     bool UnitAttack()
     {
-        navAgent.SetDestination(transform.position); //공격할땐 그자리에 멈춤
+        if (navAgent.isOnNavMesh)
+            navAgent.isStopped = true; //공격할땐 그자리에 멈춤 
 
         //유닛이 사거리 안에 들어온 적을 바라보게함
         if (neareastObject != null)
@@ -195,6 +210,8 @@ public class JHW_UnitManager : MonoBehaviour
             neareastObject.transform.position) > unitinfo.attackRange))
         {
             state = State.Move;
+            if (navAgent.isOnNavMesh)
+                navAgent.isStopped = false;
             StopCoroutine("CreateBullet");
             return true;
         }
@@ -225,11 +242,12 @@ public class JHW_UnitManager : MonoBehaviour
     {
         if (unitinfo.health <= 0)
         {
-            Destroy(unitinfo.gameObject);
-            if(unitinfo.isEnemy==true)
+            Destroy(unitinfo.gameObject); //죽으면 곧바로 destroy한다
+
+            if (unitinfo.isEnemy == true) //죽은애가 적일경우
             {
                 JHW_GameManager.instance.Score += unitinfo.score;
-                print("죽은 유닛 :" + unitinfo.gameObject + "얻은점수 : " + unitinfo.score);
+               // print("죽은 유닛 :" + unitinfo.gameObject + "얻은점수 : " + unitinfo.score);
             }
         }
     }

@@ -14,9 +14,9 @@ public class JHW_GameManager : MonoBehaviour
     public int Gold = 25 ; //플레이어 골드
     public float specialGauge = 0f; //스폐셜 게이지
 
-    public Text text; //점수 텍스트
-    public Text text2; //골드 텍스트
-    public Text text3; //스폐셜 게이지 텍스트
+    public Text scoreT; //점수 텍스트
+    public Text goldT; //골드 텍스트
+    public Text specialgageT; //스폐셜 게이지 텍스트
     public Text text4; //스폐셜 게이지 텍스트
 
     bool isClickSpecialGauge=false;
@@ -48,10 +48,10 @@ public class JHW_GameManager : MonoBehaviour
         if (isClickSpecialGauge == false) PlusSpecialGauge(); //스폐셜 게이지를 누르고 있지않을때만 실행
         if (isClickSpecialGauge == true) DefensivePosture(); //스폐셜 게이지를 누르고 있을때 실행
 
-        text.text = "플레이어 점수 : " + Score;
-        text2.text = "골드 : " + Gold;
-        text3.text = string.Format("{0,3:N0}", specialGauge)  + " %";
-        text4.text = text3.text;
+        scoreT.text = "플레이어 점수 : " + Score;
+        goldT.text = "골드 : " + Gold;
+        specialgageT.text = string.Format("{0,3:N0}", specialGauge)  + " %";
+        text4.text = specialgageT.text;
     }
 
     float currentTime;

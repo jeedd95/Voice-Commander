@@ -168,10 +168,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Score: 0
   Gold: 25
-  specialGauge: 50
-  text: {fileID: 216708796}
-  text2: {fileID: 270329972}
-  text3: {fileID: 488162192}
+  specialGauge: 0
+  scoreT: {fileID: 216708796}
+  goldT: {fileID: 270329972}
+  specialgageT: {fileID: 488162192}
   text4: {fileID: 2039408324}
 --- !u!1 &101354829
 GameObject:

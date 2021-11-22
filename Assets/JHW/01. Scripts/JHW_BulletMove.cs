@@ -42,6 +42,8 @@ public class JHW_BulletMove : MonoBehaviour
 
         else if (other.CompareTag("Enemy") || other.CompareTag("Player")) // 적하고 총알이 부딪혔을때 데미지 계산식
         {
+            Destroy(gameObject); //적에게 부딪힌 총알을 삭제
+
             if (Random.Range(1, 100) > accuracyRate) //1~100 중에서 하나를 골라 명중률보다 높다면 안맞음으로 처리
             {
                 print("빗나감");
@@ -49,9 +51,10 @@ public class JHW_BulletMove : MonoBehaviour
             }
 
             int type = (int)unitInfo.attackType;
-            if (hitObj.unitScale == UnitScale.small) hitObj.health -= damage * rate[type][0]; //소형
-            if (hitObj.unitScale == UnitScale.middle) hitObj.health -= damage * rate[type][1]; //중형
-            if (hitObj.unitScale == UnitScale.large) hitObj.health -= damage * rate[type][2]; //대형
+
+            if (hitObj.unitScale == UnitScale.small) hitObj.health -= damage * rate[type][0] ; //소형
+            if (hitObj.unitScale == UnitScale.middle) hitObj.health -= damage * rate[type][1] ; //중형
+            if (hitObj.unitScale == UnitScale.large) hitObj.health -= damage * rate[type][2] ; //대형
 
             //switch (unitInfo.attackType) //공격한놈의 공격타입
             //{
@@ -71,8 +74,9 @@ public class JHW_BulletMove : MonoBehaviour
             //        if (hitObj.unitScale == UnitScale.large) hitObj.health -= damage * 0.25f;
             //        break;
             //}
-            print("공격 한 유닛 : " + attackerName + "공격 받은 유닛 : " + hitObj.gameObject + "체력 : " + hitObj.health);
-            Destroy(gameObject); //적에게 부딪힌 총알을 삭제
+           // print("공격 한 유닛 : " + attackerName + "공격 받은 유닛 : " + hitObj.gameObject + "체력 : " + hitObj.health);
+            
+            
         }
         else if (other.CompareTag("PlayerCommand"))
         {

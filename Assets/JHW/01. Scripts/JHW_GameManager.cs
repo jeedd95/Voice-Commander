@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class JHW_GameManager : MonoBehaviour
 {
     public static JHW_GameManager instance; //싱글톤
-    //JHW_UnitManager unitManager;
-    GameObject[] MyUnits; //씬에 나와있는 모든 내 유닛들
-    GameObject[] MyUnits2;
+
 
     public int Score = 0; //플레이어 점수
-    public int Gold = 25 ; //플레이어 골드
+    public int Gold = 25; //플레이어 골드
     public float specialGauge = 0f; //스폐셜 게이지
 
     public Text scoreT; //점수 텍스트
@@ -19,7 +18,10 @@ public class JHW_GameManager : MonoBehaviour
     public Text specialgageT; //스폐셜 게이지 텍스트
     public Text text4; //스폐셜 게이지 텍스트
 
-    bool isClickSpecialGauge=false;
+    bool isClickSpecialGauge = false;
+
+    //bool bDefensiveDown;
+
 
     private void Awake()
     {
@@ -41,17 +43,24 @@ public class JHW_GameManager : MonoBehaviour
 
     private void Update()
     {
+        Mathf.Clamp(specialGauge, 0, 100); //스폐셜 게이지를 0~100 까지로 제한
+
+        if (isClickSpecialGauge)
+        {
+            specialGauge -= 0.01f;
+        }
+
+
         PlusScore();
         PlusGold();
-        
-        Mathf.Clamp(specialGauge, 0, 100); //스폐셜 게이지를 0~100 까지로 제한
+
         if (isClickSpecialGauge == false) PlusSpecialGauge(); //스폐셜 게이지를 누르고 있지않을때만 실행
-        if (isClickSpecialGauge == true) DefensivePosture(); //스폐셜 게이지를 누르고 있을때 실행
 
         scoreT.text = "플레이어 점수 : " + Score;
         goldT.text = "골드 : " + Gold;
-        specialgageT.text = string.Format("{0,3:N0}", specialGauge)  + " %";
+        specialgageT.text = string.Format("{0,3:N0}", specialGauge) + " %";
         text4.text = specialgageT.text;
+
     }
 
     float currentTime;
@@ -92,36 +101,23 @@ public class JHW_GameManager : MonoBehaviour
         }
     }
 
-    void DefensivePosture() // 방어태세, 하이어라키에있는 모든 Player 태그 유닛을 검색하고 State를 Hide로 만듬
-    {
-        MyUnits = GameObject.FindGameObjectsWithTag("Player");
-
-        for (int i = 0; i < MyUnits.Length; i++) 
-        {
-            if(MyUnits[i].transform.childCount == 0)
-            {
-                //MyUnits[i].
-            }
-
-            MyUnits2[i] = MyUnits[i].transform.parent.gameObject;
-            MyUnits2[i].GetComponent<JHW_UnitManager>().state = JHW_UnitManager.State.Hide;
-        }
-        specialGauge -= 0.01f; //게이지 다운
-    }
-
     public void OnClickDefense() //방어태세 버튼클릭이벤트
     {
-        isClickSpecialGauge = true;
-    }
-    public void NotClickDefense()
-    {
-        isClickSpecialGauge = false;
-
-        MyUnits = GameObject.FindGameObjectsWithTag("Player");
-        for (int i = 0; i < MyUnits.Length; i++) //하이어라키에있는 모든 유닛을 검색하고 State를 Move로 만듬
+        if (isClickSpecialGauge == false)
         {
-            MyUnits[i].GetComponent<JHW_UnitManager>().state = JHW_UnitManager.State.Move;
+            isClickSpecialGauge = true;
+            ChangePosture(JHW_UnitManager.State.Hide);
         }
+
+    }
+    public void NotClickDefense() //방어태세를 뗄 때 골랐던 유닛들을 Move상태로
+    {
+        if (isClickSpecialGauge == true)
+        {
+            isClickSpecialGauge = false;
+            ChangePosture(JHW_UnitManager.State.Move);
+        }
+
     }
     public void OnClickOffense() //공격태세 버튼클릭이벤트
     {
@@ -131,7 +127,15 @@ public class JHW_GameManager : MonoBehaviour
     {
         isClickSpecialGauge = false;
     }
+    void ChangePosture(JHW_UnitManager.State state) //하이어라키에있는 모든 Player 유닛을 검색하고 상태변경
+    {
+        List<JHW_UnitManager> playerUnits = JHW_UnitFactory.instance.myUnits;
 
+        for (int i = 0; i < playerUnits.Count; i++)
+        {
+            playerUnits[i].SetState(state);
+        }
 
+    }
 }
 

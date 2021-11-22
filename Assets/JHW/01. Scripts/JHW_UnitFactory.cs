@@ -5,10 +5,23 @@ using UnityEngine.AI;
 
 public class JHW_UnitFactory : MonoBehaviour
 {
+    public static JHW_UnitFactory instance;
+    void Awake()
+    {
+        instance = this;
+        myUnits = new List<JHW_UnitManager>(); // 내 유닛 리스트
+        enemyUnits = new List<JHW_UnitManager>(); //적 유닛 리스트
+    }
+
+
     public Transform[] MyCreatePoint; //우리 생성포인트 3개
     public Transform[] EnemyCreatePoint; //적팀 생성 포인트 3개
 
     public GameObject[] Units; //유닛 프리팹들
+
+    public List<JHW_UnitManager> myUnits;
+    public List<JHW_UnitManager> enemyUnits;
+
 
     void Start()
     {
@@ -84,6 +97,8 @@ public class JHW_UnitFactory : MonoBehaviour
 
                 Transform mcp = MyCreatePoint[randomNum]; // 1~3번 생성포인트 중에 하나 생성
                 SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
+
+                myUnits.Add(SelectUnit.GetComponent<JHW_UnitManager>());
             }
             else
             {
@@ -106,6 +121,8 @@ public class JHW_UnitFactory : MonoBehaviour
         col.gameObject.layer = SelectUnit.layer;
         Transform mcp = EnemyCreatePoint[randomNum]; // 1~3번 생성포인트 중에 하나 생성
         SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
+
+        enemyUnits.Add(SelectUnit.GetComponent<JHW_UnitManager>());
     }
 
 }

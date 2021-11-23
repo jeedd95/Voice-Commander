@@ -22,6 +22,7 @@ public class JHW_UnitManager : MonoBehaviour
     {
         Move,
         Hide,
+        HideAttack,
         Attack,
         Die
     }
@@ -36,28 +37,75 @@ public class JHW_UnitManager : MonoBehaviour
         navAgent = GetComponent<NavMeshAgent>();
 
         navAgent.Warp(transform.position);
+        navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance; //유닛 겹치기
 
-        state = State.Move; // 초기 상태
+        SetState(State.Move); // 초기 상태
 
     }
 
     public void SetState(State next)
     {
-        state = next;
-        if (state == State.Hide)
+        // 플레이어의 유닛인데 숨는상태로 전환하려고할때
+        if (unitinfo.isEnemy == false && next == State.Hide)
         {
-            if (navAgent.isOnNavMesh)
-                navAgent.isStopped = false; //hide 상태면 움직인다
-        }
-    }
+            neareastWall = FindNearestObjectzByLayer("Wall");
 
+            if (neareastWall == null) //벽이 하나도 없다
+                return;
+        }
+
+        state = next;
+
+        if (navAgent.isOnNavMesh)
+        {
+            if (state == State.Attack || state == State.HideAttack) //공격일때
+            {
+                navAgent.isStopped = true;  // 멈춘다
+            }
+            else
+            {
+                navAgent.isStopped = false;  // 이동한다
+            }
+        }
+
+        if (state == State.Hide || state == State.HideAttack) //방어태세를 했을때
+        {
+            for (int i = 0; i < JHW_GameManager.instance.hidingUnits.Count; i++)
+            {
+                JHW_GameManager.instance.hidingUnits[i].unitinfo.UseDefensive = true;
+            }
+        }
+        else //방어태세가 아닐때
+        {
+            for (int i = 0; i < JHW_GameManager.instance.hidingUnits.Count; i++)
+            {
+                JHW_GameManager.instance.hidingUnits[i].unitinfo.UseDefensive = false;
+            }
+        }
+
+        if (state == State.HideAttack) //엄폐물에 숨어서 공격할때 트리거 on
+        {
+            for (int i = 0; i < JHW_GameManager.instance.hidingUnits.Count; i++)
+            {
+                JHW_GameManager.instance.hidingUnits[i].unitinfo.isBehindWall = true;
+            }
+        }
+        else //엄폐물에 숨지않았을때 트리거 off
+        {
+            for (int i = 0; i < JHW_GameManager.instance.hidingUnits.Count; i++)
+            {
+                JHW_GameManager.instance.hidingUnits[i].unitinfo.isBehindWall = false;
+            }
+        }
+        
+    }
 
     void Update()
     {
         if (unitinfo.isEnemy == false)
         {
-            print("내 유닛 사거리: "+unitinfo.attackRange);
-            print(state);
+           // print("내 유닛 사거리 : " + unitinfo.ATTACK_RANGE);
+           // print(state);
         }
 
         UnitDie();
@@ -66,9 +114,10 @@ public class JHW_UnitManager : MonoBehaviour
         {
             case State.Move:
                 UnitMove();
-                UnitDetect();
+                UnitDetect(false);
                 break;
 
+            case State.HideAttack:
             case State.Attack:
                 if (UnitAttack() == false)
                 {
@@ -82,20 +131,13 @@ public class JHW_UnitManager : MonoBehaviour
 
             case State.Hide:
                 UnitHide();
-                
-                if (Vector3.Distance(gameObject.transform.position, targetpos) <= 2) //벽뒤에 숨었다
-                {
-                    UnitDetect();
-                    //unitinfo.attackRange *= 1.2f; //공격사거리 증가
-                }
 
-                if (Vector3.Distance(gameObject.transform.position, targetpos) > 2) //벽 밖으로 나옴
+                // 벽뒤에 다 숨었다면(유닛이 벽이랑 가까이 있을때)
+                if (Vector3.Distance(gameObject.transform.position, targetpos) == 0)
                 {
-                }
-
-                if (neareastWall == null) //벽이 하나도 없다(데미지 감소만)
-                {
-                    UnitDetect();
+                    // 공격상대를 찾고싶다.
+                    // 찾았다면 HideAttack으로 상태를 전이하고싶다.
+                    UnitDetect(true);
                 }
                 break;
         }
@@ -103,7 +145,7 @@ public class JHW_UnitManager : MonoBehaviour
 
     float currentTime;
     float detectTime = 0.01f; //감지시간
-    void UnitDetect() // 사거리 안에 enemy태그를 가진 적이있으면 공격상태로 가는 코드
+    void UnitDetect(bool isHide) // 사거리 안에 enemy레이어를 가진 적이있으면 공격상태로 가는 코드
     {
         currentTime += Time.deltaTime;
         if (currentTime > detectTime)
@@ -112,22 +154,30 @@ public class JHW_UnitManager : MonoBehaviour
             if (unitinfo.isEnemy == true) neareastObject = FindNearestObjectzByLayer("PlayerTeam");
             currentTime = 0;
 
-            
-                //가장 가까운 오브젝트가 있고 거리가 공격 사거리 안에 있으면
-                if (neareastObject != null && Vector3.Distance(gameObject.transform.position,
-                    neareastObject.transform.position) <= unitinfo.attackRange)
+
+            //가장 가까운 오브젝트가 있고 거리가 공격 사거리 안에 있으면
+            if (neareastObject != null && Vector3.Distance(gameObject.transform.position,
+                neareastObject.transform.position) <= unitinfo.ATTACK_RANGE)
+            {
+                StopCoroutine("CreateBullet");
+
+                if (isHide == true)
                 {
-                    StopCoroutine("CreateBullet");
-                    state = State.Attack;
-                    isfire = false;
+                    SetState(State.HideAttack); //숨어있으면 hideattack
                 }
+                else
+                {
+                    SetState(State.Attack); //안 숨어잇으면 그냥 attack
+                }
+                isfire = false;
+            }
         }
     }
 
     public GameObject FindNearestObjectzByLayer(string layer) //가장 가까운 오브젝트 레이어로 찾기
     {
         int layerMask = 1 << LayerMask.NameToLayer(layer);
-        var cols = Physics.OverlapSphere(transform.position, unitinfo.attackRange, layerMask); //공격 사거리 안에있는 적 인식
+        var cols = Physics.OverlapSphere(transform.position, unitinfo.ATTACK_RANGE, layerMask); //공격 사거리 안에있는 적 인식
         if (layer == "Wall") cols = Physics.OverlapSphere(transform.position, 500, layerMask); // 엄폐물을 찾을때는 전범위로 인식
         float dist = float.MaxValue;
         int chooseIndex = -1;
@@ -176,7 +226,7 @@ public class JHW_UnitManager : MonoBehaviour
             offset = TeamCommand.transform.position;
             transform.LookAt(Vector3.left);
         }
-            if (navAgent.isOnNavMesh) navAgent.SetDestination(offset); // 각자의 적진으로 이동
+        if (navAgent.isOnNavMesh) navAgent.SetDestination(offset); // 각자의 적진으로 이동
     }
 
     void UnitHide()
@@ -195,11 +245,6 @@ public class JHW_UnitManager : MonoBehaviour
 
     bool UnitAttack()
     {
-        if (navAgent.isOnNavMesh)
-        {
-            navAgent.isStopped = true; //공격할땐 그자리에 멈춤 
-        }
-
         //유닛이 사거리 안에 들어온 적을 바라보게함
         if (neareastObject != null)
         {
@@ -238,11 +283,11 @@ public class JHW_UnitManager : MonoBehaviour
                 break;
         }
 
-        // 사거리 안에 적이 없거나 (=가장 가까운 적이 있고= 나와 적의 거리가 사거리보다 멀때)움직이는 상태로 만듬
+        // 사거리 안에 적이 없거나 나와 적의 거리가 사거리보다 멀때 움직이는 상태로 만듬
         if (neareastObject == null || (Vector3.Distance(gameObject.transform.position,
-            neareastObject.transform.position) > unitinfo.attackRange))
+            neareastObject.transform.position) > unitinfo.ATTACK_RANGE))
         {
-            state = State.Move; //move상태로 만들고 움직이게
+            SetState(State.Move); //move상태로 만들고 움직이게
             if (navAgent.isOnNavMesh)
                 navAgent.isStopped = false;
             StopCoroutine("CreateBullet");

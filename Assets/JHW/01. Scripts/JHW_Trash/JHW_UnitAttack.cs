@@ -25,7 +25,7 @@ public class JHW_UnitAttack : MonoBehaviour
         //공격
         //그 적이 제거됬을경우 다시 기지로 공격
         if (Vector3.Distance(gameObject.transform.position,
-            GameObject.FindWithTag("Enemy").transform.position) <= unitinfo.attackRange * 0.1f)
+            GameObject.FindWithTag("Enemy").transform.position) <= unitinfo.ATTACK_RANGE * 0.1f)
         {
             print("사거리 이내 적 포착");
             gameObject.GetComponent<JHW_UnitMove>().enabled = false;

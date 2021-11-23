@@ -18,6 +18,10 @@ public class JHW_GameManager : MonoBehaviour
     public Text specialgageT; //스폐셜 게이지 텍스트
     public Text text4; //스폐셜 게이지 텍스트
 
+    public List<JHW_UnitManager> hidingUnits;
+    public List<JHW_UnitManager> RushUnits;
+
+    bool ishiding; //벽뒤에 숨었다
     bool isClickSpecialGauge = false;
 
     //bool bDefensiveDown;
@@ -43,18 +47,28 @@ public class JHW_GameManager : MonoBehaviour
 
     private void Update()
     {
-        Mathf.Clamp(specialGauge, 0, 100); //스폐셜 게이지를 0~100 까지로 제한
+        // Mathf.Clamp(specialGauge, 0, 100); //스폐셜 게이지를 0~100 까지로 제한
 
-        if (isClickSpecialGauge)
+        if (isClickSpecialGauge) // 스폐셜 게이지를 누르고 있을때 계속 호출
         {
             specialGauge -= 0.01f;
+
+            hidingUnits = JHW_UnitFactory.instance.myUnits;
+            RushUnits = JHW_UnitFactory.instance.myUnits;
+
+        }
+
+        if (isClickSpecialGauge == false) //스폐셜 게이지를 누르고 있지않을때만 계속 호출
+        {
+            PlusSpecialGauge();
+
+            hidingUnits = JHW_UnitFactory.instance.myUnits;
+            RushUnits = JHW_UnitFactory.instance.myUnits;
         }
 
 
         PlusScore();
         PlusGold();
-
-        if (isClickSpecialGauge == false) PlusSpecialGauge(); //스폐셜 게이지를 누르고 있지않을때만 실행
 
         scoreT.text = "플레이어 점수 : " + Score;
         goldT.text = "골드 : " + Gold;
@@ -108,7 +122,6 @@ public class JHW_GameManager : MonoBehaviour
             isClickSpecialGauge = true;
             ChangePosture(JHW_UnitManager.State.Hide);
         }
-
     }
     public void NotClickDefense() //방어태세를 뗄 때 골랐던 유닛들을 Move상태로
     {
@@ -117,15 +130,32 @@ public class JHW_GameManager : MonoBehaviour
             isClickSpecialGauge = false;
             ChangePosture(JHW_UnitManager.State.Move);
         }
-
     }
+
     public void OnClickOffense() //공격태세 버튼클릭이벤트
     {
-        isClickSpecialGauge = true;
+        if (isClickSpecialGauge == false)
+        {
+            isClickSpecialGauge = true;
+            print("공격태세 온");
+            for (int i = 0; i < RushUnits.Count; i++)
+            {
+                RushUnits[i].unitinfo.UseOffensive = true;
+            }
+        }
     }
     public void NotClickOffense()
     {
-        isClickSpecialGauge = false;
+        if (isClickSpecialGauge == true)
+        {
+            isClickSpecialGauge = false;
+            print("공격태세 오프");
+
+            for (int i = 0; i < RushUnits.Count; i++)
+            {
+                RushUnits[i].unitinfo.UseOffensive = false;
+            }
+        }
     }
     void ChangePosture(JHW_UnitManager.State state) //하이어라키에있는 모든 Player 유닛을 검색하고 상태변경
     {
@@ -137,5 +167,6 @@ public class JHW_GameManager : MonoBehaviour
         }
 
     }
+
 }
 

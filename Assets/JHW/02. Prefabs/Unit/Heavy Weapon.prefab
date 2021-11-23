@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c38001c1cb1854c94bc002bf90345c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBehindWall: 0
   isEnemy: 0
   unitName: name
   unitScale: 1
@@ -136,7 +137,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0

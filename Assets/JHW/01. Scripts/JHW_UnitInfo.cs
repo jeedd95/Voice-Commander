@@ -19,6 +19,10 @@ public enum AttackType
 
 public class JHW_UnitInfo : MonoBehaviour
 {
+    public bool isBehindWall; //벽 뒤에 있는지 없는지
+    public bool UseDefensive; //방어태세를 썼는지 안썼는지
+    public bool UseOffensive; //공격 태세를 썼는지 안썼는지
+
     public bool isEnemy; //우리팀인지 적팀인지
     public string unitName; //이름
     public UnitScale unitScale; //크기(소형,중형,대형) 
@@ -30,7 +34,45 @@ public class JHW_UnitInfo : MonoBehaviour
     public float health; //체력
     public float moveSpeed; //이동속도
     public float attackSpeed; //공격속도
+
     public float attackRange; //사거리
+
+    // property
+    public float ATTACK_RANGE //isBehindWall이 true면 사거리 30퍼 증가 or 원래대로
+    {
+        get
+        {
+            if (isBehindWall) 
+            {
+                return attackRange * 1.3f;
+            }
+            return attackRange;
+        }
+    }
+
+    public float MOVE_SPEED //UseOffensive를 썻을 경우 이동속도 40퍼 증가
+    {
+        get
+        {
+            if(UseOffensive)
+            {
+                return moveSpeed * 1.4f;
+            }
+            return moveSpeed;
+        }
+    }
+    public float ATTACK_SPEED  //UseOffensive를 썻을 경우 공격속도 15퍼 증가
+    {
+        get
+        {
+            if (UseOffensive)
+            {
+                return attackSpeed * 1.15f;
+            }
+            return attackSpeed;
+        }
+    }
+
     public float accuracyRate; //명중률
     public int coolDown; //쿨타임
     public int price; //가격

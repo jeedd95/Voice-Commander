@@ -14,6 +14,8 @@ public class JHW_BulletMove : MonoBehaviour
     string attackerName;
 
     float[][] rate;
+    float defensiveDamage;
+    bool isTeam;
 
     private void Start()
     {
@@ -50,11 +52,20 @@ public class JHW_BulletMove : MonoBehaviour
                 return;
             }
 
-            int type = (int)unitInfo.attackType;
+            if (unitInfo.isEnemy == true && hitObj.isEnemy == false && hitObj.UseDefensive==true)
+            { //공격한애가 적이고, 맞는사람이 내 유닛이고 방어태세를 켜고있을경우 데미지감소
+                print("데미지 경감");
+                defensiveDamage = 0.8f;
+            }
+            else
+            {
+                defensiveDamage = 1f;
+            }
 
-            if (hitObj.unitScale == UnitScale.small) hitObj.health -= damage * rate[type][0] ; //소형
-            if (hitObj.unitScale == UnitScale.middle) hitObj.health -= damage * rate[type][1] ; //중형
-            if (hitObj.unitScale == UnitScale.large) hitObj.health -= damage * rate[type][2] ; //대형
+            int type = (int)unitInfo.attackType; //공격한 놈의 타입에 따라 다른공격
+            if (hitObj.unitScale == UnitScale.small) hitObj.health -= damage * rate[type][0]  * defensiveDamage; //소형
+            if (hitObj.unitScale == UnitScale.middle) hitObj.health -= damage * rate[type][1] *defensiveDamage; //중형
+            if (hitObj.unitScale == UnitScale.large) hitObj.health -= damage * rate[type][2] * defensiveDamage; //대형
 
             //switch (unitInfo.attackType) //공격한놈의 공격타입
             //{
@@ -74,9 +85,10 @@ public class JHW_BulletMove : MonoBehaviour
             //        if (hitObj.unitScale == UnitScale.large) hitObj.health -= damage * 0.25f;
             //        break;
             //}
-           // print("공격 한 유닛 : " + attackerName + "공격 받은 유닛 : " + hitObj.gameObject + "체력 : " + hitObj.health);
-            
-            
+            // print("공격 한 유닛 : " + attackerName + "공격 받은 유닛 : " + hitObj.gameObject + "체력 : " + hitObj.health);
+
+            print("공격한 유닛 : " + unitInfo + "맞은 유닛 : " + hitObj + "맞은 유닛의 체력 : " + (float)hitObj.health);
+
         }
         else if (other.CompareTag("PlayerCommand"))
         {

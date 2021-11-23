@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c38001c1cb1854c94bc002bf90345c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBehindWall: 0
   isEnemy: 0
   unitName: Artillery
   unitScale: 0
@@ -173,6 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b49c7a3e3048b4f915ba667e8b8261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitinfo: {fileID: 0}
   Bullet:
   - {fileID: 7732385021513877985, guid: c77447f5c88f7dd47bb3684c872fcbee, type: 3}
   - {fileID: 7732385021513877985, guid: 3cdb4af0f60f2c74babc58feafbf9c6c, type: 3}
@@ -186,7 +188,9 @@ MonoBehaviour:
   FirePos: {fileID: 6750816147189487928}
   TeamCommand: {fileID: 8146030571281266687, guid: e7e27fd7d1615ed4cb59eccd3dd8512c, type: 3}
   enemyCommand: {fileID: 8283047153395507706, guid: 3849ca7fb7c99824bb4302725f61b4a7, type: 3}
+  state: 0
   neareastObject: {fileID: 0}
+  neareastWall: {fileID: 0}
 --- !u!54 &5872296453823699896
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -198,7 +202,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0

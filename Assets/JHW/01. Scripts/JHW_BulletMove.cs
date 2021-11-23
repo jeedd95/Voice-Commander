@@ -87,7 +87,7 @@ public class JHW_BulletMove : MonoBehaviour
             //}
             // print("공격 한 유닛 : " + attackerName + "공격 받은 유닛 : " + hitObj.gameObject + "체력 : " + hitObj.health);
 
-            print("공격한 유닛 : " + unitInfo + "맞은 유닛 : " + hitObj + "맞은 유닛의 체력 : " + (float)hitObj.health);
+            print("공격한 유닛 : " + unitInfo + "맞은 유닛 : " + hitObj.gameObject + "맞은 유닛의 체력 : " + (float)hitObj.health);
 
         }
         else if (other.CompareTag("PlayerCommand"))

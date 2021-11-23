@@ -49,23 +49,19 @@ public class JHW_GameManager : MonoBehaviour
     {
         // Mathf.Clamp(specialGauge, 0, 100); //스폐셜 게이지를 0~100 까지로 제한
 
-        if (isClickSpecialGauge) // 스폐셜 게이지를 누르고 있을때 계속 호출
-        {
-            specialGauge -= 0.01f;
-
             hidingUnits = JHW_UnitFactory.instance.myUnits;
             RushUnits = JHW_UnitFactory.instance.myUnits;
 
+
+        if (isClickSpecialGauge) // 스폐셜 게이지를 누르고 있을때 계속 호출
+        {
+            specialGauge -= 0.01f;
         }
 
         if (isClickSpecialGauge == false) //스폐셜 게이지를 누르고 있지않을때만 계속 호출
         {
             PlusSpecialGauge();
-
-            hidingUnits = JHW_UnitFactory.instance.myUnits;
-            RushUnits = JHW_UnitFactory.instance.myUnits;
         }
-
 
         PlusScore();
         PlusGold();

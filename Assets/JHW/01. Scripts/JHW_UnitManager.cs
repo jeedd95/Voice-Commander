@@ -104,11 +104,15 @@ public class JHW_UnitManager : MonoBehaviour
     {
         if (unitinfo.isEnemy == false)
         {
-           // print("내 유닛 사거리 : " + unitinfo.ATTACK_RANGE);
-           // print(state);
+            print("내 유닛 사거리 : " + unitinfo.ATTACK_RANGE);
+            print("내 유닛 공격속도 : " + unitinfo.ATTACK_SPEED);
+            print("내 유닛 이동속도 : " + unitinfo.MOVE_SPEED) ;
+
+            // print(state);
         }
 
         UnitDie();
+        navAgent.speed = unitinfo.MOVE_SPEED;
 
         switch (state)
         {
@@ -300,7 +304,7 @@ public class JHW_UnitManager : MonoBehaviour
 
     IEnumerator CreateBullet() // 일정시간마다 총알을 생성
     {
-        yield return new WaitForSeconds(100 / unitinfo.attackSpeed); //공격속도에 따른 주기
+        yield return new WaitForSeconds(100 / unitinfo.ATTACK_SPEED); //공격속도에 따른 주기
 
         if (neareastObject == null) //가까이에 있는 유닛이 없다면 기다리는걸 끝냄
             yield break;

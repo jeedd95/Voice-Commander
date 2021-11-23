@@ -19,6 +19,6 @@ public class JHW_UnitMove : MonoBehaviour
 
     public void UnitMove() // 매시간 앞으로 이동하는 코드
     {
-        transform.position += transform.forward * unitinfo.moveSpeed * Time.deltaTime;
+        transform.position += transform.forward * unitinfo.MOVE_SPEED * Time.deltaTime;
     }
 }

@@ -90,7 +90,7 @@ public class JHW_UnitFactory : MonoBehaviour
                 SelectUnit.GetComponent<JHW_UnitInfo>().isEnemy = false; //아군이다
                 SelectUnit.tag = "Player";
                 SelectUnit.layer = LayerMask.NameToLayer("PlayerTeam");
-                SelectUnit.GetComponent<NavMeshAgent>().speed = SelectUnit.GetComponent<JHW_UnitInfo>().moveSpeed;
+                SelectUnit.GetComponent<NavMeshAgent>().speed = SelectUnit.GetComponent<JHW_UnitInfo>().MOVE_SPEED;
                 Collider col = SelectUnit.GetComponentInChildren<Collider>(); //생성한 유닛은 부모가 빈오브젝트임(콜라이더 없음)
                 col.gameObject.tag = SelectUnit.tag;
                 col.gameObject.layer = SelectUnit.layer;

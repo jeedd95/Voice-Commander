@@ -79,6 +79,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBehindWall: 0
+  UseDefensive: 0
+  UseOffensive: 0
   isEnemy: 0
   unitName: Tank
   unitScale: 2
@@ -94,7 +96,7 @@ MonoBehaviour:
   accuracyRate: 100
   coolDown: 10
   price: 10
-  populationLimit: 2
+  populationLimit: 999
   exp: 20
   score: 1000
 --- !u!114 &-7986787917205129833

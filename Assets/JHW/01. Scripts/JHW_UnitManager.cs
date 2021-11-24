@@ -104,9 +104,10 @@ public class JHW_UnitManager : MonoBehaviour
     {
         if (unitinfo.isEnemy == false)
         {
-            print("내 유닛 사거리 : " + unitinfo.ATTACK_RANGE);
-            print("내 유닛 공격속도 : " + unitinfo.ATTACK_SPEED);
-            print("내 유닛 이동속도 : " + unitinfo.MOVE_SPEED) ;
+            print(state);
+           //print("내 유닛 사거리 : " + unitinfo.ATTACK_RANGE);
+           //print("내 유닛 공격속도 : " + unitinfo.ATTACK_SPEED);
+           //print("내 유닛 이동속도 : " + unitinfo.MOVE_SPEED) ;
 
             // print(state);
         }
@@ -334,6 +335,7 @@ public class JHW_UnitManager : MonoBehaviour
             else
             {
                 JHW_UnitFactory.instance.myUnits.Remove(this); //내 유닛 리스트에서 삭제
+                JHW_GameManager.instance.currentPopulation--; //인구수 -1
             }
 
             Destroy(unitinfo.gameObject); //죽으면 곧바로 destroy한다

@@ -18,7 +18,7 @@ public class JHW_UnitFactory : MonoBehaviour
     public Transform[] EnemyCreatePoint; //적팀 생성 포인트 3개
 
     public GameObject[] Units; //유닛 프리팹들
-
+    public JHW_UnitInfo units; //유닛 프리팹들의 유닛인포
     public List<JHW_UnitManager> myUnits;
     public List<JHW_UnitManager> enemyUnits;
 
@@ -82,9 +82,19 @@ public class JHW_UnitFactory : MonoBehaviour
                 return;
             }
 
-            if (JHW_GameManager.instance.Gold >= Units[i].GetComponent<JHW_UnitInfo>().price)
+            units = Units[i].GetComponent<JHW_UnitInfo>();
+
+            if (JHW_GameManager.instance.Gold >= units.price && JHW_GameManager.instance.CanProduce_Whole ) //가지고 있는 골드가 뽑으려는 유닛 가격보다 많고, 생산가능일때
             {
-                JHW_GameManager.instance.Gold -= Units[i].GetComponent<JHW_UnitInfo>().price; //전체 골드에서 유닛의 값만 큼 뺀다
+                    if (i == 0)
+                    {
+                        JHW_GameManager.instance.RifleManCurrentPopulation++;
+                    }
+
+
+                JHW_GameManager.instance.Gold -= units.price; //전체 골드에서 유닛의 값만 큼 뺀다
+                
+              // JHW_GameManager.instance.currentPopulation++; //생산하면 인구수를 1 늘린다
 
                 GameObject SelectUnit = Instantiate(Units[i]); // 1~9번까지의 유닛중에 하나 생성
                 SelectUnit.GetComponent<JHW_UnitInfo>().isEnemy = false; //아군이다
@@ -98,11 +108,15 @@ public class JHW_UnitFactory : MonoBehaviour
                 Transform mcp = MyCreatePoint[randomNum]; // 1~3번 생성포인트 중에 하나 생성
                 SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
 
-                myUnits.Add(SelectUnit.GetComponent<JHW_UnitManager>());
+                myUnits.Add(SelectUnit.GetComponent<JHW_UnitManager>()); //생성하면 리스트에 넣는다
             }
-            else
+            else if(JHW_GameManager.instance.Gold < units.price)
             {
                 print("돈이 부족합니다");
+            }
+            else if(!JHW_GameManager.instance.CanProduce_Whole)
+            {
+                print("최대 인구수가 부족합니다");
             }
         }
     }

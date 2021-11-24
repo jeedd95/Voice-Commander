@@ -49,6 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBehindWall: 0
+  UseDefensive: 0
+  UseOffensive: 0
   isEnemy: 0
   unitName: Armoured
   unitScale: 1
@@ -64,7 +66,7 @@ MonoBehaviour:
   accuracyRate: 60
   coolDown: 10
   price: 10
-  populationLimit: 3
+  populationLimit: 999
   exp: 20
   score: 800
 --- !u!114 &-8712778871140618858

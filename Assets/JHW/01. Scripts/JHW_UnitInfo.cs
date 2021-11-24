@@ -34,8 +34,13 @@ public class JHW_UnitInfo : MonoBehaviour
     public float health; //체력
     public float moveSpeed; //이동속도
     public float attackSpeed; //공격속도
-
     public float attackRange; //사거리
+    public float accuracyRate; //명중률
+    public int coolDown; //쿨타임
+    public int price; //가격
+    public int populationLimit; //각 유닛 별 인구 제한
+    public int exp; //경험치
+    public int score; //점수
 
     // property
     public float ATTACK_RANGE //isBehindWall이 true면 사거리 30퍼 증가 or 원래대로
@@ -73,11 +78,6 @@ public class JHW_UnitInfo : MonoBehaviour
         }
     }
 
-    public float accuracyRate; //명중률
-    public int coolDown; //쿨타임
-    public int price; //가격
-    public int populationLimit; //인구 제한
-    public int exp; //경험치
-    public int score; //점수
+    
 }
 

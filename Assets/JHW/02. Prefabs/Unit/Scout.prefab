@@ -49,6 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBehindWall: 0
+  UseDefensive: 0
+  UseOffensive: 0
   isEnemy: 0
   unitName: Scout
   unitScale: 1
@@ -64,7 +66,7 @@ MonoBehaviour:
   accuracyRate: 40
   coolDown: 10
   price: 10
-  populationLimit: 1
+  populationLimit: 2
   exp: 5
   score: 150
 --- !u!114 &3565129255294036550

@@ -174,6 +174,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBehindWall: 0
+  UseDefensive: 0
+  UseOffensive: 0
   isEnemy: 0
   unitName: 'Helicopter '
   unitScale: 2
@@ -189,7 +191,7 @@ MonoBehaviour:
   accuracyRate: 70
   coolDown: 10
   price: 10
-  populationLimit: 2
+  populationLimit: 5
   exp: 20
   score: 2500
 --- !u!114 &-8489519529440304241

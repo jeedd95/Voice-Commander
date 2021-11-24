@@ -49,6 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBehindWall: 0
+  UseDefensive: 0
+  UseOffensive: 0
   isEnemy: 0
   unitName: Raptor
   unitScale: 2
@@ -64,7 +66,7 @@ MonoBehaviour:
   accuracyRate: 80
   coolDown: 10
   price: 10
-  populationLimit: 2
+  populationLimit: 5
   exp: 20
   score: 3000
 --- !u!114 &1585636838523786871

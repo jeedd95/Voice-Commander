@@ -79,6 +79,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBehindWall: 0
+  UseDefensive: 0
+  UseOffensive: 0
   isEnemy: 0
   unitName: name
   unitScale: 1
@@ -94,7 +96,7 @@ MonoBehaviour:
   accuracyRate: 60
   coolDown: 10
   price: 10
-  populationLimit: 10
+  populationLimit: 999
   exp: 10
   score: 700
 --- !u!114 &7773764136207462545

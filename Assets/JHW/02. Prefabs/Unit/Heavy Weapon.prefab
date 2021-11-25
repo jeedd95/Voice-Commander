@@ -82,7 +82,7 @@ MonoBehaviour:
   UseDefensive: 0
   UseOffensive: 0
   isEnemy: 0
-  unitName: name
+  unitName: Heavy Weapon
   unitScale: 1
   attackType: 2
   canGroundAttack: 1

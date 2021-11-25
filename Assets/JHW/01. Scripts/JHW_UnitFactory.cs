@@ -40,6 +40,7 @@ public class JHW_UnitFactory : MonoBehaviour
 
     public void CreateUnit() //아군을 생성하는 코드
     {
+
         int randomNum = Random.Range(0, 3); // 3개중에 하나를 선택해서 생성 (생성 지역)
         //int randomNum2 = Random.Range(0, 9); // 9개 중에 하나를 선택해서 생성 
         int i = -1;
@@ -84,17 +85,101 @@ public class JHW_UnitFactory : MonoBehaviour
 
             units = Units[i].GetComponent<JHW_UnitInfo>();
 
-            if (JHW_GameManager.instance.Gold >= units.price && JHW_GameManager.instance.CanProduce_Whole ) //가지고 있는 골드가 뽑으려는 유닛 가격보다 많고, 생산가능일때
+            if (JHW_GameManager.instance.Gold >= units.price && JHW_GameManager.instance.CanProduce) //가지고 있는 골드가 뽑으려는 유닛 가격보다 많고, 생산가능일때
             {
-                    if (i == 0)
-                    {
-                        JHW_GameManager.instance.RifleManCurrentPopulation++;
-                    }
 
+                if (i == 0 && JHW_GameManager.instance.RifleManCurrentPopulation < JHW_GameManager.instance.unitMaxCount[0] && JHW_GameManager.instance.CoolDownComplete[0])
+                {
+                    JHW_GameManager.instance.RifleManCurrentPopulation++;
+                }
+                else if(i == 0 && JHW_GameManager.instance.RifleManCurrentPopulation >= JHW_GameManager.instance.unitMaxCount[0])
+                {
+                    print("유닛 인구수가 부족합니다");
+                    return;
+                }
+                else if(i == 0 && !JHW_GameManager.instance.CoolDownComplete[0])
+                {
+                    print("쿨타임 중입니다 : " + JHW_GameManager.instance.CoolDownComplete[0]+"초 남았습니다");
+                    return;
+                }
+
+
+                if (i == 1 && JHW_GameManager.instance.ScoutCurrentPopulation < JHW_GameManager.instance.unitMaxCount[1])
+                {
+                    JHW_GameManager.instance.ScoutCurrentPopulation++;
+                }
+                else if (i == 1 && JHW_GameManager.instance.ScoutCurrentPopulation >= JHW_GameManager.instance.unitMaxCount[1])
+                {
+                    print("유닛 인구수가 부족합니다");
+                    return;
+                }
+                if (i == 2 && JHW_GameManager.instance.SniperCurrentPopulation < JHW_GameManager.instance.unitMaxCount[2])
+                {
+                    JHW_GameManager.instance.SniperCurrentPopulation++;
+                }
+                else if (i == 2 && JHW_GameManager.instance.SniperCurrentPopulation >= JHW_GameManager.instance.unitMaxCount[2])
+                {
+                    print("유닛 인구수가 부족합니다");
+                    return;
+                }
+                if (i == 3 && JHW_GameManager.instance.ArtilleryCurrentPopulation < JHW_GameManager.instance.unitMaxCount[3])
+                {
+                    JHW_GameManager.instance.ArtilleryCurrentPopulation++;
+                }
+                else if (i == 3 && JHW_GameManager.instance.ArtilleryCurrentPopulation >= JHW_GameManager.instance.unitMaxCount[3])
+                {
+                    print("유닛 인구수가 부족합니다");
+                    return;
+                }
+                if (i == 4 && JHW_GameManager.instance.HeavyWeaponCurrentPopulation < JHW_GameManager.instance.unitMaxCount[4])
+                {
+                    JHW_GameManager.instance.HeavyWeaponCurrentPopulation++;
+                }
+                else if (i == 4 && JHW_GameManager.instance.HeavyWeaponCurrentPopulation >= JHW_GameManager.instance.unitMaxCount[4])
+                {
+                    print("유닛 인구수가 부족합니다");
+                    return;
+                }
+                if (i == 5 && JHW_GameManager.instance.ArmouredCurrentPopulation < JHW_GameManager.instance.unitMaxCount[5])
+                {
+                    JHW_GameManager.instance.ArmouredCurrentPopulation++;
+                }
+                else if (i == 5 && JHW_GameManager.instance.ArmouredCurrentPopulation >= JHW_GameManager.instance.unitMaxCount[5])
+                {
+                    print("유닛 인구수가 부족합니다");
+                    return;
+                }
+                if (i == 6 && JHW_GameManager.instance.TankCurrentPopulation < JHW_GameManager.instance.unitMaxCount[6])
+                {
+                    JHW_GameManager.instance.TankCurrentPopulation++;
+                }
+                else if (i == 6 && JHW_GameManager.instance.TankCurrentPopulation >= JHW_GameManager.instance.unitMaxCount[6])
+                {
+                    print("유닛 인구수가 부족합니다");
+                    return;
+                }
+                if (i == 7 && JHW_GameManager.instance.HelicopterCurrentPopulation < JHW_GameManager.instance.unitMaxCount[7])
+                {
+                    JHW_GameManager.instance.HelicopterCurrentPopulation++;
+                }
+                else if (i == 7 && JHW_GameManager.instance.HelicopterCurrentPopulation >= JHW_GameManager.instance.unitMaxCount[7])
+                {
+                    print("유닛 인구수가 부족합니다");
+                    return;
+                }
+                if (i == 8 && JHW_GameManager.instance.RaptorCurrentPopulation < JHW_GameManager.instance.unitMaxCount[8])
+                {
+                    JHW_GameManager.instance.RaptorCurrentPopulation++;
+                }
+                else if (i == 8 && JHW_GameManager.instance.RaptorCurrentPopulation >= JHW_GameManager.instance.unitMaxCount[8])
+                {
+                    print("유닛 인구수가 부족합니다");
+                    return;
+                }
 
                 JHW_GameManager.instance.Gold -= units.price; //전체 골드에서 유닛의 값만 큼 뺀다
-                
-              // JHW_GameManager.instance.currentPopulation++; //생산하면 인구수를 1 늘린다
+
+                // JHW_GameManager.instance.currentPopulation++; //생산하면 인구수를 1 늘린다
 
                 GameObject SelectUnit = Instantiate(Units[i]); // 1~9번까지의 유닛중에 하나 생성
                 SelectUnit.GetComponent<JHW_UnitInfo>().isEnemy = false; //아군이다
@@ -110,11 +195,11 @@ public class JHW_UnitFactory : MonoBehaviour
 
                 myUnits.Add(SelectUnit.GetComponent<JHW_UnitManager>()); //생성하면 리스트에 넣는다
             }
-            else if(JHW_GameManager.instance.Gold < units.price)
+            else if (JHW_GameManager.instance.Gold < units.price)
             {
                 print("돈이 부족합니다");
             }
-            else if(!JHW_GameManager.instance.CanProduce_Whole)
+            else if (!JHW_GameManager.instance.CanProduce)
             {
                 print("최대 인구수가 부족합니다");
             }
@@ -140,3 +225,5 @@ public class JHW_UnitFactory : MonoBehaviour
     }
 
 }
+
+

@@ -57,8 +57,8 @@ public class JHW_GameManager : MonoBehaviour
     bool isClickSpecialGauge = false; //스폐셜 게이지를 쓰고있는지
     //public bool CanProduce; // 전체 인구가 생산 할 수 있는지
     //public bool CanProduce_Individual; //유닛별 개인 인구가 생산 할 수 있는지
-
     //bool bDefensiveDown;
+    public bool populationSum;
 
     private void Awake()
     {
@@ -85,7 +85,7 @@ public class JHW_GameManager : MonoBehaviour
         Raptor,
     }
    // public int[] _maxUnit = { 3, 2, 2, 999, 999, 999, 999, 5, 5 }; //최대 인구수
-    float[] _cooldown = {5,10,12,20,30,40,50,60,70 }; //고정 쿨타임
+    float[] _cooldown = {5,7,10,10,15,17,18,24,27 }; //고정 쿨타임
     public int[] _UnitLoad = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }; //유닛 부하량
     
 
@@ -125,11 +125,16 @@ public class JHW_GameManager : MonoBehaviour
 
     private void Update()
     {
-        print("현재 인구수 : " + currentPopulation + "전체 인구수 : " + wholePopulationLimit);
+        //print("현재 인구수 : " + currentPopulation + " 전체 인구수 : " + wholePopulationLimit);
 
-        for (int i = 0; i < currentPopulationArray.Length; i++)
+        if (populationSum==false)
         {
-            currentPopulation += currentPopulationArray[i]; //총 인구수에 인구수 배열의 모든 합을 담음
+            currentPopulation = 0;
+            for (int i = 0; i < currentPopulationArray.Length; i++)
+            {
+                currentPopulation += currentPopulationArray[i]; //총 인구수에 인구수 배열의 모든 합을 담음
+            }
+            populationSum = true;
         }
 
 
@@ -154,8 +159,6 @@ public class JHW_GameManager : MonoBehaviour
         //{
         //setCurrentUnit((UnitType)i, _currentUnit[i]);
         //}
-
-
     }
 
     float currentTime;
@@ -251,11 +254,7 @@ public class JHW_GameManager : MonoBehaviour
     }
 
 
-   public void CoolTimer(int population, int index) 
-    {
-
-
-    }
+   
 
     void SpecialGageManager()
     {
@@ -297,16 +296,15 @@ public class JHW_GameManager : MonoBehaviour
         text4.text = specialgageT.text;
         Population.text = currentPopulation + " / " + wholePopulationLimit;
 
-        //RifleManText.text ="RifleMan\n" + RifleManCurrentPopulation + " / " + "\n" + currentCool[0].ToString("N1");
-        //ScoutText.text =  "Scout\n" + ScoutCurrentPopulation + " / " +  "\n" + currentCool[1].ToString("N1");
-        //SniperText.text = "Sniper\n" + SniperCurrentPopulation + " / " +  "\n" + currentCool[2].ToString("N1");
-        //ArtilleryText.text = "Artillery\n" + ArtilleryCurrentPopulation + " / " +  "\n" + currentCool[3].ToString("N1");
-        //HeavyWeaponText.text = "HeavyWeapon\n" + HeavyWeaponCurrentPopulation + " / " +  "\n" + currentCool[4].ToString("N1");
-        //ArmouredText.text = "Armoured\n" + ArmouredCurrentPopulation + " / " +  "\n" + currentCool[5].ToString("N1");
-        //TankText.text = "Tank\n" + TankCurrentPopulation + " / " +  "\n" + currentCool[6].ToString("N1");
-        //HelicopterText.text = "Helicopter\n" + HelicopterCurrentPopulation + " / " +  "\n" + currentCool[7].ToString("N1");
-        //RaptorText.text = "Raptor\n" + RaptorCurrentPopulation + " / " +  "\n" + currentCool[8].ToString("N1");
-
+        RifleManText.text = "RifleMan\n" + currentPopulationArray[0]  +"\n" + currentCool[0].ToString("N1");
+        ScoutText.text = "Scout\n" + currentPopulationArray[1] +  "\n" + currentCool[1].ToString("N1");
+        SniperText.text = "Sniper\n" + currentPopulationArray[2] +  "\n" + currentCool[2].ToString("N1");
+        ArtilleryText.text = "Artillery\n" + currentPopulationArray[3] +  "\n" + currentCool[3].ToString("N1");
+        HeavyWeaponText.text = "HeavyWeapon\n" + currentPopulationArray[4] +  "\n" + currentCool[4].ToString("N1");
+        ArmouredText.text = "Armoured\n" + currentPopulationArray[5] +  "\n" + currentCool[5].ToString("N1");
+        TankText.text = "Tank\n" + currentPopulationArray[6] +  "\n" + currentCool[6].ToString("N1");
+        HelicopterText.text = "Helicopter\n" + currentPopulationArray[7] +  "\n" + currentCool[7].ToString("N1");
+        RaptorText.text = "Raptor\n" + currentPopulationArray[8] +  "\n" + currentCool[8].ToString("N1");
     }
 
     

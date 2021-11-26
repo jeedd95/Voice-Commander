@@ -192,6 +192,7 @@ MonoBehaviour:
   RaptorText: {fileID: 336011796}
   hidingUnits: []
   RushUnits: []
+  populationSum: 0
   _UnitLoad: 010000000200000003000000040000000500000006000000070000000800000009000000
 --- !u!1 &76588360
 GameObject:
@@ -263,11 +264,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'RifleMan
-
-    0 / 0
-
-    cooldown'
+  m_Text: "\uC720\uB2DB \uC774\uB984\n\uBD80\uD558\ncooldown"
 --- !u!222 &76588363
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -513,11 +510,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'RifleMan
-
-    0 / 0
-
-    cooldown'
+  m_Text: "\uC720\uB2DB \uC774\uB984\n\uBD80\uD558\ncooldown"
 --- !u!222 &122161875
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -814,11 +807,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'RifleMan
-
-    0 / 0
-
-    cooldown'
+  m_Text: "\uC720\uB2DB \uC774\uB984\n\uBD80\uD558\ncooldown"
 --- !u!222 &330483124
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -897,11 +886,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'RifleMan
-
-    0 / 0
-
-    cooldown'
+  m_Text: "\uC720\uB2DB \uC774\uB984\n\uBD80\uD558\ncooldown"
 --- !u!222 &336011797
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -980,11 +965,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'RifleMan
-
-    0 / 0
-
-    cooldown'
+  m_Text: "\uC720\uB2DB \uC774\uB984\n\uBD80\uD558\ncooldown"
 --- !u!222 &411170906
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1268,11 +1249,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'RifleMan
-
-    0 / 0
-
-    cooldown'
+  m_Text: "\uC720\uB2DB \uC774\uB984\n\uBD80\uD558\ncooldown"
 --- !u!222 &579277173
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1949,11 +1926,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'RifleMan
-
-    0 / 0
-
-    cooldown'
+  m_Text: "\uC720\uB2DB \uC774\uB984\n\uBD80\uD558\ncooldown"
 --- !u!222 &1118896688
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2500,11 +2473,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'RifleMan
-
-    0 / 0
-
-    cooldown'
+  m_Text: "\uC720\uB2DB \uC774\uB984\n\uBD80\uD558\ncooldown"
 --- !u!222 &1393418017
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3043,7 +3012,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -826, y: 423}
+  m_AnchoredPosition: {x: -727, y: 423}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1627933839
@@ -3079,7 +3048,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 0 / 2
+  m_Text: "\uD604\uC7AC \uC778\uAD6C / \uCD5C\uB300 \uC778\uAD6C"
 --- !u!222 &1627933840
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3929,11 +3898,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'RifleMan
-
-    0 / 0
-
-    cooldown'
+  m_Text: "\uC720\uB2DB \uC774\uB984\n\uBD80\uD558\ncooldown"
 --- !u!222 &2135479535
 CanvasRenderer:
   m_ObjectHideFlags: 0

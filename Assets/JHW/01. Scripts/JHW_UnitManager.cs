@@ -336,45 +336,45 @@ public class JHW_UnitManager : MonoBehaviour
             {
                 JHW_UnitFactory.instance.myUnits.Remove(this); //내 유닛 리스트에서 삭제
                 JHW_GameManager.instance.currentPopulation--; //인구수 -1
-                MyUnitDie();
+              //  MyUnitDie();
             }
 
             Destroy(unitinfo.gameObject); //죽으면 곧바로 destroy한다
         }
     }
 
-    void MyUnitDie()
-    {
-        switch(unitinfo.unitName)
-        {
-            case "RifleMan":
-                JHW_GameManager.instance.RifleManCurrentPopulation--;
-                break;
-            case "Scout":
-                JHW_GameManager.instance.ScoutCurrentPopulation--;
-                break;
-            case "Sniper":
-                JHW_GameManager.instance.SniperCurrentPopulation--;
-                break;
-            case "Artillery":
-                JHW_GameManager.instance.ArtilleryCurrentPopulation--;
-                break;
-            case "Heavy Weapon":
-                JHW_GameManager.instance.HeavyWeaponCurrentPopulation--;
-                break;
-            case "Armoured":
-                JHW_GameManager.instance.ArmouredCurrentPopulation--;
-                break;
-            case "Tank":
-                JHW_GameManager.instance.TankCurrentPopulation--;
-                break;
-            case "Helicopter":
-                JHW_GameManager.instance.HelicopterCurrentPopulation--;
-                break;
-            case "Raptor":
-                JHW_GameManager.instance.RaptorCurrentPopulation--;
-                break;
-        }
+    //void MyUnitDie()
+    //{
+    //    switch(unitinfo.unitName)
+    //    {
+    //        case "RifleMan":
+    //            JHW_GameManager.instance.RifleManCurrentPopulation--;
+    //            break;
+    //        case "Scout":
+    //            JHW_GameManager.instance.ScoutCurrentPopulation--;
+    //            break;
+    //        case "Sniper":
+    //            JHW_GameManager.instance.SniperCurrentPopulation--;
+    //            break;
+    //        case "Artillery":
+    //            JHW_GameManager.instance.ArtilleryCurrentPopulation--;
+    //            break;
+    //        case "Heavy Weapon":
+    //            JHW_GameManager.instance.HeavyWeaponCurrentPopulation--;
+    //            break;
+    //        case "Armoured":
+    //            JHW_GameManager.instance.ArmouredCurrentPopulation--;
+    //            break;
+    //        case "Tank":
+    //            JHW_GameManager.instance.TankCurrentPopulation--;
+    //            break;
+    //        case "Helicopter":
+    //            JHW_GameManager.instance.HelicopterCurrentPopulation--;
+    //            break;
+    //        case "Raptor":
+    //            JHW_GameManager.instance.RaptorCurrentPopulation--;
+    //            break;
+    //    }
 
-    }
+    //}
 }

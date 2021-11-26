@@ -166,15 +166,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3eaa3263ce2574ea366a7674dc554d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitMaxCount: 
   Score: 0
   Gold: 25
   specialGauge: 2
+  currentPopulationArray: 
   currentPopulation: 0
-  wholePopulationLimit: 2
+  wholePopulationLimit: 4
   playTime: 0
   currentCool: []
-  CoolDownComplete: 
+  CoolDownReady: 
   scoreT: {fileID: 216708796}
   goldT: {fileID: 270329972}
   specialgageT: {fileID: 488162192}
@@ -190,29 +190,9 @@ MonoBehaviour:
   TankText: {fileID: 1118896687}
   HelicopterText: {fileID: 1393418016}
   RaptorText: {fileID: 336011796}
-  RifleManCurrentPopulation: 0
-  ScoutCurrentPopulation: 0
-  SniperCurrentPopulation: 0
-  ArtilleryCurrentPopulation: 0
-  HeavyWeaponCurrentPopulation: 0
-  ArmouredCurrentPopulation: 0
-  TankCurrentPopulation: 0
-  HelicopterCurrentPopulation: 0
-  RaptorCurrentPopulation: 0
   hidingUnits: []
   RushUnits: []
-  CanProduce: 0
-  _maxUnit: 030000000200000002000000e7030000e7030000e7030000e70300000500000005000000
-  _cooldown:
-  - 25
-  - 10
-  - 10
-  - 20
-  - 30
-  - 40
-  - 50
-  - 60
-  - 70
+  _UnitLoad: 010000000200000003000000040000000500000006000000070000000800000009000000
 --- !u!1 &76588360
 GameObject:
   m_ObjectHideFlags: 0

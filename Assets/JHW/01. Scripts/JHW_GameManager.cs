@@ -8,17 +8,18 @@ public class JHW_GameManager : MonoBehaviour
 {
     public static JHW_GameManager instance; //싱글톤
 
-    public int[] unitMaxCount; // 나온 개별유닛의 총 개수
+    //public int[] unitMaxCount; // 나온 개별유닛의 총 개수
 
     /// <summary> 레이어 점수 </summary>
     public int Score = 0;
     public int Gold = 25; //플레이어 골드
     public float specialGauge; //스폐셜 게이지
-    public int currentPopulation; //현재 인구수
-    public int wholePopulationLimit; //전체 인구수 제한 (각 유닛별x) (초기2 ~ 최대 33까지)
+    public int[] currentPopulationArray; //현재 인구수 배열
+    public int currentPopulation; //현재 인구수 = 현재 인구수 배열의 모든 합
+    public int wholePopulationLimit; //전체 인구수 제한 (초기4)
     public float playTime; //플레이타임 시간 초
     public float[] currentCool; //유닛별 현재 쿨타임 배열
-    public bool[] CoolDownComplete; // 유닛 쿨타임이 다 돌았는지
+    public bool[] CoolDownReady; // 유닛 쿨타임이 다 돌았는지
 
     public Text scoreT; //점수 텍스트
     public Text goldT; //골드 텍스트
@@ -38,15 +39,15 @@ public class JHW_GameManager : MonoBehaviour
     public Text HelicopterText;
     public Text RaptorText;
 
-    public int RifleManCurrentPopulation; //라이플맨의 현재인구
-    public int ScoutCurrentPopulation;
-    public int SniperCurrentPopulation;
-    public int ArtilleryCurrentPopulation;
-    public int HeavyWeaponCurrentPopulation;
-    public int ArmouredCurrentPopulation;
-    public int TankCurrentPopulation;
-    public int HelicopterCurrentPopulation;
-    public int RaptorCurrentPopulation;
+    //public int RifleManCurrentPopulation; //라이플맨의 현재인구
+    //public int ScoutCurrentPopulation;
+    //public int SniperCurrentPopulation;
+    //public int ArtilleryCurrentPopulation;
+    //public int HeavyWeaponCurrentPopulation;
+    //public int ArmouredCurrentPopulation;
+    //public int TankCurrentPopulation;
+    //public int HelicopterCurrentPopulation;
+    //public int RaptorCurrentPopulation;
     /*=====================================*/
 
     public List<JHW_UnitManager> hidingUnits;
@@ -54,7 +55,7 @@ public class JHW_GameManager : MonoBehaviour
 
     // bool ishiding; //벽뒤에 숨었다
     bool isClickSpecialGauge = false; //스폐셜 게이지를 쓰고있는지
-    public bool CanProduce; // 전체 인구가 생산 할 수 있는지
+    //public bool CanProduce; // 전체 인구가 생산 할 수 있는지
     //public bool CanProduce_Individual; //유닛별 개인 인구가 생산 할 수 있는지
 
     //bool bDefensiveDown;
@@ -83,14 +84,15 @@ public class JHW_GameManager : MonoBehaviour
         Helicopter,
         Raptor,
     }
-    public int[] _maxUnit = { 3, 2, 2, 999, 999, 999, 999, 5, 5 }; //최대 인구수
-    public float[] _cooldown = {25,10,10,20,30,40,50,60,70 }; //고정 쿨타임
+   // public int[] _maxUnit = { 3, 2, 2, 999, 999, 999, 999, 5, 5 }; //최대 인구수
+    float[] _cooldown = {5,10,12,20,30,40,50,60,70 }; //고정 쿨타임
+    public int[] _UnitLoad = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }; //유닛 부하량
+    
 
-
-    public void SetMaxUnit(UnitType unitType, int amount)
-    {
-        unitMaxCount[(int)unitType] = amount;
-    }
+    //public void SetMaxUnit(UnitType unitType, int amount)
+    //{
+    //    unitMaxCount[(int)unitType] = amount;
+    //}
     //public int GetMaxUnit(UnitType unitType)
     //{
     //    return unitMaxCount[(int)unitType];
@@ -98,43 +100,49 @@ public class JHW_GameManager : MonoBehaviour
 
     private void Start()
     {
-        CoolDownComplete = new bool[_cooldown.Length];
-        for (int i = 0; i < CoolDownComplete.Length; i++)
+        currentPopulationArray = new int[_UnitLoad.Length]; //현재 인구수 배열 생성
+
+        CoolDownReady = new bool[_cooldown.Length];
+        for (int i = 0; i < CoolDownReady.Length; i++)
         {
-            CoolDownComplete[i] = true;
+            CoolDownReady[i] = true;
         }
+
         currentCool = new float[_cooldown.Length];
         for (int j = 0; j < currentCool.Length; j++) //현재 쿨타임 배열에 각자 유닛 쿨타임 수치를 담음
         {
             currentCool[j] = _cooldown[j];
         }
 
-        unitMaxCount = new int[JHW_UnitFactory.instance.Units.Length];
+        //unitMaxCount = new int[JHW_UnitFactory.instance.Units.Length];
 
-        for (int i = 0; i < unitMaxCount.Length; i++)
-        {
-            SetMaxUnit((UnitType)i, _maxUnit[i]);
-        }
+        //for (int i = 0; i < unitMaxCount.Length; i++)
+        //{
+        //    SetMaxUnit((UnitType)i, _maxUnit[i]);
+        //}
         //int max = GetMaxUnit(UnitType.Raptor);
     }
 
     private void Update()
     {
-        print(_cooldown[0]);
+        print("현재 인구수 : " + currentPopulation + "전체 인구수 : " + wholePopulationLimit);
+
+        for (int i = 0; i < currentPopulationArray.Length; i++)
+        {
+            currentPopulation += currentPopulationArray[i]; //총 인구수에 인구수 배열의 모든 합을 담음
+        }
+
 
         hidingUnits = JHW_UnitFactory.instance.myUnits;
         RushUnits = JHW_UnitFactory.instance.myUnits;
 
-        currentPopulation = JHW_UnitFactory.instance.myUnits.Count; // 현재 나와있는 인구는 내 유닛들의 갯수
+        //if (currentPopulation < wholePopulationLimit) //현재인구가 최대 인구보다 작을때 생산 가능 상태로 만들어줌
+        //{
+        //    CanProduce = true;
+        //}
+        //else CanProduce = false; //아니면 불가능
 
-        if (currentPopulation < wholePopulationLimit) //현재인구가 최대 인구보다 작을때 생산 가능 상태로 만들어줌
-        {
-            CanProduce = true;
-        }
-        else CanProduce = false; //아니면 불가능
-
-
-        CoolTimer(RifleManCurrentPopulation,0);
+        //CoolTimer(RifleManCurrentPopulation,0);
 
         SpecialGageManager();
         PlusScore();
@@ -240,26 +248,12 @@ public class JHW_GameManager : MonoBehaviour
     void Timer() //플레이타임 기록
     {
         playTime += Time.deltaTime;
-    } 
+    }
 
-   
 
-   public void CoolTimer(int population, int index) // 쿨타임으로 플래그 만드는 함수
+   public void CoolTimer(int population, int index) 
     {
-        if (population == unitMaxCount[index])
-        {
-                currentCool[index] -= 1f;
-        }
 
-          else if (currentCool[index] <= 0)
-            {
-                CoolDownComplete[index] = true; //쿨타임이 다 돌았다
-                currentCool[index] = _cooldown[0]; //0초가 되면 다시 되돌리기
-            }
-            else if (currentCool[index] > 0)
-            {
-                CoolDownComplete[index] = false;
-            }
 
     }
 
@@ -303,15 +297,15 @@ public class JHW_GameManager : MonoBehaviour
         text4.text = specialgageT.text;
         Population.text = currentPopulation + " / " + wholePopulationLimit;
 
-        RifleManText.text ="RifleMan\n" + RifleManCurrentPopulation + " / " + unitMaxCount[0]+"\n" + currentCool[0];
-        ScoutText.text =  "Scout\n" + ScoutCurrentPopulation + " / " + unitMaxCount[1] + "\n" + currentCool[1];
-        SniperText.text = "Sniper\n" + SniperCurrentPopulation + " / " + unitMaxCount[2] + "\n" + currentCool[2];
-        ArtilleryText.text = "Artillery\n" + ArtilleryCurrentPopulation + " / " + unitMaxCount[3] + "\n" + currentCool[3];
-        HeavyWeaponText.text = "HeavyWeapon\n" + HeavyWeaponCurrentPopulation + " / " + unitMaxCount[4] + "\n" + currentCool[4];
-        ArmouredText.text = "Armoured\n" + ArmouredCurrentPopulation + " / " + unitMaxCount[5] + "\n" + currentCool[5];
-        TankText.text = "Tank\n" + TankCurrentPopulation + " / " + unitMaxCount[6] + "\n" + currentCool[6];
-        HelicopterText.text = "Helicopter\n" + HelicopterCurrentPopulation + " / " + unitMaxCount[7] + "\n" + currentCool[7];
-        RaptorText.text = "Raptor\n" + RaptorCurrentPopulation + " / " + unitMaxCount[8] + "\n" + currentCool[8];
+        //RifleManText.text ="RifleMan\n" + RifleManCurrentPopulation + " / " + "\n" + currentCool[0].ToString("N1");
+        //ScoutText.text =  "Scout\n" + ScoutCurrentPopulation + " / " +  "\n" + currentCool[1].ToString("N1");
+        //SniperText.text = "Sniper\n" + SniperCurrentPopulation + " / " +  "\n" + currentCool[2].ToString("N1");
+        //ArtilleryText.text = "Artillery\n" + ArtilleryCurrentPopulation + " / " +  "\n" + currentCool[3].ToString("N1");
+        //HeavyWeaponText.text = "HeavyWeapon\n" + HeavyWeaponCurrentPopulation + " / " +  "\n" + currentCool[4].ToString("N1");
+        //ArmouredText.text = "Armoured\n" + ArmouredCurrentPopulation + " / " +  "\n" + currentCool[5].ToString("N1");
+        //TankText.text = "Tank\n" + TankCurrentPopulation + " / " +  "\n" + currentCool[6].ToString("N1");
+        //HelicopterText.text = "Helicopter\n" + HelicopterCurrentPopulation + " / " +  "\n" + currentCool[7].ToString("N1");
+        //RaptorText.text = "Raptor\n" + RaptorCurrentPopulation + " / " +  "\n" + currentCool[8].ToString("N1");
 
     }
 
@@ -320,9 +314,9 @@ public class JHW_GameManager : MonoBehaviour
     /*훈장 사용처*/
     public void OnClickWholePopulationUp() //최대 인구수 증가 버튼
     {
-        if (wholePopulationLimit < 33)
+        if (wholePopulationLimit < 100)
         {
-            wholePopulationLimit++;
+            wholePopulationLimit+=5;
         }
         else
         {

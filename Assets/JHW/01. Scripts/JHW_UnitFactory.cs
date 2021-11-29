@@ -22,7 +22,7 @@ public class JHW_UnitFactory : MonoBehaviour
     public List<JHW_UnitManager> myUnits;
     public List<JHW_UnitManager> enemyUnits;
 
-    bool producing=false;
+    bool producing = false;
 
 
     void Start()
@@ -39,60 +39,65 @@ public class JHW_UnitFactory : MonoBehaviour
         }
     }
 
-    int i = -1; //아래 함수에서 쓰이는 변수
+
+    int unitIndex = -1; //아래 함수에서 쓰이는 변수
     public void CreateUnit() //아군을 생성하는 코드
     {
-
-        int randomNum = Random.Range(0, 3); // 3개중에 하나를 선택해서 생성 (생성 지역)
-        //int randomNum2 = Random.Range(0, 9); // 9개 중에 하나를 선택해서 생성 
-
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown) //유닛에 해당하는 버튼을 누른다
         {
             switch (Input.inputString)
             {
                 case "q":
-                    i = 0; // RifleMan
+                    unitIndex = 0; // RifleMan
                     break;
                 case "w": //Scout
-                    i = 1;
+                    unitIndex = 1;
                     break;
                 case "e": //Sniper
-                    i = 2;
+                    unitIndex = 2;
                     break;
                 case "r": //Artillery
-                    i = 3;
+                    unitIndex = 3;
                     break;
                 case "t": //Armoured
-                    i = 4;
+                    unitIndex = 4;
                     break;
                 case "y": //Tank
-                    i = 5;
+                    unitIndex = 5;
                     break;
                 case "u": //Helicopter
-                    i = 6;
+                    unitIndex = 6;
                     break;
                 case "i": //HeavyWeapon
-                    i = 7;
+                    unitIndex = 7;
                     break;
                 case "o": //Raptor
-                    i = 8;
+                    unitIndex = 8;
                     break;
                 default:
-                    i = -1;
+                    unitIndex = -1;
                     break;
             }
 
-            if (i == -1)
+            if (unitIndex == -1)
             {
                 return;
             }
 
-            units = Units[i].GetComponent<JHW_UnitInfo>();
-            if (JHW_GameManager.instance.Gold >= units.price && JHW_GameManager.instance.currentPopulation + JHW_GameManager.instance._UnitLoad[i] <= JHW_GameManager.instance.wholePopulationLimit) //가지고 있는 골드가 뽑으려는 유닛 가격보다 많고, 현재 인구 + 누른 부하수가 총 인구보다 낮을때
+            units = Units[unitIndex].GetComponent<JHW_UnitInfo>(); //각 유닛의 정보를 가져온다
+
+            //(전체) 가격 검사 , 인구 수 검사
+            if (JHW_GameManager.instance.Gold >= units.price && JHW_GameManager.instance.currentPopulation + JHW_GameManager.instance._UnitLoad[unitIndex] <= JHW_GameManager.instance.wholePopulationLimit)
             {
-                for (int j = 0; j < JHW_GameManager.instance._UnitLoad.Length; j++)
+                if (JHW_GameManager.instance.CoolDownReady[unitIndex]) //쿨타임까지 준비됬을때
                 {
-                AA(j);
+                    InstantiateUnit(unitIndex); //유닛을 생성한다
+                    ValueChanger(unitIndex); //가격과 인구수를 올린다
+                    CoolTimeSetter(unitIndex);
+                }
+                else //쿨타임이 준비 안됬을때
+                {
+                    print("쿨타임 중입니다 : " + JHW_GameManager.instance.currentCool[unitIndex] + "초 남았습니다");
                 }
 
                 #region 안쓰는 코드
@@ -187,29 +192,12 @@ public class JHW_UnitFactory : MonoBehaviour
                 //}
                 #endregion
 
-                JHW_GameManager.instance.Gold -= units.price; // 전체 골드에서 유닛의 값만 큼 뺀다
-
-                // JHW_GameManager.instance.currentPopulation++; //생산하면 인구수를 1 늘린다
-
-                GameObject SelectUnit = Instantiate(Units[i]); // 1~9번까지의 유닛중에 하나 생성
-                SelectUnit.GetComponent<JHW_UnitInfo>().isEnemy = false; //아군이다
-                SelectUnit.tag = "Player";
-                SelectUnit.layer = LayerMask.NameToLayer("PlayerTeam");
-                SelectUnit.GetComponent<NavMeshAgent>().speed = SelectUnit.GetComponent<JHW_UnitInfo>().MOVE_SPEED;
-                Collider col = SelectUnit.GetComponentInChildren<Collider>(); //생성한 유닛은 부모가 빈오브젝트임(콜라이더 없음)
-                col.gameObject.tag = SelectUnit.tag;
-                col.gameObject.layer = SelectUnit.layer;
-
-                Transform mcp = MyCreatePoint[randomNum]; // 1~3번 생성포인트 중에 하나 생성
-                SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
-
-                myUnits.Add(SelectUnit.GetComponent<JHW_UnitManager>()); //생성하면 리스트에 넣는다
             }
-            else if (JHW_GameManager.instance.Gold < units.price)
+            else if (JHW_GameManager.instance.Gold < units.price) //가격 검사 false
             {
                 print("돈이 부족합니다");
             }
-            else if (JHW_GameManager.instance.currentPopulation + JHW_GameManager.instance._UnitLoad[i] > JHW_GameManager.instance.wholePopulationLimit)
+            else if (JHW_GameManager.instance.currentPopulation + JHW_GameManager.instance._UnitLoad[unitIndex] > JHW_GameManager.instance.wholePopulationLimit) //인구 수 검사 false
             {
                 print("최대 인구수가 부족합니다");
             }
@@ -234,32 +222,60 @@ public class JHW_UnitFactory : MonoBehaviour
         enemyUnits.Add(SelectUnit.GetComponent<JHW_UnitManager>());
     }
 
-    void AA(int index)
+    void ValueChanger(int index)
     {
-            if (i == index && JHW_GameManager.instance.CoolDownReady[index] && JHW_GameManager.instance.CoolDownReady[index] == true)
-            {
-                JHW_GameManager.instance.currentPopulationArray[index] += JHW_GameManager.instance._UnitLoad[index];
-                JHW_GameManager.instance.populationSum = false;
-                JHW_GameManager.instance.CoolDownReady[index] = false; //생산할 수 없게 쿨타임레디를 거짓으로 만들어준다
-            }
-            else if (i == index && !JHW_GameManager.instance.CoolDownReady[index])
-            {
-                print("쿨타임 중입니다 : " + JHW_GameManager.instance.currentCool[index] + "초 남았습니다");
-                return;
-            }
-           StartCoroutine(CoolTimeCo(index, JHW_GameManager.instance.currentCool[index]));
-            
+        //if (unitIndex == index)
+        //{
+        JHW_GameManager.instance.currentPopulationArray[index] += JHW_GameManager.instance._UnitLoad[index];
+        JHW_GameManager.instance.populationSum = false;
+        JHW_GameManager.instance.CoolDownReady[index] = false; //생산할 수 없게 쿨타임레디를 거짓으로 만들어준다
+        //}
+
     }
-    //public void CoolTimer()
-    //{
-    //    //유닛을 하나 뽑을 때마다 쿨타임을 돌리고 싶다
-    //    //쿨타임일 경우는 유닛을 뽑지 못한다
-    //    //필요 속성 : 유닛 쿨타임 고정배열, 유닛 쿨타임 가변 배열(이를 올렸다 내렸다 함), 쿨타임이 돌고있는지 아닌지 판별하는 불 배열
-    //}
-    IEnumerator CoolTimeCo(int index, float coolTime)
+
+    void CoolTimeSetter(int index)
     {
-        yield return new WaitForSeconds(coolTime); //쿨타임 만큼 기다린다
-        JHW_GameManager.instance.CoolDownReady[index] = true; //쿨타임을 기다린다음  쿨이 됬다고 쿨타임레디를  참으로 변화시켜준다
+        JHW_GameManager.instance.currentCool[index] = JHW_GameManager.instance._cooldown[index];
+        print("쿨타임 시작");
+        // JHW_GameManager.instance.currentCool[unitIndex] -= Time.deltaTime;
+        StartCoroutine("BB", index);
+    }
+
+    IEnumerator BB(int index)
+    {
+        JHW_GameManager.instance.CoolDownReady[index] = false;
+
+        while (JHW_GameManager.instance.currentCool[index] > 0)
+        {
+            JHW_GameManager.instance.currentCool[index]--;
+            yield return new WaitForSeconds(1);
+        }
+
+        // print("쿨타임 끝");
+        JHW_GameManager.instance.CoolDownReady[index] = true;
+    }
+
+    void InstantiateUnit(int unitIndex)
+    {
+        int randomNum = Random.Range(0, 3); // 3개중에 하나를 선택해서 생성 (생성 지역)
+
+        JHW_GameManager.instance.Gold -= units.price; // 전체 골드에서 유닛의 값만 큼 뺀다
+
+        // JHW_GameManager.instance.currentPopulation++; //생산하면 인구수를 1 늘린다
+
+        GameObject SelectUnit = Instantiate(Units[unitIndex]); // 1~9번까지의 유닛중에 하나 생성
+        SelectUnit.GetComponent<JHW_UnitInfo>().isEnemy = false; //아군이다
+        SelectUnit.tag = "Player";
+        SelectUnit.layer = LayerMask.NameToLayer("PlayerTeam");
+        SelectUnit.GetComponent<NavMeshAgent>().speed = SelectUnit.GetComponent<JHW_UnitInfo>().MOVE_SPEED;
+        Collider col = SelectUnit.GetComponentInChildren<Collider>(); //생성한 유닛은 부모가 빈오브젝트임(콜라이더 없음)
+        col.gameObject.tag = SelectUnit.tag;
+        col.gameObject.layer = SelectUnit.layer;
+
+        Transform mcp = MyCreatePoint[randomNum]; // 1~3번 생성포인트 중에 하나 생성
+        SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
+
+        myUnits.Add(SelectUnit.GetComponent<JHW_UnitManager>()); //생성하면 리스트에 넣는다
     }
 
 }

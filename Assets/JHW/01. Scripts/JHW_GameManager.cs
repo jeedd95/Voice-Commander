@@ -84,10 +84,10 @@ public class JHW_GameManager : MonoBehaviour
         Helicopter,
         Raptor,
     }
-   // public int[] _maxUnit = { 3, 2, 2, 999, 999, 999, 999, 5, 5 }; //최대 인구수
-    float[] _cooldown = {5,7,10,10,15,17,18,24,27 }; //고정 쿨타임
+    // public int[] _maxUnit = { 3, 2, 2, 999, 999, 999, 999, 5, 5 }; //최대 인구수
+    public float[] _cooldown = { 5, 7, 10, 10, 15, 17, 18, 24, 27 }; //고정 쿨타임
     public int[] _UnitLoad = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }; //유닛 부하량
-    
+
 
     //public void SetMaxUnit(UnitType unitType, int amount)
     //{
@@ -127,7 +127,7 @@ public class JHW_GameManager : MonoBehaviour
     {
         //print("현재 인구수 : " + currentPopulation + " 전체 인구수 : " + wholePopulationLimit);
 
-        if (populationSum==false)
+        if (populationSum == false)
         {
             currentPopulation = 0;
             for (int i = 0; i < currentPopulationArray.Length; i++)
@@ -254,7 +254,7 @@ public class JHW_GameManager : MonoBehaviour
     }
 
 
-   
+
 
     void SpecialGageManager()
     {
@@ -296,25 +296,34 @@ public class JHW_GameManager : MonoBehaviour
         text4.text = specialgageT.text;
         Population.text = currentPopulation + " / " + wholePopulationLimit;
 
-        RifleManText.text = "RifleMan\n" + currentPopulationArray[0]  +"\n" + currentCool[0].ToString("N1");
-        ScoutText.text = "Scout\n" + currentPopulationArray[1] +  "\n" + currentCool[1].ToString("N1");
-        SniperText.text = "Sniper\n" + currentPopulationArray[2] +  "\n" + currentCool[2].ToString("N1");
-        ArtilleryText.text = "Artillery\n" + currentPopulationArray[3] +  "\n" + currentCool[3].ToString("N1");
-        HeavyWeaponText.text = "HeavyWeapon\n" + currentPopulationArray[4] +  "\n" + currentCool[4].ToString("N1");
-        ArmouredText.text = "Armoured\n" + currentPopulationArray[5] +  "\n" + currentCool[5].ToString("N1");
-        TankText.text = "Tank\n" + currentPopulationArray[6] +  "\n" + currentCool[6].ToString("N1");
-        HelicopterText.text = "Helicopter\n" + currentPopulationArray[7] +  "\n" + currentCool[7].ToString("N1");
-        RaptorText.text = "Raptor\n" + currentPopulationArray[8] +  "\n" + currentCool[8].ToString("N1");
+
+        Text[] tts = { RifleManText, ScoutText, SniperText, ArtilleryText, HeavyWeaponText, ArmouredText, TankText, HelicopterText, RaptorText };
+
+        for (int i = 0; i < tts.Length; i++)
+        {
+            tts[i].text = ((UnitType)i).ToString() + "\n" + currentPopulationArray[i] + "\n" + CoolDownReady[i] + "\n" + currentCool[i].ToString("N1");
+        }
+
+
+        //RifleManText.text = "RifleMan\n" + currentPopulationArray[0] + "\n" + CoolDownReady[0] + currentCool[0].ToString("N1");
+        //ScoutText.text = "Scout\n" + currentPopulationArray[1] + "\n" + currentCool[1].ToString("N1");
+        //SniperText.text = "Sniper\n" + currentPopulationArray[2] + "\n" + currentCool[2].ToString("N1");
+        //ArtilleryText.text = "Artillery\n" + currentPopulationArray[3] + "\n" + currentCool[3].ToString("N1");
+        //HeavyWeaponText.text = "HeavyWeapon\n" + currentPopulationArray[4] + "\n" + currentCool[4].ToString("N1");
+        //ArmouredText.text = "Armoured\n" + currentPopulationArray[5] + "\n" + currentCool[5].ToString("N1");
+        //TankText.text = "Tank\n" + currentPopulationArray[6] + "\n" + currentCool[6].ToString("N1");
+        //HelicopterText.text = "Helicopter\n" + currentPopulationArray[7] + "\n" + currentCool[7].ToString("N1");
+        //RaptorText.text = "Raptor\n" + currentPopulationArray[8] + "\n" + currentCool[8].ToString("N1");
     }
 
-    
+
 
     /*훈장 사용처*/
     public void OnClickWholePopulationUp() //최대 인구수 증가 버튼
     {
         if (wholePopulationLimit < 100)
         {
-            wholePopulationLimit+=5;
+            wholePopulationLimit += 5;
         }
         else
         {

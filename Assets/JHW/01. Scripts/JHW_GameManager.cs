@@ -19,7 +19,13 @@ public class JHW_GameManager : MonoBehaviour
     public int wholePopulationLimit; //전체 인구수 제한 (초기4)
     public float playTime; //플레이타임 시간 초
     public float[] currentCool; //유닛별 현재 쿨타임 배열
+    public int playerLevel; //플레이어 레벨
+    public float currentExp; //현재 경험치
+    public int maxlevel = 20;
+
     public bool[] CoolDownReady; // 유닛 쿨타임이 다 돌았는지
+    bool isClickSpecialGauge = false; //스폐셜 게이지를 쓰고있는지
+    public bool populationSum;
 
     public Text scoreT; //점수 텍스트
     public Text goldT; //골드 텍스트
@@ -27,9 +33,7 @@ public class JHW_GameManager : MonoBehaviour
     public Text text4; //스폐셜 게이지 텍스트(공격태세)
     public Text Population; //인구수 관련 텍스트
     public Text timer; // 플레이 타임 시간 분초
-
-    /* 유닛 개별 UI ============================*/
-    public Text RifleManText; //라이플맨의 텍스트
+    public Text RifleManText; //유닛 개별 UI
     public Text ScoutText;
     public Text SniperText;
     public Text ArtilleryText;
@@ -39,26 +43,8 @@ public class JHW_GameManager : MonoBehaviour
     public Text HelicopterText;
     public Text RaptorText;
 
-    //public int RifleManCurrentPopulation; //라이플맨의 현재인구
-    //public int ScoutCurrentPopulation;
-    //public int SniperCurrentPopulation;
-    //public int ArtilleryCurrentPopulation;
-    //public int HeavyWeaponCurrentPopulation;
-    //public int ArmouredCurrentPopulation;
-    //public int TankCurrentPopulation;
-    //public int HelicopterCurrentPopulation;
-    //public int RaptorCurrentPopulation;
-    /*=====================================*/
-
     public List<JHW_UnitManager> hidingUnits;
     public List<JHW_UnitManager> RushUnits;
-
-    // bool ishiding; //벽뒤에 숨었다
-    bool isClickSpecialGauge = false; //스폐셜 게이지를 쓰고있는지
-    //public bool CanProduce; // 전체 인구가 생산 할 수 있는지
-    //public bool CanProduce_Individual; //유닛별 개인 인구가 생산 할 수 있는지
-    //bool bDefensiveDown;
-    public bool populationSum;
 
     private void Awake()
     {
@@ -87,6 +73,7 @@ public class JHW_GameManager : MonoBehaviour
     // public int[] _maxUnit = { 3, 2, 2, 999, 999, 999, 999, 5, 5 }; //최대 인구수
     public float[] _cooldown = { 5, 7, 10, 10, 15, 17, 18, 24, 27 }; //고정 쿨타임
     public int[] _UnitLoad = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }; //유닛 부하량
+    public float[] amountExp= { }; //총 경험치
 
 
     //public void SetMaxUnit(UnitType unitType, int amount)
@@ -100,18 +87,25 @@ public class JHW_GameManager : MonoBehaviour
 
     private void Start()
     {
-        currentPopulationArray = new int[_UnitLoad.Length]; //현재 인구수 배열 생성
+        currentPopulationArray = new int[_UnitLoad.Length]; //현재 인구수 배열
 
-        CoolDownReady = new bool[_cooldown.Length];
+        CoolDownReady = new bool[_cooldown.Length]; // 쿨타임레디상태 배열
         for (int i = 0; i < CoolDownReady.Length; i++)
         {
             CoolDownReady[i] = true;
         }
 
         currentCool = new float[_cooldown.Length];
-        for (int j = 0; j < currentCool.Length; j++) //현재 쿨타임 배열에 각자 유닛 쿨타임 수치를 담음
+        for (int j = 0; j < currentCool.Length; j++) //현재 쿨타임 배열
         {
             currentCool[j] = _cooldown[j];
+        }
+
+        amountExp = new float[maxlevel+1];
+        amountExp[0] = 100; //초기 경험치
+        for (int i = 0; i < maxlevel; i++) //경험치 배열
+        {
+            amountExp[i + 1] = amountExp[i] * 1.75f;
         }
 
         //unitMaxCount = new int[JHW_UnitFactory.instance.Units.Length];
@@ -299,21 +293,16 @@ public class JHW_GameManager : MonoBehaviour
 
         Text[] tts = { RifleManText, ScoutText, SniperText, ArtilleryText, HeavyWeaponText, ArmouredText, TankText, HelicopterText, RaptorText };
 
+        string[] CDRText = new string[_cooldown.Length];
+
         for (int i = 0; i < tts.Length; i++)
         {
-            tts[i].text = ((UnitType)i).ToString() + "\n" + currentPopulationArray[i] + "\n" + CoolDownReady[i] + "\n" + currentCool[i].ToString("N1");
+            if (CoolDownReady[i]) CDRText[i] = "쿨타임 완료";
+            else CDRText[i] = "쿨타임 중...";
+
+            tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : "+currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + currentCool[i].ToString("N1");
         }
 
-
-        //RifleManText.text = "RifleMan\n" + currentPopulationArray[0] + "\n" + CoolDownReady[0] + currentCool[0].ToString("N1");
-        //ScoutText.text = "Scout\n" + currentPopulationArray[1] + "\n" + currentCool[1].ToString("N1");
-        //SniperText.text = "Sniper\n" + currentPopulationArray[2] + "\n" + currentCool[2].ToString("N1");
-        //ArtilleryText.text = "Artillery\n" + currentPopulationArray[3] + "\n" + currentCool[3].ToString("N1");
-        //HeavyWeaponText.text = "HeavyWeapon\n" + currentPopulationArray[4] + "\n" + currentCool[4].ToString("N1");
-        //ArmouredText.text = "Armoured\n" + currentPopulationArray[5] + "\n" + currentCool[5].ToString("N1");
-        //TankText.text = "Tank\n" + currentPopulationArray[6] + "\n" + currentCool[6].ToString("N1");
-        //HelicopterText.text = "Helicopter\n" + currentPopulationArray[7] + "\n" + currentCool[7].ToString("N1");
-        //RaptorText.text = "Raptor\n" + currentPopulationArray[8] + "\n" + currentCool[8].ToString("N1");
     }
 
 

@@ -9,13 +9,14 @@ public class JHW_BulletMove : MonoBehaviour
 
     JHW_UnitManager unit; // 총알을 쏜 unit 컴포넌트
     JHW_UnitInfo unitInfo;
+    JHW_UnitManager um;
     private float damage;
     private float accuracyRate;
-    string attackerName;
+    //string attackerName;
 
     float[][] rate;
     float defensiveDamage;
-    bool isTeam;
+    //bool isTeam;
 
     private void Start()
     {
@@ -24,8 +25,10 @@ public class JHW_BulletMove : MonoBehaviour
                 new float[]{0.5f,0.75f,1},
                 new float[]{1,0.5f,0.25f},
             };
-    }
 
+       um= GameObject.Find("UnitFactory").GetComponent<JHW_UnitManager>();
+    }
+    Vector3 pos;
     void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
@@ -38,8 +41,27 @@ public class JHW_BulletMove : MonoBehaviour
 
         if (other.CompareTag("Wall"))
         {
-            Destroy(gameObject); //벽에 부딪히면 총알 삭제
-            other.GetComponent<JHW_Wall>().wallHp -= 10f;
+            //내 유닛이 방어태세이면 내가 쏘는 총알은 벽을 뚫고 간다(적이 쏘는 총알은 그대로)
+            if(!unitInfo.isBehindWall && !unitInfo.UseDefensive)
+            {
+                Destroy(gameObject); //벽에 부딪히면 총알 삭제
+                other.GetComponent<JHW_Wall>().wallHp -= 10f;
+            }
+
+            //if(unitInfo.UseDefensive)
+            //{
+            //}
+            //else if (!unitInfo.UseDefensive)
+            //{
+            //    if(unitInfo.isBehindWall)
+            //    {
+            //    }
+            //    else
+            //    {
+            //        Destroy(gameObject); //벽에 부딪히면 총알 삭제
+            //        other.GetComponent<JHW_Wall>().wallHp -= 10f;
+            //    }
+            //}
         }
 
         else if (other.CompareTag("Enemy") || other.CompareTag("Player")) // 적하고 총알이 부딪혔을때 데미지 계산식
@@ -108,7 +130,7 @@ public class JHW_BulletMove : MonoBehaviour
         unitInfo = unit.GetComponent<JHW_UnitInfo>(); //쏜 애의 유닛 정보
         this.damage = unitInfo.damage;
         this.accuracyRate = unitInfo.accuracyRate;
-        attackerName = unit.gameObject.name;
+       // attackerName = unit.gameObject.name;
     }
 
 }

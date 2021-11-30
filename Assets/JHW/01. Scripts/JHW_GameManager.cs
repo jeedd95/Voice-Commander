@@ -13,6 +13,7 @@ public class JHW_GameManager : MonoBehaviour
     /// <summary> 레이어 점수 </summary>
     public int Score = 0;
     public int Gold = 25; //플레이어 골드
+    public int GoldRate = 60; //상승 되는 골드
     public float specialGauge; //스폐셜 게이지
     public int[] currentPopulationArray; //현재 인구수 배열
     public int currentPopulation; //현재 인구수 = 현재 인구수 배열의 모든 합
@@ -21,7 +22,9 @@ public class JHW_GameManager : MonoBehaviour
     public float[] currentCool; //유닛별 현재 쿨타임 배열
     public int playerLevel; //플레이어 레벨
     public float currentExp; //현재 경험치
-    public int maxlevel = 20;
+    public float amountExp; //총 경험치
+    public int maxlevel = 20; //만렙
+    public int medal;
 
     public bool[] CoolDownReady; // 유닛 쿨타임이 다 돌았는지
     bool isClickSpecialGauge = false; //스폐셜 게이지를 쓰고있는지
@@ -33,7 +36,8 @@ public class JHW_GameManager : MonoBehaviour
     public Text text4; //스폐셜 게이지 텍스트(공격태세)
     public Text Population; //인구수 관련 텍스트
     public Text timer; // 플레이 타임 시간 분초
-    public Text RifleManText; //유닛 개별 UI
+    //==유닛 개별 UI
+    public Text RifleManText; 
     public Text ScoutText;
     public Text SniperText;
     public Text ArtilleryText;
@@ -42,6 +46,10 @@ public class JHW_GameManager : MonoBehaviour
     public Text TankText;
     public Text HelicopterText;
     public Text RaptorText;
+    //==
+    public Text expText;
+    public Text MedalText;
+    public Text GoldRateUpText;
 
     public List<JHW_UnitManager> hidingUnits;
     public List<JHW_UnitManager> RushUnits;
@@ -70,10 +78,11 @@ public class JHW_GameManager : MonoBehaviour
         Helicopter,
         Raptor,
     }
+
     // public int[] _maxUnit = { 3, 2, 2, 999, 999, 999, 999, 5, 5 }; //최대 인구수
     public float[] _cooldown = { 5, 7, 10, 10, 15, 17, 18, 24, 27 }; //고정 쿨타임
     public int[] _UnitLoad = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }; //유닛 부하량
-    public float[] amountExp= { }; //총 경험치
+    public float[] amountExpArray= { }; //총 경험치
 
 
     //public void SetMaxUnit(UnitType unitType, int amount)
@@ -87,6 +96,7 @@ public class JHW_GameManager : MonoBehaviour
 
     private void Start()
     {
+
         currentPopulationArray = new int[_UnitLoad.Length]; //현재 인구수 배열
 
         CoolDownReady = new bool[_cooldown.Length]; // 쿨타임레디상태 배열
@@ -101,11 +111,12 @@ public class JHW_GameManager : MonoBehaviour
             currentCool[j] = _cooldown[j];
         }
 
-        amountExp = new float[maxlevel+1];
-        amountExp[0] = 100; //초기 경험치
+        amountExpArray = new float[maxlevel+1];
+        amountExpArray[0] = 100; //초기 경험치
+        amountExp = amountExpArray[0];
         for (int i = 0; i < maxlevel; i++) //경험치 배열
         {
-            amountExp[i + 1] = amountExp[i] * 1.75f;
+            amountExpArray[i + 1] = amountExpArray[i] * 1.75f;
         }
 
         //unitMaxCount = new int[JHW_UnitFactory.instance.Units.Length];
@@ -131,7 +142,6 @@ public class JHW_GameManager : MonoBehaviour
             populationSum = true;
         }
 
-
         hidingUnits = JHW_UnitFactory.instance.myUnits;
         RushUnits = JHW_UnitFactory.instance.myUnits;
 
@@ -148,6 +158,7 @@ public class JHW_GameManager : MonoBehaviour
         PlusGold();
         Timer();
         TextManager();
+        LevelUp();
 
         //for (int i = 0; i < unitCurrentCount.Length; i++)
         //{
@@ -289,9 +300,12 @@ public class JHW_GameManager : MonoBehaviour
         specialgageT.text = string.Format("{0,3:N0}", specialGauge) + " %";
         text4.text = specialgageT.text;
         Population.text = currentPopulation + " / " + wholePopulationLimit;
+        expText.text = currentExp + " / " + amountExp.ToString("N1") + " Level : "+ playerLevel;
+        MedalText.text = "훈장 : " + medal.ToString();
+        GoldRateUpText.text = "+" + GoldRate.ToString();
 
 
-        Text[] tts = { RifleManText, ScoutText, SniperText, ArtilleryText, HeavyWeaponText, ArmouredText, TankText, HelicopterText, RaptorText };
+    Text[] tts = { RifleManText, ScoutText, SniperText, ArtilleryText, HeavyWeaponText, ArmouredText, TankText, HelicopterText, RaptorText };
 
         string[] CDRText = new string[_cooldown.Length];
 
@@ -301,23 +315,6 @@ public class JHW_GameManager : MonoBehaviour
             else CDRText[i] = "쿨타임 중...";
 
             tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : "+currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + currentCool[i].ToString("N1");
-        }
-
-    }
-
-
-
-    /*훈장 사용처*/
-    public void OnClickWholePopulationUp() //최대 인구수 증가 버튼
-    {
-        if (wholePopulationLimit < 100)
-        {
-            wholePopulationLimit += 5;
-        }
-        else
-        {
-            print("더 이상 최대 인구를 늘릴 수 없습니다");
-            return;
         }
     }
 
@@ -332,5 +329,70 @@ public class JHW_GameManager : MonoBehaviour
 
     }
 
+    void LevelUp()
+    {
+        amountExp = amountExpArray[playerLevel - 1];
+
+        if (currentExp >= amountExp)
+        {
+            playerLevel++;
+            medal++;
+            float temp  = currentExp - amountExp; //초과량 이관 시켜주기
+            currentExp = 0;
+            currentExp += temp;
+        }
+    }
+
+    //훈장 사용처 1.인구수 증가, 2. 돈 획득, 2. 돈의 획득량 증가
+    public void OnClickWholePopulationUp() //최대 인구수 증가 버튼
+    {
+        if(medal >=1)
+        {
+            if (wholePopulationLimit < 100)
+            {
+                medal--;
+                wholePopulationLimit += 7;
+            }
+            else
+            {
+                print("더 이상 최대 인구를 늘릴 수 없습니다");
+            }
+        }
+        else
+        {
+            print("훈장이 부족합니다");
+        }
+    }
+    public void OnClickGetGold()
+    {
+        if (medal >= 1)
+        {
+            Gold += GoldRate;   
+        }
+        else
+        {
+            print("훈장이 부족합니다");
+        }
+    }
+
+
+    public void OnClickGetGoldRateUP()
+    {
+        if (medal >= 1)
+        {
+            if(GoldRate <=130)
+            {
+            GoldRate += 15;
+            }
+            else
+            {
+                print("더 이상 비율을 늘릴 수 없습니다");
+            }
+        }
+        else
+        {
+            print("훈장이 부족합니다");
+        }
+    }
 }
 

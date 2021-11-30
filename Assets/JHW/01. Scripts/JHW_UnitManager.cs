@@ -16,7 +16,10 @@ public class JHW_UnitManager : MonoBehaviour
     bool isfire; // 공격상태인지 아닌지
     public GameObject TeamCommand; //우리의 기지
     public GameObject enemyCommand; //적의 기지
-    Vector3 targetpos; //벽 뒤 좌표
+    public Vector3 targetpos; //벽 뒤 좌표
+    // public bool closedWall;
+    public Collider[] cols;
+    public Collider[] cols2;
 
     public enum State // 유닛 상태머신
     {
@@ -104,16 +107,24 @@ public class JHW_UnitManager : MonoBehaviour
     {
         if (unitinfo.isEnemy == false)
         {
-           // print(state);
-           //print("내 유닛 사거리 : " + unitinfo.ATTACK_RANGE);
-           //print("내 유닛 공격속도 : " + unitinfo.ATTACK_SPEED);
-           //print("내 유닛 이동속도 : " + unitinfo.MOVE_SPEED) ;
-
-            // print(state);
+            print(state);
+            //print("내 유닛 사거리 : " + unitinfo.ATTACK_RANGE);
+            //print("내 유닛 공격속도 : " + unitinfo.ATTACK_SPEED);
+            //print("내 유닛 이동속도 : " + unitinfo.MOVE_SPEED) ;
         }
 
-        UnitDie();
-        navAgent.speed = unitinfo.MOVE_SPEED;
+        cols2 = Physics.OverlapSphere(transform.position, unitinfo.ATTACK_RANGE, 1 << LayerMask.NameToLayer("EnemyTeam"));
+
+        navAgent.speed = unitinfo.MOVE_SPEED; //nav mesh와 속도 동기화
+
+        if(unitinfo.isEnemy==false && Vector3.Distance(gameObject.transform.position,targetpos) <=1)
+        {
+            unitinfo.isBehindWall = true;
+        }
+        else
+        {
+            unitinfo.isBehindWall = false;
+        }
 
         switch (state)
         {
@@ -146,6 +157,7 @@ public class JHW_UnitManager : MonoBehaviour
                 }
                 break;
         }
+        UnitDie();
     }
 
     float currentTime;
@@ -178,14 +190,15 @@ public class JHW_UnitManager : MonoBehaviour
             }
         }
     }
-
     public GameObject FindNearestObjectzByLayer(string layer) //가장 가까운 오브젝트 레이어로 찾기
     {
         int layerMask = 1 << LayerMask.NameToLayer(layer);
-        var cols = Physics.OverlapSphere(transform.position, unitinfo.ATTACK_RANGE, layerMask); //공격 사거리 안에있는 적 인식
-        if (layer == "Wall") cols = Physics.OverlapSphere(transform.position, 500, layerMask); // 엄폐물을 찾을때는 전범위로 인식
+        cols = Physics.OverlapSphere(transform.position, unitinfo.ATTACK_RANGE, layerMask); //공격 사거리 안에있는 적 인식
+
+        if (layer == "Wall") cols = Physics.OverlapSphere(transform.position, float.MaxValue, layerMask); // 엄폐물을 찾을때는 전범위로 인식
         float dist = float.MaxValue;
         int chooseIndex = -1;
+
         for (int i = 0; i < cols.Length; i++)
         {
             float temp = Vector3.Distance(transform.position, cols[i].transform.position);
@@ -200,7 +213,6 @@ public class JHW_UnitManager : MonoBehaviour
         {
             return null;
         }
-
         return cols[chooseIndex].gameObject;
 
         //return cols.OrderBy(obj =>
@@ -255,6 +267,13 @@ public class JHW_UnitManager : MonoBehaviour
         {
             transform.LookAt(neareastObject.transform);
         }
+        print(neareastObject);
+        //기지를 공격하던 중 다른 유닛이 생성되면 그 유닛 먼저 공격함
+        //if(neareastObject.name == "EnemyCommand" && cols[2].name !=null)
+        //{
+        //    print("111111111111111");
+        //}
+
         //transform.LookAt(GameObject.FindWithTag("Enemy").transform);
 
         switch (gameObject.name) // 유닛에 따라 다른 총알을 쓰도록
@@ -329,15 +348,27 @@ public class JHW_UnitManager : MonoBehaviour
             if (unitinfo.isEnemy == true) //죽은애가 적일경우
             {
                 JHW_GameManager.instance.Score += unitinfo.score;
+                JHW_GameManager.instance.currentExp += unitinfo.exp;
                 // print("죽은 유닛 :" + unitinfo.gameObject + "얻은점수 : " + unitinfo.score);
                 JHW_UnitFactory.instance.enemyUnits.Remove(this); // 적 유닛 리스트에서 삭제
+
             }
-            else
+            else //죽은 애가 우리팀일 경우
             {
                 JHW_UnitFactory.instance.myUnits.Remove(this); //내 유닛 리스트에서 삭제
-               //if()///////////======================================= 11.29 내 유닛 인구수 줄이기
                // JHW_GameManager.instance.wholePopulationLimit -= JHW_GameManager.instance.currentPopulationArray[index];
-                JHW_GameManager.instance.currentPopulation--; //인구수 -1
+               // JHW_GameManager.instance.currentPopulation--; //인구수 -1
+
+                for (int i = 0; i < System.Enum.GetValues(typeof(JHW_GameManager.UnitType)).Length; i++)
+                {
+                    if (unitinfo.unitName == (System.Enum.GetName(typeof(JHW_GameManager.UnitType), i)))
+                    {
+                        JHW_GameManager.instance.currentPopulationArray[i] -= JHW_GameManager.instance._UnitLoad[i];
+                        JHW_GameManager.instance.populationSum = false;
+                    }
+                }
+
+                
             }
 
             Destroy(unitinfo.gameObject); //죽으면 곧바로 destroy한다

@@ -97,7 +97,7 @@ public class JHW_UnitFactory : MonoBehaviour
                 }
                 else //쿨타임이 준비 안됬을때
                 {
-                    print("쿨타임 중입니다 : " + JHW_GameManager.instance.currentCool[unitIndex] + "초 남았습니다");
+                    print("쿨타임 중입니다 : " +(System.Enum.GetName(typeof(JHW_GameManager.UnitType), unitIndex))+" " + JHW_GameManager.instance.currentCool[unitIndex] + "초 남았습니다");
                 }
 
                 #region 안쓰는 코드
@@ -236,7 +236,7 @@ public class JHW_UnitFactory : MonoBehaviour
     void CoolTimeSetter(int index)
     {
         JHW_GameManager.instance.currentCool[index] = JHW_GameManager.instance._cooldown[index];
-        print("쿨타임 시작");
+        //print("쿨타임 시작");
         // JHW_GameManager.instance.currentCool[unitIndex] -= Time.deltaTime;
         StartCoroutine("BB", index);
     }

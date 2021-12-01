@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class JHW_BulletMove : MonoBehaviour
 {
-    public float speed = 50; //총알이 날아가는 속도
+    float speed = 50; //총알이 날아가는 속도
 
     JHW_UnitManager unit; // 총알을 쏜 unit 컴포넌트
     JHW_UnitInfo unitInfo;

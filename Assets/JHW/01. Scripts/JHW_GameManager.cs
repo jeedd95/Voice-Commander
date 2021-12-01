@@ -18,17 +18,24 @@ public class JHW_GameManager : MonoBehaviour
     public int[] currentPopulationArray; //현재 인구수 배열
     public int currentPopulation; //현재 인구수 = 현재 인구수 배열의 모든 합
     public int wholePopulationLimit; //전체 인구수 제한 (초기4)
-    public float playTime; //플레이타임 시간 초
+    public float playTime; //플레이타임 시간 전체 second
+    int _Min; //플레이타임 시간 분으로 환산
     public float[] currentCool; //유닛별 현재 쿨타임 배열
     public int playerLevel; //플레이어 레벨
     public float currentExp; //현재 경험치
     public float amountExp; //총 경험치
     public int maxlevel = 20; //만렙
     public int medal;
+    public GameObject[] CaptureAreas; //주둔지역 배열 Gold, Cooldown,Special Gauge
+    GameObject CaptureArea;
 
     public bool[] CoolDownReady; // 유닛 쿨타임이 다 돌았는지
     bool isClickSpecialGauge = false; //스폐셜 게이지를 쓰고있는지
     public bool populationSum;
+    public bool isBuff_Gold;
+    public bool isBuff_CoolDown;
+    public bool isBuff_SpecialGauge;
+
 
     public Text scoreT; //점수 텍스트
     public Text goldT; //골드 텍스트
@@ -53,6 +60,8 @@ public class JHW_GameManager : MonoBehaviour
 
     public List<JHW_UnitManager> hidingUnits;
     public List<JHW_UnitManager> RushUnits;
+    [SerializeField]
+    List<GameObject> NowCaptureAreasList;  //현재 맵에 나와있는 주둔지역 리스트
 
     private void Awake()
     {
@@ -96,6 +105,7 @@ public class JHW_GameManager : MonoBehaviour
 
     private void Start()
     {
+        NowCaptureAreasList = new List<GameObject>();
 
         currentPopulationArray = new int[_UnitLoad.Length]; //현재 인구수 배열
 
@@ -159,6 +169,7 @@ public class JHW_GameManager : MonoBehaviour
         Timer();
         TextManager();
         LevelUp();
+        InstantiateCaptureArea();
 
         //for (int i = 0; i < unitCurrentCount.Length; i++)
         //{
@@ -194,7 +205,9 @@ public class JHW_GameManager : MonoBehaviour
         currentTime2 += Time.deltaTime;
         if (currentTime2 > goldEarnTime)
         {
-            Gold += 5;
+            if (isBuff_Gold) Gold += 8;
+            else Gold += 5;
+
             currentTime2 = 0;
         }
     }
@@ -204,7 +217,8 @@ public class JHW_GameManager : MonoBehaviour
         currentTime3 += Time.deltaTime;
         if (currentTime3 > specialEarnTime)
         {
-            specialGauge += 0.05f;
+            if (!isBuff_SpecialGauge) specialGauge += 0.05f;
+            else specialGauge += 0.5f;
             currentTime3 = 0;
         }
     }
@@ -256,6 +270,14 @@ public class JHW_GameManager : MonoBehaviour
     void Timer() //플레이타임 기록
     {
         playTime += Time.deltaTime;
+
+        timer.text = string.Format("{0:D2} : {1:D2}",_Min,(int)playTime);
+        if((int)playTime > 59)
+        {
+            playTime = 0;
+            _Min++;
+        }
+
     }
 
 
@@ -304,8 +326,7 @@ public class JHW_GameManager : MonoBehaviour
         MedalText.text = "훈장 : " + medal.ToString();
         GoldRateUpText.text = "+" + GoldRate.ToString();
 
-
-    Text[] tts = { RifleManText, ScoutText, SniperText, ArtilleryText, HeavyWeaponText, ArmouredText, TankText, HelicopterText, RaptorText };
+        Text[] tts = { RifleManText, ScoutText, SniperText, ArtilleryText, HeavyWeaponText, ArmouredText, TankText, HelicopterText, RaptorText };
 
         string[] CDRText = new string[_cooldown.Length];
 
@@ -314,7 +335,23 @@ public class JHW_GameManager : MonoBehaviour
             if (CoolDownReady[i]) CDRText[i] = "쿨타임 완료";
             else CDRText[i] = "쿨타임 중...";
 
-            tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : "+currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + currentCool[i].ToString("N1");
+            if(!isBuff_CoolDown) 
+            {
+                tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + currentCool[i].ToString("N2");
+                if (currentCool[i] <=0)
+                {
+                    tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n";
+                }
+            }
+            else 
+            {
+                tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + (currentCool[i] * 0.75f).ToString("N2");
+                if (currentCool[i] <= 0)
+                {
+                    tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n";
+                }
+            }
+
         }
     }
 
@@ -393,6 +430,47 @@ public class JHW_GameManager : MonoBehaviour
         {
             print("훈장이 부족합니다");
         }
+    }
+
+    float CaptureInstantiateTime = 5;
+    float DestroyTime = 10;
+    float currentTime4;
+    float currentTime5;
+    void InstantiateCaptureArea()
+    {
+        currentTime4 += Time.deltaTime;
+        currentTime5 += Time.deltaTime;
+       //주둔지(3개중 랜덤)를 시작한지 10초 후 생성하고 이후에는 2분마다 생성하고 싶다
+        if(currentTime4 > CaptureInstantiateTime)
+        {
+            //랜덤 위치를 만들자
+            float xRange = Random.Range(-40, 40);
+            float zRange = Random.Range(-20, 20);
+            Vector3 RandomCapturePos = new Vector3(xRange, 0, zRange);
+
+            //주둔지 뭘 만들지 랜덤으로 정하기
+            GameObject RandomCaptureType = CaptureAreas[Random.Range(0, CaptureAreas.Length)];
+            CaptureArea = Instantiate(RandomCaptureType);
+            CaptureArea.transform.position = RandomCapturePos;
+            //리스트에 넣기
+            NowCaptureAreasList.Add(CaptureArea);
+          
+            currentTime4 = 0;
+        }
+        //주둔지당 3분 30초 동안 유지 된다
+        if(currentTime5 > DestroyTime)
+        {
+            Destroy(NowCaptureAreasList[0]);
+            NowCaptureAreasList.RemoveAt(0);
+            
+            currentTime5 = 0;
+        }
+    }
+
+
+    public void ToggleCaptureMode()
+    {
+
     }
 }
 

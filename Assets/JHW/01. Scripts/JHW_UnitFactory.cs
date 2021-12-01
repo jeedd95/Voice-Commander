@@ -235,7 +235,8 @@ public class JHW_UnitFactory : MonoBehaviour
 
     void CoolTimeSetter(int index)
     {
-        JHW_GameManager.instance.currentCool[index] = JHW_GameManager.instance._cooldown[index];
+        if(!JHW_GameManager.instance.isBuff_CoolDown) JHW_GameManager.instance.currentCool[index] = JHW_GameManager.instance._cooldown[index]; //원래 쿨로 돌려준다
+        else JHW_GameManager.instance.currentCool[index] = JHW_GameManager.instance._cooldown[index]*0.75f;
         //print("쿨타임 시작");
         // JHW_GameManager.instance.currentCool[unitIndex] -= Time.deltaTime;
         StartCoroutine("BB", index);
@@ -247,12 +248,12 @@ public class JHW_UnitFactory : MonoBehaviour
 
         while (JHW_GameManager.instance.currentCool[index] > 0)
         {
-            JHW_GameManager.instance.currentCool[index]--;
-            yield return new WaitForSeconds(1);
+            JHW_GameManager.instance.currentCool[index]-=0.01f;
+            yield return new WaitForSeconds(0.01f);
         }
 
         // print("쿨타임 끝");
-        JHW_GameManager.instance.CoolDownReady[index] = true;
+            JHW_GameManager.instance.CoolDownReady[index] = true;
     }
 
     void InstantiateUnit(int unitIndex)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,9 @@ public class JHW_UnitManager : MonoBehaviour
     public Vector3 targetpos; //벽 뒤 좌표
     // public bool closedWall;
     public Collider[] cols;
-    public Collider[] cols2;
+    [SerializeField]
+    Collider[] cols2;
+
 
     public enum State // 유닛 상태머신
     {
@@ -27,7 +30,7 @@ public class JHW_UnitManager : MonoBehaviour
         Hide,
         HideAttack,
         Attack,
-        Die
+        Capture
     }
     public State state;
 
@@ -107,13 +110,12 @@ public class JHW_UnitManager : MonoBehaviour
     {
         if (unitinfo.isEnemy == false)
         {
-            print(state);
+           // print(state);
             //print("내 유닛 사거리 : " + unitinfo.ATTACK_RANGE);
             //print("내 유닛 공격속도 : " + unitinfo.ATTACK_SPEED);
             //print("내 유닛 이동속도 : " + unitinfo.MOVE_SPEED) ;
         }
 
-        cols2 = Physics.OverlapSphere(transform.position, unitinfo.ATTACK_RANGE, 1 << LayerMask.NameToLayer("EnemyTeam"));
 
         navAgent.speed = unitinfo.MOVE_SPEED; //nav mesh와 속도 동기화
 
@@ -132,6 +134,9 @@ public class JHW_UnitManager : MonoBehaviour
                 UnitMove();
                 UnitDetect(false);
                 break;
+            case State.Capture:
+                UnitCapture();
+                break;
 
             case State.HideAttack:
             case State.Attack:
@@ -142,6 +147,9 @@ public class JHW_UnitManager : MonoBehaviour
                         isfire = true;
                         StartCoroutine("CreateBullet");
                     }
+
+                    if (unitinfo.isEnemy == false) AllNearestObjectByLayer("EnemyTeam");
+                    if (unitinfo.isEnemy == true) AllNearestObjectByLayer("PlayerTeam");
                 }
                 break;
 
@@ -158,6 +166,15 @@ public class JHW_UnitManager : MonoBehaviour
                 break;
         }
         UnitDie();
+    }
+
+    private void UnitCapture() //유닛 주둔 상태 / 죽을때까지 홀딩 상태 / 적이 가까이 오면 감지하고 공격
+    {
+        Vector3 CapturePos = JHW_GameManager.instance.CaptureAreas[0].transform.position;
+        Vector3 CaptureRandomPos;
+        CaptureRandomPos = new Vector3(CapturePos.x,CapturePos.y,CapturePos.z);
+        navAgent.SetDestination(JHW_GameManager.instance.CaptureAreas[0].transform.position);
+        
     }
 
     float currentTime;
@@ -228,6 +245,37 @@ public class JHW_UnitManager : MonoBehaviour
         //.FirstOrDefault(); //List의 첫번째 요소를 반환, 비어있으면 null을 반환
     }
 
+    public void AllNearestObjectByLayer(string layer)
+    {
+        //모든 적들을 찾았다 근데 배열의 첫번째 요소가 커맨드센터이고 두번째가 병력일경우는 공격을 병력한테 한다
+        //nearestObject를 두번째 요소로 한다
+        int layerMask = 1 << LayerMask.NameToLayer(layer);
+        cols2 = Physics.OverlapSphere(transform.position, unitinfo.ATTACK_RANGE, layerMask);
+
+        if (cols2[0].name == "EnemyCommand")
+        {
+            if (cols2.Length > 1 && cols2[1] != null)
+            {
+                neareastObject = cols2[1].gameObject;
+            }
+        }
+
+        if (cols2[0].name == "TeamCommand")
+        {
+            if (cols2.Length > 1 && cols2[1] != null)
+            {
+                neareastObject = cols2[1].gameObject;
+            }
+        }
+        //int chooseIndex = -1;
+
+        //if (chooseIndex == -1) //사거리 안에 있는 적이 없음
+        //{
+        //    return null;
+        //}
+        //return cols[chooseIndex].gameObject;
+    }
+
     void UnitMove() // nav mesh를 이용하여 인식한 적 방향으로 가는 코드
     {
         //// transform.position += transform.forward * unitinfo.moveSpeed * Time.deltaTime; //앞으로만 가는 코드
@@ -236,12 +284,12 @@ public class JHW_UnitManager : MonoBehaviour
         if (unitinfo.isEnemy == false) //우리팀일때
         {
             offset = enemyCommand.transform.position;
-            transform.LookAt(Vector3.right);
+           // transform.LookAt(Vector3.right);
         }
         if (unitinfo.isEnemy == true) //적팀일때
         {
             offset = TeamCommand.transform.position;
-            transform.LookAt(Vector3.left);
+           // transform.LookAt(Vector3.left);
         }
         if (navAgent.isOnNavMesh) navAgent.SetDestination(offset); // 각자의 적진으로 이동
     }
@@ -267,7 +315,8 @@ public class JHW_UnitManager : MonoBehaviour
         {
             transform.LookAt(neareastObject.transform);
         }
-        print(neareastObject);
+
+
         //기지를 공격하던 중 다른 유닛이 생성되면 그 유닛 먼저 공격함
         //if(neareastObject.name == "EnemyCommand" && cols[2].name !=null)
         //{
@@ -367,10 +416,8 @@ public class JHW_UnitManager : MonoBehaviour
                         JHW_GameManager.instance.populationSum = false;
                     }
                 }
-
                 
             }
-
             Destroy(unitinfo.gameObject); //죽으면 곧바로 destroy한다
         }
     }

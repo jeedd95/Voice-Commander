@@ -26,8 +26,14 @@ public class JHW_GameManager : MonoBehaviour
     public float amountExp; //총 경험치
     public int maxlevel = 20; //만렙
     public int medal;
-    public GameObject[] CaptureAreas; //주둔지역 배열 Gold, Cooldown,Special Gauge
-    GameObject CaptureArea;
+    public GameObject[] CaptureAreaType; //주둔지역 타입 Gold, Cooldown,Special Gauge
+    public GameObject CaptureArea;
+
+    //스트링 오더 관련
+    [HideInInspector]
+    public string order;
+    public InputField inputFieldOrder;
+
 
     public bool[] CoolDownReady; // 유닛 쿨타임이 다 돌았는지
     bool isClickSpecialGauge = false; //스폐셜 게이지를 쓰고있는지
@@ -35,6 +41,7 @@ public class JHW_GameManager : MonoBehaviour
     public bool isBuff_Gold;
     public bool isBuff_CoolDown;
     public bool isBuff_SpecialGauge;
+    public bool isCaptureCreateMode;
 
 
     public Text scoreT; //점수 텍스트
@@ -60,8 +67,7 @@ public class JHW_GameManager : MonoBehaviour
 
     public List<JHW_UnitManager> hidingUnits;
     public List<JHW_UnitManager> RushUnits;
-    [SerializeField]
-    List<GameObject> NowCaptureAreasList;  //현재 맵에 나와있는 주둔지역 리스트
+   // List<GameObject> NowCaptureAreasList;  //현재 맵에 나와있는 주둔지역 리스트
 
     private void Awake()
     {
@@ -105,7 +111,7 @@ public class JHW_GameManager : MonoBehaviour
 
     private void Start()
     {
-        NowCaptureAreasList = new List<GameObject>();
+        //NowCaptureAreasList = new List<GameObject>();
 
         currentPopulationArray = new int[_UnitLoad.Length]; //현재 인구수 배열
 
@@ -141,6 +147,12 @@ public class JHW_GameManager : MonoBehaviour
     private void Update()
     {
         //print("현재 인구수 : " + currentPopulation + " 전체 인구수 : " + wholePopulationLimit);
+        print("isCaptureCreateMode : " + isCaptureCreateMode);
+
+        if (Input.GetKeyDown(KeyCode.Return) && false == string.IsNullOrEmpty(inputFieldOrder.text))
+        {
+            StringOrder();
+        }
 
         if (populationSum == false)
         {
@@ -170,6 +182,8 @@ public class JHW_GameManager : MonoBehaviour
         TextManager();
         LevelUp();
         InstantiateCaptureArea();
+
+        
 
         //for (int i = 0; i < unitCurrentCount.Length; i++)
         //{
@@ -431,15 +445,13 @@ public class JHW_GameManager : MonoBehaviour
             print("훈장이 부족합니다");
         }
     }
-
-    float CaptureInstantiateTime = 5;
-    float DestroyTime = 10;
+     public float CaptureInstantiateTime ; //주둔지 생성 시간
+    public float RemainTime ; //주둔지 유지 시간
     float currentTime4;
-    float currentTime5;
+
     void InstantiateCaptureArea()
     {
         currentTime4 += Time.deltaTime;
-        currentTime5 += Time.deltaTime;
        //주둔지(3개중 랜덤)를 시작한지 10초 후 생성하고 이후에는 2분마다 생성하고 싶다
         if(currentTime4 > CaptureInstantiateTime)
         {
@@ -447,30 +459,41 @@ public class JHW_GameManager : MonoBehaviour
             float xRange = Random.Range(-40, 40);
             float zRange = Random.Range(-20, 20);
             Vector3 RandomCapturePos = new Vector3(xRange, 0, zRange);
-
+            
             //주둔지 뭘 만들지 랜덤으로 정하기
-            GameObject RandomCaptureType = CaptureAreas[Random.Range(0, CaptureAreas.Length)];
+            GameObject RandomCaptureType = CaptureAreaType[Random.Range(0, CaptureAreaType.Length)];
             CaptureArea = Instantiate(RandomCaptureType);
             CaptureArea.transform.position = RandomCapturePos;
             //리스트에 넣기
-            NowCaptureAreasList.Add(CaptureArea);
-          
+            //NowCaptureAreasList.Add(CaptureArea);
+            
             currentTime4 = 0;
         }
-        //주둔지당 3분 30초 동안 유지 된다
-        if(currentTime5 > DestroyTime)
-        {
-            Destroy(NowCaptureAreasList[0]);
-            NowCaptureAreasList.RemoveAt(0);
-            
-            currentTime5 = 0;
-        }
+
     }
 
 
-    public void ToggleCaptureMode()
+    public void ToggleCaptureMode() //버튼 클릭으로 점령유닛을 생성할 수 있음
     {
+        isCaptureCreateMode = !isCaptureCreateMode;
+    }
 
+    public void StringOrder()
+    {
+        order = inputFieldOrder.text;
+
+        if (order.Contains("고!"))
+        {
+            print("명령 실행");            
+            
+        }
+        else
+        {
+            print("없는 명령입니다");
+        }
+
+        inputFieldOrder.text = "";
+        inputFieldOrder.Select();
     }
 }
 

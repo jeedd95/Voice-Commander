@@ -66,7 +66,7 @@ public class SSJ_TextOrderTest : MonoBehaviour
         }
         if (order.Contains("생성"))
         {
-            unitCreat.CreateUnit();
+            print("1111111111111111111111");
         }
         order = "10,20으로가";
         if (order.Contains("으로가"))

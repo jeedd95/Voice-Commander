@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 //using System.Linq;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class JHW_UnitManager : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class JHW_UnitManager : MonoBehaviour
     [SerializeField]
     Collider[] cols2;
 
+    Vector3 CapturePos;
 
     public enum State // 유닛 상태머신
     {
@@ -46,7 +48,12 @@ public class JHW_UnitManager : MonoBehaviour
         navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance; //유닛 겹치기
 
         SetState(State.Move); // 초기 상태
-
+        if (JHW_GameManager.instance.isCaptureCreateMode)
+        {
+            SetState(State.Capture);
+            //JHW_GameManager.instance.isCaptureCreateMode = false;
+            GameObject.Find("Canvas/CaptureMode").GetComponent<Toggle>().isOn = false;
+        } 
     }
 
     public void SetState(State next)
@@ -110,7 +117,7 @@ public class JHW_UnitManager : MonoBehaviour
     {
         if (unitinfo.isEnemy == false)
         {
-           // print(state);
+           print(state);
             //print("내 유닛 사거리 : " + unitinfo.ATTACK_RANGE);
             //print("내 유닛 공격속도 : " + unitinfo.ATTACK_SPEED);
             //print("내 유닛 이동속도 : " + unitinfo.MOVE_SPEED) ;
@@ -168,12 +175,19 @@ public class JHW_UnitManager : MonoBehaviour
         UnitDie();
     }
 
-    private void UnitCapture() //유닛 주둔 상태 / 죽을때까지 홀딩 상태 / 적이 가까이 오면 감지하고 공격
+    private void UnitCapture() // 어느 한 지점으로 이동유닛 주둔 상태 / 죽을때까지 홀딩 상태 / 적이 가까이 오면 감지하고 공격
     {
-        Vector3 CapturePos = JHW_GameManager.instance.CaptureAreas[0].transform.position;
-        Vector3 CaptureRandomPos;
-        CaptureRandomPos = new Vector3(CapturePos.x,CapturePos.y,CapturePos.z);
-        navAgent.SetDestination(JHW_GameManager.instance.CaptureAreas[0].transform.position);
+
+
+        CapturePos = JHW_GameManager.instance.CaptureAreaType[0].transform.position;
+
+
+
+
+        //Vector3 CaptureRandomPos;
+        //CaptureRandomPos = new Vector3(CapturePos.x,CapturePos.y,CapturePos.z);
+        
+        navAgent.SetDestination(JHW_GameManager.instance.CaptureAreaType[0].transform.position);
         
     }
 

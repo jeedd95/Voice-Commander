@@ -22,7 +22,7 @@ public class JHW_UnitFactory : MonoBehaviour
     public List<JHW_UnitManager> myUnits;
     public List<JHW_UnitManager> enemyUnits;
 
-    bool producing = false;
+    //bool producing = false;
 
 
     void Start()

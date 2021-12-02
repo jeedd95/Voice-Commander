@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - PlayerCommand
   - EnemyCommand
+  - CaptureArea
   layers:
   - Default
   - TransparentFX

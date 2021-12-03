@@ -22,6 +22,7 @@ public class JHW_UnitInfo : MonoBehaviour
     public bool isBehindWall; //벽 뒤에 있는지 없는지
     public bool UseDefensive; //방어태세를 썼는지 안썼는지
     public bool UseOffensive; //공격 태세를 썼는지 안썼는지
+    public bool isCaptureUnit; //점령유닛인지
 
     public bool isEnemy; //우리팀인지 적팀인지
     public string unitName; //이름

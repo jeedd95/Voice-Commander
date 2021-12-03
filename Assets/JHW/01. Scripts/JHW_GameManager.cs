@@ -29,10 +29,7 @@ public class JHW_GameManager : MonoBehaviour
     public GameObject[] CaptureAreaType; //주둔지역 타입 Gold, Cooldown,Special Gauge
     public GameObject CaptureArea;
 
-    //스트링 오더 관련
-    [HideInInspector]
-    public string order;
-    public InputField inputFieldOrder;
+    
 
 
     public bool[] CoolDownReady; // 유닛 쿨타임이 다 돌았는지
@@ -147,12 +144,7 @@ public class JHW_GameManager : MonoBehaviour
     private void Update()
     {
         //print("현재 인구수 : " + currentPopulation + " 전체 인구수 : " + wholePopulationLimit);
-        print("isCaptureCreateMode : " + isCaptureCreateMode);
-
-        if (Input.GetKeyDown(KeyCode.Return) && false == string.IsNullOrEmpty(inputFieldOrder.text))
-        {
-            StringOrder();
-        }
+       // print("isCaptureCreateMode : " + isCaptureCreateMode);
 
         if (populationSum == false)
         {
@@ -375,7 +367,10 @@ public class JHW_GameManager : MonoBehaviour
 
         for (int i = 0; i < playerUnits.Count; i++)
         {
+            if(playerUnits[i].GetComponent<JHW_UnitInfo>().isCaptureUnit==false) // 점령중인 유닛은 스폐셜게이지가 안먹게함
+            {
             playerUnits[i].SetState(state);
+            }
         }
 
     }
@@ -478,22 +473,6 @@ public class JHW_GameManager : MonoBehaviour
         isCaptureCreateMode = !isCaptureCreateMode;
     }
 
-    public void StringOrder()
-    {
-        order = inputFieldOrder.text;
-
-        if (order.Contains("고!"))
-        {
-            print("명령 실행");            
-            
-        }
-        else
-        {
-            print("없는 명령입니다");
-        }
-
-        inputFieldOrder.text = "";
-        inputFieldOrder.Select();
-    }
+    
 }
 

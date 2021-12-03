@@ -32,7 +32,9 @@ public class JHW_UnitManager : MonoBehaviour
         Hide,
         HideAttack,
         Attack,
-        Capture
+        CaptureMove,
+        CaputureDetect,
+        CaptureAttack,
     }
     public State state;
 
@@ -41,6 +43,7 @@ public class JHW_UnitManager : MonoBehaviour
 
     void Start()
     {
+
         unitinfo = GetComponent<JHW_UnitInfo>();
         navAgent = GetComponent<NavMeshAgent>();
 
@@ -48,10 +51,10 @@ public class JHW_UnitManager : MonoBehaviour
         navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance; //유닛 겹치기
 
         SetState(State.Move); // 초기 상태
-        if (JHW_GameManager.instance.isCaptureCreateMode)
+        if (JHW_GameManager.instance.isCaptureCreateMode && unitinfo.isEnemy==false)
         {
-            SetState(State.Capture);
-            //JHW_GameManager.instance.isCaptureCreateMode = false;
+            SetState(State.CaptureMove); //점령 모드로 생성된 유닛은 점령상태로 초기화
+            unitinfo.isCaptureUnit = true;
             GameObject.Find("Canvas/CaptureMode").GetComponent<Toggle>().isOn = false;
         } 
     }
@@ -79,6 +82,7 @@ public class JHW_UnitManager : MonoBehaviour
             {
                 navAgent.isStopped = false;  // 이동한다
             }
+            
         }
 
         if (state == State.Hide || state == State.HideAttack) //방어태세를 했을때
@@ -117,7 +121,8 @@ public class JHW_UnitManager : MonoBehaviour
     {
         if (unitinfo.isEnemy == false)
         {
-           print(state);
+            print(state);
+           // print(navAgent.remainingDistance);
             //print("내 유닛 사거리 : " + unitinfo.ATTACK_RANGE);
             //print("내 유닛 공격속도 : " + unitinfo.ATTACK_SPEED);
             //print("내 유닛 이동속도 : " + unitinfo.MOVE_SPEED) ;
@@ -141,8 +146,28 @@ public class JHW_UnitManager : MonoBehaviour
                 UnitMove();
                 UnitDetect(false);
                 break;
-            case State.Capture:
-                UnitCapture();
+
+            case State.CaptureMove:
+                if (JHW_OrderManager.instance.DesinationAreaObj != null)
+                {
+                    UnitCaptureMoving();
+                }
+                break;
+
+            case State.CaputureDetect:
+                UnitCapturerDectecting();
+                isfire = false;
+                break;
+
+            case State.CaptureAttack:
+                if(UnitCaptureAttackting()==false)
+                {
+                    if (isfire == false) //총을 쏘고있지 않다면 총을 쏜다
+                    {
+                        isfire = true;
+                        StartCoroutine("CreateBullet");
+                    }
+                }
                 break;
 
             case State.HideAttack:
@@ -175,21 +200,78 @@ public class JHW_UnitManager : MonoBehaviour
         UnitDie();
     }
 
-    private void UnitCapture() // 어느 한 지점으로 이동유닛 주둔 상태 / 죽을때까지 홀딩 상태 / 적이 가까이 오면 감지하고 공격
+    private void UnitCaptureMoving() // 어느 한 지점으로 이동유닛 주둔 상태 / 죽을때까지 홀딩 상태 / 적이 가까이 오면 감지하고 공격
     {
+        CapturePos = JHW_OrderManager.instance.DesinationAreaObj.transform.position;
 
+        navAgent.SetDestination(CapturePos);
 
-        CapturePos = JHW_GameManager.instance.CaptureAreaType[0].transform.position;
-
-
-
-
-        //Vector3 CaptureRandomPos;
-        //CaptureRandomPos = new Vector3(CapturePos.x,CapturePos.y,CapturePos.z);
-        
-        navAgent.SetDestination(JHW_GameManager.instance.CaptureAreaType[0].transform.position);
-        
+        if (navAgent.velocity.sqrMagnitude > 0.1f * 0.1f && navAgent.remainingDistance <= 1.0f) //도달했다
+        {
+            print("주둔지역 도착");
+            SetState(State.CaputureDetect);
+        }
     }
+
+    void UnitCapturerDectecting()
+    {
+        navAgent.isStopped = true;
+        StopCoroutine("CreateBullet");
+        neareastObject = FindNearestObjectzByLayer("EnemyTeam");
+
+        if(neareastObject!=null && Vector3.Distance(gameObject.transform.position, neareastObject.transform.position) <= unitinfo.ATTACK_RANGE)
+        {
+            SetState(State.CaptureAttack);
+        }
+    }
+
+    bool UnitCaptureAttackting()
+    {
+        if (neareastObject != null) transform.LookAt(neareastObject.transform);
+
+        switch (gameObject.name) // 유닛에 따라 다른 총알을 쓰도록
+        {
+            case "RifleMan(Clone)":
+                bulletnum = 0;
+                break;
+            case "Scout(Clone)":
+                bulletnum = 1;
+                break;
+            case "Sniper(Clone)":
+                bulletnum = 2;
+                break;
+            case "Artillery(Clone)":
+                bulletnum = 3;
+                break;
+            case "Heavy Weapon(Clone)":
+                bulletnum = 4;
+                break;
+            case "Armoured(Clone)":
+                bulletnum = 5;
+                break;
+            case "Tank(Clone)":
+                bulletnum = 6;
+                break;
+            case "Helicopter(Clone)":
+                bulletnum = 7;
+                break;
+            case "Raptor(Clone)":
+                bulletnum = 8;
+                break;
+        } //유닛마다 다른 총알
+
+
+        if (neareastObject == null || (Vector3.Distance(gameObject.transform.position,
+            neareastObject.transform.position) > unitinfo.ATTACK_RANGE)) 
+            //가까이 있는 오브젝트가 없거나 가까운 오브젝트가 사거리 안에 없을때
+        {
+            SetState(State.CaputureDetect); // 탐지상태로 간다
+            return true;
+        }
+
+        return false;
+    }
+
 
     float currentTime;
     float detectTime = 0.01f; //감지시간
@@ -281,6 +363,11 @@ public class JHW_UnitManager : MonoBehaviour
                 neareastObject = cols2[1].gameObject;
             }
         }
+
+        if(cols2.Length <1)
+        {
+            return;
+        }
         //int chooseIndex = -1;
 
         //if (chooseIndex == -1) //사거리 안에 있는 적이 없음
@@ -330,15 +417,6 @@ public class JHW_UnitManager : MonoBehaviour
             transform.LookAt(neareastObject.transform);
         }
 
-
-        //기지를 공격하던 중 다른 유닛이 생성되면 그 유닛 먼저 공격함
-        //if(neareastObject.name == "EnemyCommand" && cols[2].name !=null)
-        //{
-        //    print("111111111111111");
-        //}
-
-        //transform.LookAt(GameObject.FindWithTag("Enemy").transform);
-
         switch (gameObject.name) // 유닛에 따라 다른 총알을 쓰도록
         {
             case "RifleMan(Clone)":
@@ -380,7 +458,6 @@ public class JHW_UnitManager : MonoBehaviour
             StopCoroutine("CreateBullet");
             return true;
         }
-
 
         return false; //사거리 안에 적이있음
     }

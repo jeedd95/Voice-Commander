@@ -36,7 +36,6 @@ public class JHW_BulletMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        JHW_UnitInfo hitObj = other.gameObject.transform.parent.GetComponent<JHW_UnitInfo>(); //맞은 애의 유닛정보
 
 
         if (other.CompareTag("Wall"))
@@ -66,6 +65,8 @@ public class JHW_BulletMove : MonoBehaviour
 
         else if (other.CompareTag("Enemy") || other.CompareTag("Player")) // 적하고 총알이 부딪혔을때 데미지 계산식
         {
+            JHW_UnitInfo hitObj = other.gameObject.transform.parent.GetComponent<JHW_UnitInfo>(); //맞은 애의 유닛정보
+
             Destroy(gameObject); //적에게 부딪힌 총알을 삭제
 
             if (Random.Range(1, 100) > accuracyRate) //1~100 중에서 하나를 골라 명중률보다 높다면 안맞음으로 처리
@@ -121,7 +122,19 @@ public class JHW_BulletMove : MonoBehaviour
             JHW_GameManager.instance.Score += (int)damage;
             Destroy(gameObject);
         }
+        else if (other.CompareTag("PlayerTurret"))
+        {
+            JHW_Turret hitObj = other.GetComponent<JHW_Turret>();
+            hitObj.turretHp -= unitInfo.damage;
+            Destroy(gameObject);
+        }
+        else if (other.CompareTag("EnemyTurret"))
+        {
+            JHW_Turret hitObj = other.GetComponent<JHW_Turret>();
+            hitObj.turretHp -= unitInfo.damage;
+            Destroy(gameObject);
 
+        }
     }
 
     public void SetCreator(JHW_UnitManager unit)  //총알의 주인이 누구인지 알려주는 함수

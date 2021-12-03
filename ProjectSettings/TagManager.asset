@@ -10,6 +10,8 @@ TagManager:
   - PlayerCommand
   - EnemyCommand
   - CaptureArea
+  - PlayerTurret
+  - EnemyTurret
   layers:
   - Default
   - TransparentFX

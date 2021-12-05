@@ -307,7 +307,6 @@ public class JHW_UnitManager : MonoBehaviour
     {
         int layerMask = 1 << LayerMask.NameToLayer(layer);
         cols = Physics.OverlapSphere(transform.position, unitinfo.ATTACK_RANGE, layerMask); //공격 사거리 안에있는 적 인식
-
         if (layer == "Wall") cols = Physics.OverlapSphere(transform.position, float.MaxValue, layerMask); // 엄폐물을 찾을때는 전범위로 인식
         float dist = float.MaxValue;
         int chooseIndex = -1;

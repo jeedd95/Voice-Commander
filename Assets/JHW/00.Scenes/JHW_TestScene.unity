@@ -4617,7 +4617,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cbed27d0900784fb8183a6a21a2429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firePos: {fileID: 54514675}
   turretHp: 0
+  nearestUnit: {fileID: 0}
+  cols: []
 --- !u!1 &579277170
 GameObject:
   m_ObjectHideFlags: 0
@@ -7880,7 +7883,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cbed27d0900784fb8183a6a21a2429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firePos: {fileID: 1102814390}
   turretHp: 0
+  nearestUnit: {fileID: 0}
+  cols: []
 --- !u!1 &1178546650
 GameObject:
   m_ObjectHideFlags: 0

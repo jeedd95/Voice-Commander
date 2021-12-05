@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class JHW_GameManager : MonoBehaviour
 {
     public static JHW_GameManager instance; //싱글톤
+    public Slider slider;
 
     //public int[] unitMaxCount; // 나온 개별유닛의 총 개수
 
@@ -28,9 +29,8 @@ public class JHW_GameManager : MonoBehaviour
     public int medal;
     public GameObject[] CaptureAreaType; //주둔지역 타입 Gold, Cooldown,Special Gauge
     public GameObject CaptureArea;
-
+    public float windPower;
     
-
 
     public bool[] CoolDownReady; // 유닛 쿨타임이 다 돌았는지
     bool isClickSpecialGauge = false; //스폐셜 게이지를 쓰고있는지
@@ -39,6 +39,7 @@ public class JHW_GameManager : MonoBehaviour
     public bool isBuff_CoolDown;
     public bool isBuff_SpecialGauge;
     public bool isCaptureCreateMode;
+    bool Flag_wind;
 
 
     public Text scoreT; //점수 텍스트
@@ -108,7 +109,7 @@ public class JHW_GameManager : MonoBehaviour
 
     private void Start()
     {
-        //NowCaptureAreasList = new List<GameObject>();
+        windPower = 50.0f;
 
         currentPopulationArray = new int[_UnitLoad.Length]; //현재 인구수 배열
 
@@ -144,7 +145,17 @@ public class JHW_GameManager : MonoBehaviour
     private void Update()
     {
         //print("현재 인구수 : " + currentPopulation + " 전체 인구수 : " + wholePopulationLimit);
-       // print("isCaptureCreateMode : " + isCaptureCreateMode);
+        // print("isCaptureCreateMode : " + isCaptureCreateMode);
+        print(windPower);
+
+        slider.value = windPower; //바람의 세기를 슬라이더로 표현
+        if (!Flag_wind)
+        {
+            Flag_wind = true;
+            StartCoroutine("RandomWind");
+        }
+
+
 
         if (populationSum == false)
         {
@@ -467,12 +478,19 @@ public class JHW_GameManager : MonoBehaviour
 
     }
 
-
     public void ToggleCaptureMode() //버튼 클릭으로 점령유닛을 생성할 수 있음
     {
         isCaptureCreateMode = !isCaptureCreateMode;
     }
 
+    IEnumerator  RandomWind()
+    {
+        yield return new WaitForSeconds(5);
+        windPower += Random.Range(-10.0f, 10.0f);
+        if (windPower <= 0) windPower = 0;
+        if (windPower >= 100) windPower = 100;
+        Flag_wind = false;
+    }
     
 }
 

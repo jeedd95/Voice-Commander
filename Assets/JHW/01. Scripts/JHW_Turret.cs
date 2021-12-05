@@ -102,7 +102,10 @@ public class JHW_Turret : MonoBehaviour
         if (Physics.Raycast(firePos.transform.position, dir, out hit, MaxDistance))
         {
             Debug.DrawRay(firePos.transform.position , dir , Color.red,0.1f);
-            if(hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Player")) hit.transform.gameObject.GetComponent<JHW_UnitInfo>().health -= 50; //무조건 50 고정데미지
+            if(hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Player"))
+            {
+                hit.transform.gameObject.GetComponent<JHW_UnitInfo>().health -= 50; //무조건 50 고정데미지
+            }
         }
 
         isfire = false;

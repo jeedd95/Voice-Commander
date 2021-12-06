@@ -30,4 +30,11 @@ public class JHW_CheatManager : MonoBehaviour
         Time.timeScale = time[index];
         textSpeed.text = "x" + Time.timeScale;
     }
+
+    public void OnClickCheat()
+    {
+        JHW_GameManager.instance.Gold   += 999999;
+        JHW_GameManager.instance.specialGauge += 90;
+        JHW_GameManager.instance.medal += 9999;
+    }
 }

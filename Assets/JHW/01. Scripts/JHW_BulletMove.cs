@@ -32,7 +32,7 @@ public class JHW_BulletMove : MonoBehaviour
     void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
-        print("ÃÑ¾Ë ¼Óµµ : " + speed);
+       // print("ÃÑ¾Ë ¼Óµµ : " + speed);
 
         if(JHW_GameManager.instance.Flag_wind)
         {
@@ -158,14 +158,23 @@ public class JHW_BulletMove : MonoBehaviour
 
     void WindToBullet() //ÃÑ¾ËÀÌ ¹Ù¶÷ÀÇ ¿µÇâÀ» ¹ÞÀ½
     {
-        if(JHW_GameManager.instance.windPower <50 && unitInfo.isEnemy ==true) //½ð ³ðÀÌ Àû
+        //if(JHW_GameManager.instance.windPower <50 && unitInfo.isEnemy ==true) //½ð ³ðÀÌ Àû
+        //{
+        //    speed = -0.5f * JHW_GameManager.instance.windPower + 75;
+        //}
+        //else if (JHW_GameManager.instance.windPower > 50 && unitInfo.isEnemy == false) //½ð³ðÀÌ ¾Æ±º
+        //{
+        //    speed = 0.5f * JHW_GameManager.instance.windPower + 25;
+        //}
+        //else speed = 50;
+
+       if(unitInfo.isEnemy == true) //Àû±ºÀÏ¶§
         {
-            speed = -0.5f * JHW_GameManager.instance.windPower + 75;
+            speed = -0.5f * JHW_GameManager.instance.windPower + 75.0f;
         }
-        else if (JHW_GameManager.instance.windPower > 50 && unitInfo.isEnemy == false) //½ð³ðÀÌ ¾Æ±º
+       else
         {
-            speed = 0.5f * JHW_GameManager.instance.windPower + 25;
+            speed = 0.5f * JHW_GameManager.instance.windPower + 25.0f;
         }
-        else speed = 50;
     }
 }

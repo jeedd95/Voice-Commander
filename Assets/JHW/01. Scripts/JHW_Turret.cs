@@ -32,6 +32,7 @@ public class JHW_Turret : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         turretHp = 5000f;
         //um = JHW_UnitFactory.instance.GetComponent<JHW_UnitManager>();
         state = State.Detect;
@@ -40,8 +41,8 @@ public class JHW_Turret : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         //if (this.name == "TeamTurret") print(state);
-        if(hit.transform !=null) print(hit.transform);
 
         //if (this.name == "EnemyTurret") print("적군 터렛 상태 : " + state);
 
@@ -82,7 +83,6 @@ public class JHW_Turret : MonoBehaviour
 
     void ShootRay()
     {
-
         if (nearestUnit == null || Vector3.Distance(firePos.transform.position, nearestUnit.transform.position) > MaxDistance)
         {
             state = State.Detect;
@@ -93,7 +93,6 @@ public class JHW_Turret : MonoBehaviour
     IEnumerator FireRay()
     {
         dir = nearestUnit.transform.position - firePos.transform.position;
-
         yield return new WaitForSeconds(2);
 
         if (nearestUnit == null) //가까이에 있는 유닛이 없다면 기다리는걸 끝냄
@@ -102,12 +101,14 @@ public class JHW_Turret : MonoBehaviour
         if (Physics.Raycast(firePos.transform.position, dir, out hit, MaxDistance))
         {
             Debug.DrawRay(firePos.transform.position , dir , Color.red,0.1f);
-            if(hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Player"))
+           
+
+            if (hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Player"))
             {
                 hit.transform.gameObject.GetComponent<JHW_UnitInfo>().health -= 50; //무조건 50 고정데미지
             }
         }
-
+        
         isfire = false;
     }
 

@@ -211,6 +211,7 @@ MonoBehaviour:
   expText: {fileID: 2084025644}
   MedalText: {fileID: 581677228}
   GoldRateUpText: {fileID: 2104147036}
+  WindText: {fileID: 530203945}
   hidingUnits: []
   RushUnits: []
   _cooldown:

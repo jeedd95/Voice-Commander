@@ -121,7 +121,7 @@ public class JHW_UnitManager : MonoBehaviour
     {
         if (unitinfo.isEnemy == false)
         {
-            print(state);
+            //print(state);
            // print(navAgent.remainingDistance);
             //print("내 유닛 사거리 : " + unitinfo.ATTACK_RANGE);
             //print("내 유닛 공격속도 : " + unitinfo.ATTACK_SPEED);

@@ -39,7 +39,7 @@ public class JHW_GameManager : MonoBehaviour
     public bool isBuff_CoolDown;
     public bool isBuff_SpecialGauge;
     public bool isCaptureCreateMode;
-    bool Flag_wind;
+    public bool Flag_wind;
 
 
     public Text scoreT; //점수 텍스트
@@ -62,6 +62,7 @@ public class JHW_GameManager : MonoBehaviour
     public Text expText;
     public Text MedalText;
     public Text GoldRateUpText;
+    public Text WindText;
 
     public List<JHW_UnitManager> hidingUnits;
     public List<JHW_UnitManager> RushUnits;
@@ -109,7 +110,7 @@ public class JHW_GameManager : MonoBehaviour
 
     private void Start()
     {
-        windPower = 50.0f;
+        windPower =50.0f;
 
         currentPopulationArray = new int[_UnitLoad.Length]; //현재 인구수 배열
 
@@ -146,9 +147,10 @@ public class JHW_GameManager : MonoBehaviour
     {
         //print("현재 인구수 : " + currentPopulation + " 전체 인구수 : " + wholePopulationLimit);
         // print("isCaptureCreateMode : " + isCaptureCreateMode);
-        print(windPower);
 
         slider.value = windPower; //바람의 세기를 슬라이더로 표현
+
+
         if (!Flag_wind)
         {
             Flag_wind = true;
@@ -185,7 +187,7 @@ public class JHW_GameManager : MonoBehaviour
         TextManager();
         LevelUp();
         InstantiateCaptureArea();
-
+        WindTextMove();
         
 
         //for (int i = 0; i < unitCurrentCount.Length; i++)
@@ -491,6 +493,41 @@ public class JHW_GameManager : MonoBehaviour
         if (windPower >= 100) windPower = 100;
         Flag_wind = false;
     }
-    
+
+    public bool isWindOn;
+
+    void WindTextMove()
+    {
+        if(windPower<50)
+        {
+            if(isWindOn==false)
+            {
+                isWindOn = true;
+                StartCoroutine(BB("<"));
+
+            }
+        }
+        else if (windPower ==50)
+        {
+            WindText.text = "-";
+        }
+        else
+        {
+            if (isWindOn == false)
+            {
+                isWindOn = true;
+                StartCoroutine(BB(">"));
+            }
+        }
+    }
+
+    IEnumerator BB(string dir)
+    {
+        WindText.text = dir;
+        yield return new WaitForSeconds(1);
+        WindText.text = dir + "\t" + dir;
+        yield return new WaitForSeconds(1);
+        isWindOn = false;
+    }
 }
 

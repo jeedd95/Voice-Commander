@@ -32,6 +32,12 @@ public class JHW_BulletMove : MonoBehaviour
     void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
+        print("총알 속도 : " + speed);
+
+        if(JHW_GameManager.instance.Flag_wind)
+        {
+            WindToBullet();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -146,4 +152,20 @@ public class JHW_BulletMove : MonoBehaviour
        // attackerName = unit.gameObject.name;
     }
 
+    //바람의 세기가 50미만일때는 쏜놈이 에너미이면 총알의 속도를 증가
+    //반대면 우리팀의 총알의 속도를 증가
+    //총알의 속도 비율은 바람이 50(변화량0)일때 그대로 50 100이거나 0일때(최대) 75(1.5배)
+
+    void WindToBullet() //총알이 바람의 영향을 받음
+    {
+        if(JHW_GameManager.instance.windPower <50 && unitInfo.isEnemy ==true) //쏜 놈이 적
+        {
+            speed = -0.5f * JHW_GameManager.instance.windPower + 75;
+        }
+        else if (JHW_GameManager.instance.windPower > 50 && unitInfo.isEnemy == false) //쏜놈이 아군
+        {
+            speed = 0.5f * JHW_GameManager.instance.windPower + 25;
+        }
+        else speed = 50;
+    }
 }

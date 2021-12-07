@@ -23,6 +23,7 @@ public class JHW_UnitInfo : MonoBehaviour
     public bool UseDefensive; //방어태세를 썼는지 안썼는지
     public bool UseOffensive; //공격 태세를 썼는지 안썼는지
     public bool isCaptureUnit; //점령유닛인지
+    public bool inSmoke;
 
     public bool isEnemy; //우리팀인지 적팀인지
     public string unitName; //이름
@@ -48,7 +49,7 @@ public class JHW_UnitInfo : MonoBehaviour
     {
         get
         {
-            if (isBehindWall) 
+            if (isBehindWall)
             {
                 return attackRange * 1.3f;
             }
@@ -60,7 +61,7 @@ public class JHW_UnitInfo : MonoBehaviour
     {
         get
         {
-            if(UseOffensive)
+            if (UseOffensive)
             {
                 return moveSpeed * 1.5f;
             }
@@ -79,6 +80,19 @@ public class JHW_UnitInfo : MonoBehaviour
         }
     }
 
-    
+    public float ACCURACYRATE
+    {
+        get
+        {
+            if (inSmoke)
+            {
+                return accuracyRate * 0.5f;
+            }
+            return accuracyRate;
+        }
+    }
+
+
+
 }
 

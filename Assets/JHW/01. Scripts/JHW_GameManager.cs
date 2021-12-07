@@ -8,6 +8,7 @@ public class JHW_GameManager : MonoBehaviour
 {
     public static JHW_GameManager instance; //싱글톤
     public Slider slider;
+    Animation anim;
 
     //public int[] unitMaxCount; // 나온 개별유닛의 총 개수
 
@@ -30,6 +31,8 @@ public class JHW_GameManager : MonoBehaviour
     public GameObject[] CaptureAreaType; //주둔지역 타입 Gold, Cooldown,Special Gauge
     public GameObject CaptureArea;
     public float windPower;
+    public GameObject PlayerSkill_Bomb_prefabs;
+    public GameObject PlayerSkill_Smoke_prefabs;
     
 
     public bool[] CoolDownReady; // 유닛 쿨타임이 다 돌았는지
@@ -40,6 +43,7 @@ public class JHW_GameManager : MonoBehaviour
     public bool isBuff_SpecialGauge;
     public bool isCaptureCreateMode;
     public bool Flag_wind;
+    public bool isPlayerSkillMode;
 
 
     public Text scoreT; //점수 텍스트
@@ -188,7 +192,9 @@ public class JHW_GameManager : MonoBehaviour
         LevelUp();
         InstantiateCaptureArea();
         WindTextMove();
-        
+
+        PlayerSkill_Bomb();
+        PlayerSkill_Smoke();
 
         //for (int i = 0; i < unitCurrentCount.Length; i++)
         //{
@@ -485,7 +491,12 @@ public class JHW_GameManager : MonoBehaviour
         isCaptureCreateMode = !isCaptureCreateMode;
     }
 
-    IEnumerator  RandomWind()
+    public void TogglePlayerSkillMode()
+    {
+        isPlayerSkillMode = !isPlayerSkillMode;
+    }
+
+    IEnumerator RandomWind()
     {
         yield return new WaitForSeconds(5);
         windPower += Random.Range(-10.0f, 10.0f);
@@ -503,7 +514,7 @@ public class JHW_GameManager : MonoBehaviour
             if(isWindOn==false)
             {
                 isWindOn = true;
-                StartCoroutine(BB("<"));
+                StartCoroutine(WindTextAnim("<"));
 
             }
         }
@@ -516,18 +527,44 @@ public class JHW_GameManager : MonoBehaviour
             if (isWindOn == false)
             {
                 isWindOn = true;
-                StartCoroutine(BB(">"));
+                StartCoroutine(WindTextAnim(">"));
             }
         }
     }
 
-    IEnumerator BB(string dir)
+    IEnumerator WindTextAnim(string dir)
     {
         WindText.text = dir;
         yield return new WaitForSeconds(1);
         WindText.text = dir + "\t" + dir;
         yield return new WaitForSeconds(1);
         isWindOn = false;
+    }
+
+
+    void PlayerSkill_Bomb()
+    {
+        if(isPlayerSkillMode && JHW_OrderManager.instance.DesinationAreaObj !=null && Input.GetKeyDown(KeyCode.Z))
+        {
+            print("플레이어 스킬 _ 폭격");
+            //isPlayerSkillMode = false;
+            GameObject.Find("Canvas/PlayerSkillMode").GetComponent<Toggle>().isOn = false;
+            GameObject PS_B = Instantiate(PlayerSkill_Bomb_prefabs);
+            PS_B.transform.position = JHW_OrderManager.instance.DesinationAreaObj.transform.position;
+            anim = PS_B.GetComponent<Animation>();
+            anim.Play();
+        }
+    }
+    void PlayerSkill_Smoke()
+    {
+        if (isPlayerSkillMode && JHW_OrderManager.instance.DesinationAreaObj != null && Input.GetKeyDown(KeyCode.X))
+        {
+            print("플레이어 스킬 _ 연막");
+            //isPlayerSkillMode = false;
+            GameObject.Find("Canvas/PlayerSkillMode").GetComponent<Toggle>().isOn = false;
+            GameObject PS_S = Instantiate(PlayerSkill_Smoke_prefabs);
+            PS_S.transform.position = JHW_OrderManager.instance.DesinationAreaObj.transform.position;
+        }
     }
 }
 

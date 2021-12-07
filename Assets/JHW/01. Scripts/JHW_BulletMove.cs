@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class JHW_BulletMove : MonoBehaviour
 {
-    float speed = 50; //총알이 날아가는 속도
+    float speed = 50; //총알이 날아가는 기본속도
 
     JHW_UnitManager unit; // 총알을 쏜 unit 컴포넌트
     JHW_UnitInfo unitInfo;
@@ -148,7 +148,7 @@ public class JHW_BulletMove : MonoBehaviour
         this.unit = unit;
         unitInfo = unit.GetComponent<JHW_UnitInfo>(); //쏜 애의 유닛 정보
         this.damage = unitInfo.damage;
-        this.accuracyRate = unitInfo.accuracyRate;
+        this.accuracyRate = unitInfo.ACCURACYRATE;
        // attackerName = unit.gameObject.name;
     }
 

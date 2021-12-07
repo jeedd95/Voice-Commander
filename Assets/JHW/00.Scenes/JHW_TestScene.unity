@@ -187,6 +187,8 @@ MonoBehaviour:
   - {fileID: 4380045233681440093, guid: b8de0f8e7a42f584faf8b6f8ac5f15d6, type: 3}
   CaptureArea: {fileID: 0}
   windPower: 0
+  PlayerSkill_Bomb_prefabs: {fileID: 8370819899733058362, guid: c36c68dc28c8ade4b85aee47551022c0, type: 3}
+  PlayerSkill_Smoke_prefabs: {fileID: 0}
   CoolDownReady: 
   populationSum: 0
   isBuff_Gold: 0
@@ -194,6 +196,7 @@ MonoBehaviour:
   isBuff_SpecialGauge: 0
   isCaptureCreateMode: 0
   Flag_wind: 0
+  isPlayerSkillMode: 0
   scoreT: {fileID: 216708796}
   goldT: {fileID: 270329972}
   specialgageT: {fileID: 488162192}
@@ -4154,7 +4157,7 @@ RectTransform:
   - {fileID: 1199111003}
   - {fileID: 188673356}
   m_Father: {fileID: 1832704182}
-  m_RootOrder: 20
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4210,7 +4213,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 34825069}
         m_TargetAssemblyTypeName: JHW_GameManager, Assembly-CSharp
-        m_MethodName: ToggleCaptureMode
+        m_MethodName: TogglePlayerSkillMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4251,7 +4254,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1832704182}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5254,7 +5257,7 @@ RectTransform:
   m_Children:
   - {fileID: 541661574}
   m_Father: {fileID: 1832704182}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6226,7 +6229,7 @@ RectTransform:
   - {fileID: 328885089}
   - {fileID: 1291734129}
   m_Father: {fileID: 1832704182}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7482,7 +7485,7 @@ RectTransform:
   m_Children:
   - {fileID: 1652900591}
   m_Father: {fileID: 1832704182}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8169,7 +8172,7 @@ RectTransform:
   - {fileID: 2048932685}
   - {fileID: 444130664}
   m_Father: {fileID: 1832704182}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13019,13 +13022,13 @@ RectTransform:
   - {fileID: 2084025643}
   - {fileID: 581677227}
   - {fileID: 1434216877}
+  - {fileID: 511164756}
   - {fileID: 1004804440}
   - {fileID: 862300673}
   - {fileID: 1845238462}
   - {fileID: 714561244}
   - {fileID: 530203944}
   - {fileID: 578094071}
-  - {fileID: 511164756}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13125,7 +13128,7 @@ RectTransform:
   m_LocalScale: {x: 0.8504433, y: 0.8504433, z: 0.8504433}
   m_Children: []
   m_Father: {fileID: 1832704182}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

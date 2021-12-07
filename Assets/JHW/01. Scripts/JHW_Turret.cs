@@ -10,6 +10,7 @@ public class JHW_Turret : MonoBehaviour
     //JHW_UnitManager um;
     public GameObject firePos; //쏘는 곳
     RaycastHit hit; //맞은놈
+    LineRenderer lr;
 
     public float turretHp;
     float MaxDistance = 40; //최대 사거리 = 감지거리
@@ -32,6 +33,11 @@ public class JHW_Turret : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        lr=gameObject.GetComponent<LineRenderer>();
+        //lr.startWidth = 0.3f;
+        //lr.startWidth = 0.3f;
+        //lr.startColor = Color.red;
+        //lr.endColor = Color.red;
 
         turretHp = 5000f;
         //um = JHW_UnitFactory.instance.GetComponent<JHW_UnitManager>();
@@ -41,7 +47,7 @@ public class JHW_Turret : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         //if (this.name == "TeamTurret") print(state);
 
         //if (this.name == "EnemyTurret") print("적군 터렛 상태 : " + state);
@@ -100,9 +106,11 @@ public class JHW_Turret : MonoBehaviour
 
         if (Physics.Raycast(firePos.transform.position, dir, out hit, MaxDistance))
         {
-            Debug.DrawRay(firePos.transform.position , dir , Color.red,0.1f);
-           
-
+            lr.enabled = true;
+           // Debug.DrawRay(firePos.transform.position , dir , Color.red,0.1f);
+            lr.SetPosition(0, firePos.transform.position);
+            lr.SetPosition(1, nearestUnit.transform.position);
+            Invoke("InvokeRay", 0.1f);
             if (hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Player"))
             {
                 hit.transform.gameObject.GetComponent<JHW_UnitInfo>().health -= 50; //무조건 50 고정데미지
@@ -110,6 +118,11 @@ public class JHW_Turret : MonoBehaviour
         }
         
         isfire = false;
+    }
+
+    void InvokeRay()
+    {
+        lr.enabled = false;
     }
 
 

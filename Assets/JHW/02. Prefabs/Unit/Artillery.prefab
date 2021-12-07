@@ -146,6 +146,8 @@ MonoBehaviour:
   isBehindWall: 0
   UseDefensive: 0
   UseOffensive: 0
+  isCaptureUnit: 0
+  inSmoke: 0
   isEnemy: 0
   unitName: Artillery
   unitScale: 0
@@ -157,7 +159,7 @@ MonoBehaviour:
   health: 100
   moveSpeed: 5
   attackSpeed: 66.6
-  attackRange: 120
+  attackRange: 100
   accuracyRate: 70
   coolDown: 10
   price: 10
@@ -190,6 +192,9 @@ MonoBehaviour:
   FirePos: {fileID: 6750816147189487928}
   TeamCommand: {fileID: 8146030571281266687, guid: e7e27fd7d1615ed4cb59eccd3dd8512c, type: 3}
   enemyCommand: {fileID: 8283047153395507706, guid: 3849ca7fb7c99824bb4302725f61b4a7, type: 3}
+  targetpos: {x: 0, y: 0, z: 0}
+  cols: []
+  cols2: []
   state: 0
   neareastObject: {fileID: 0}
   neareastWall: {fileID: 0}

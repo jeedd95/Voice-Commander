@@ -188,7 +188,7 @@ MonoBehaviour:
   CaptureArea: {fileID: 0}
   windPower: 0
   PlayerSkill_Bomb_prefabs: {fileID: 8370819899733058362, guid: c36c68dc28c8ade4b85aee47551022c0, type: 3}
-  PlayerSkill_Smoke_prefabs: {fileID: 0}
+  PlayerSkill_Smoke_prefabs: {fileID: 4332216781993252345, guid: af13e69adaedb2a4a8d90afb99073168, type: 3}
   CoolDownReady: 
   populationSum: 0
   isBuff_Gold: 0

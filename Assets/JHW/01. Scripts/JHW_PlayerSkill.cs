@@ -44,7 +44,7 @@ public class JHW_PlayerSkill : MonoBehaviour
             {
                 other.GetComponentInParent<JHW_UnitInfo>().health -= bombDamage;
             }
-            if (gameObject.name == "Smoke")
+            if (gameObject.name == "SmokeHit" || gameObject.name == "SmokeHit2")
             {
                 other.GetComponentInParent<JHW_UnitInfo>().inSmoke = true;
             }
@@ -52,7 +52,13 @@ public class JHW_PlayerSkill : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        other.GetComponentInParent<JHW_UnitInfo>().inSmoke = false;
+        if (other.CompareTag("Enemy"))
+        {
+            if (gameObject.name == "SmokeHit" || gameObject.name == "SmokeHit2")
+            {
+                other.GetComponentInParent<JHW_UnitInfo>().inSmoke = false;
+            }
+        }
 
     }
 }

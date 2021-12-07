@@ -119,13 +119,15 @@ public class JHW_UnitManager : MonoBehaviour
 
     void Update()
     {
-        if (unitinfo.isEnemy == false)
+        if (unitinfo.isEnemy)
         {
             //print(state);
-           // print(navAgent.remainingDistance);
+            // print(navAgent.remainingDistance);
             //print("내 유닛 사거리 : " + unitinfo.ATTACK_RANGE);
             //print("내 유닛 공격속도 : " + unitinfo.ATTACK_SPEED);
             //print("내 유닛 이동속도 : " + unitinfo.MOVE_SPEED) ;
+            print(unitinfo.inSmoke);
+            print(unitinfo.ACCURACYRATE);
         }
 
 

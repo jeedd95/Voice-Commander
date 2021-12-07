@@ -553,6 +553,10 @@ public class JHW_GameManager : MonoBehaviour
             PS_B.transform.position = JHW_OrderManager.instance.DesinationAreaObj.transform.position;
             anim = PS_B.GetComponent<Animation>();
             anim.Play();
+            if(anim.isPlaying==false)
+            {
+                Destroy(PS_B);
+            }
         }
     }
     void PlayerSkill_Smoke()
@@ -564,6 +568,12 @@ public class JHW_GameManager : MonoBehaviour
             GameObject.Find("Canvas/PlayerSkillMode").GetComponent<Toggle>().isOn = false;
             GameObject PS_S = Instantiate(PlayerSkill_Smoke_prefabs);
             PS_S.transform.position = JHW_OrderManager.instance.DesinationAreaObj.transform.position;
+            anim = PS_S.GetComponent<Animation>();
+            anim.Play();
+            if (anim.isPlaying == false)
+            {
+                Destroy(PS_S);
+            }
         }
     }
 }

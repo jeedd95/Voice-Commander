@@ -15,6 +15,7 @@ public class JHW_UnitFactory : MonoBehaviour
 
 
     public Transform[] MyCreatePoint; //우리 생성포인트 3개
+    public Transform[] MyCreatePoint_Sky; //우리 공중 생성포인트 3개
     public Transform[] EnemyCreatePoint; //적팀 생성 포인트 3개
 
     public GameObject[] Units; //유닛 프리팹들
@@ -212,7 +213,7 @@ public class JHW_UnitFactory : MonoBehaviour
         int randomNum = Random.Range(0, 3); // 3개중에 하나를 선택해서 생성
         int randomNum2 = Random.Range(0, 9); // 9개 중에 하나를 선택해서 생성
 
-        GameObject SelectUnit = Instantiate(Units[randomNum2]); // 1~9번까지의 유닛중에 하나 생성
+        GameObject SelectUnit = Instantiate(Units[1]); // 1~9번까지의 유닛중에 하나 생성
         SelectUnit.GetComponent<JHW_UnitInfo>().isEnemy = true; //적이다
         SelectUnit.tag = "Enemy";
         SelectUnit.layer = LayerMask.NameToLayer("EnemyTeam");
@@ -276,8 +277,18 @@ public class JHW_UnitFactory : MonoBehaviour
         col.gameObject.tag = SelectUnit.tag;
         col.gameObject.layer = SelectUnit.layer;
 
-        Transform mcp = MyCreatePoint[randomNum]; // 1~3번 생성포인트 중에 하나 생성
-        SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
+        
+        
+        if(SelectUnit.GetComponent<JHW_UnitInfo>().isAirForce==true)
+        {
+            Transform mcp = MyCreatePoint_Sky[randomNum]; // 1~3번 생성포인트 중에 하나 생성
+            SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
+        }
+        else
+        {
+            Transform mcp = MyCreatePoint[randomNum]; // 1~3번 생성포인트 중에 하나 생성
+            SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
+        }
 
         myUnits.Add(SelectUnit.GetComponent<JHW_UnitManager>()); //생성하면 리스트에 넣는다
     }

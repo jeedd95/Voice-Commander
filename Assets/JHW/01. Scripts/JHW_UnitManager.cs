@@ -21,8 +21,10 @@ public class JHW_UnitManager : MonoBehaviour
     public Vector3 targetpos; //벽 뒤 좌표
     // public bool closedWall;
     public Collider[] cols;
+    public List<Collider> colsTemp;
     [SerializeField]
     Collider[] cols2;
+
 
     Vector3 CapturePos;
 
@@ -43,6 +45,7 @@ public class JHW_UnitManager : MonoBehaviour
 
     void Start()
     {
+        colsTemp = new List<Collider>();
 
         unitinfo = GetComponent<JHW_UnitInfo>();
         navAgent = GetComponent<NavMeshAgent>();
@@ -282,6 +285,7 @@ public class JHW_UnitManager : MonoBehaviour
         {
             if (unitinfo.isEnemy == false) neareastObject = FindNearestObjectzByLayer("EnemyTeam");
             if (unitinfo.isEnemy == true) neareastObject = FindNearestObjectzByLayer("PlayerTeam");
+
             currentTime = 0;
 
 
@@ -303,6 +307,8 @@ public class JHW_UnitManager : MonoBehaviour
             }
         }
     }
+
+
     public GameObject FindNearestObjectzByLayer(string layer) //가장 가까운 오브젝트 레이어로 찾기
     {
         int layerMask = 1 << LayerMask.NameToLayer(layer);
@@ -311,33 +317,35 @@ public class JHW_UnitManager : MonoBehaviour
         float dist = float.MaxValue;
         int chooseIndex = -1;
 
-        for (int i = 0; i < cols.Length; i++)
+        for (int i = 0; i < cols.Length; i++) //가장 가까운 애의 인덱스 부여
         {
             float temp = Vector3.Distance(transform.position, cols[i].transform.position);
-            if (temp < dist)
-            {
-                dist = temp;
-                chooseIndex = i;
-            }
+            
+                if (temp < dist)
+                {
+                    dist = temp;
+                    chooseIndex = i;
+                }
         }
+
+        //if (!unitinfo.canSkyAttack && cols[i].gameObject.GetComponentInParent<JHW_UnitInfo>().isAirForce)
+        //{
+        //    print("11111111111111111111");
+        //}
+        //if (!unitinfo.canGroundAttack && !cols[i].gameObject.GetComponentInParent<JHW_UnitInfo>().isAirForce)
+        //{
+        //    print("222222222222222222");
+        //}
+
 
         if (chooseIndex == -1) //사거리 안에 있는 적이 없음
         {
             return null;
         }
-        return cols[chooseIndex].gameObject;
-
-        //return cols.OrderBy(obj =>
-        //{
-        //    return Vector3.Distance(transform.position, obj.transform.position);
-        //}).FirstOrDefault().gameObject;
-
-        //var objects = GameObject.FindGameObjectsWithTag(tag).ToList();
-        //return objects.OrderBy(obj =>
-        //{
-        //    return Vector3.Distance(transform.position, obj.transform.position);
-        //})
-        //.FirstOrDefault(); //List의 첫번째 요소를 반환, 비어있으면 null을 반환
+        else
+        {
+            return cols[chooseIndex].gameObject; // = nearestObject
+        }
     }
 
     public void AllNearestObjectByLayer(string layer)
@@ -347,23 +355,27 @@ public class JHW_UnitManager : MonoBehaviour
         int layerMask = 1 << LayerMask.NameToLayer(layer);
         cols2 = Physics.OverlapSphere(transform.position, unitinfo.ATTACK_RANGE, layerMask);
 
-        if (cols2[0].name == "EnemyCommand")
+        if(cols2.Length>1) //cols2가 없지 않다
         {
-            if (cols2.Length > 1 && cols2[1] != null)
+            if (cols2[0].name == "EnemyCommand"  || cols2[0].name == "EnemyTurret")
             {
-                neareastObject = cols2[1].gameObject;
+                if (cols2[1] != null)
+                {
+                    neareastObject = cols2[1].gameObject;
+                    
+                }
+            }
+
+            if (cols2[0].name == "TeamCommand" || cols2[0].name == "TeamTurret")
+            {
+                if (cols2[1] != null)
+                {
+                    neareastObject = cols2[1].gameObject;
+                }
             }
         }
 
-        if (cols2[0].name == "TeamCommand")
-        {
-            if (cols2.Length > 1 && cols2[1] != null)
-            {
-                neareastObject = cols2[1].gameObject;
-            }
-        }
-
-        if(cols2.Length <1)
+        if (cols2.Length <1)
         {
             return;
         }
@@ -468,7 +480,7 @@ public class JHW_UnitManager : MonoBehaviour
         if (neareastObject == null) //가까이에 있는 유닛이 없다면 기다리는걸 끝냄
             yield break;
 
-        GameObject bullet = GameObject.Instantiate(Bullet[bulletnum]); //유닛에 따라 다른 총알쓰기
+        GameObject bullet = Instantiate(Bullet[bulletnum]); //유닛에 따라 다른 총알쓰기
         bullet.transform.position = FirePos.transform.position; //총알의 위치를 발사 위치랑 일치
         Vector3 dir = neareastObject.transform.position - FirePos.transform.position; //제일 가까운애랑 나랑의 벡터
         dir.Normalize();

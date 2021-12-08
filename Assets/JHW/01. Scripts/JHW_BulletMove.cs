@@ -8,7 +8,7 @@ public class JHW_BulletMove : MonoBehaviour
     float speed = 50; //ÃÑ¾ËÀÌ ³¯¾Æ°¡´Â ±âº»¼Óµµ
 
     JHW_UnitManager unit; // ÃÑ¾ËÀ» ½ð unit ÄÄÆ÷³ÍÆ®
-    JHW_UnitInfo unitInfo;
+    JHW_UnitInfo unitInfo; //½ð ¾ÖÀÇ À¯´Ö Á¤º¸
     JHW_UnitManager um;
     private float damage;
     private float accuracyRate;
@@ -18,8 +18,12 @@ public class JHW_BulletMove : MonoBehaviour
     float defensiveDamage;
     //bool isTeam;
 
+
+
+
     private void Start()
     {
+
         rate = new float[][] {
                 new float[]{1,1,1},
                 new float[]{0.5f,0.75f,1},
@@ -28,13 +32,12 @@ public class JHW_BulletMove : MonoBehaviour
 
        um= GameObject.Find("UnitFactory").GetComponent<JHW_UnitManager>();
     }
-    Vector3 pos;
+
     void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
-       // print("ÃÑ¾Ë ¼Óµµ : " + speed);
-
-        if(JHW_GameManager.instance.Flag_wind)
+        // print("ÃÑ¾Ë ¼Óµµ : " + speed);
+        if (JHW_GameManager.instance.Flag_wind)
         {
             WindToBullet();
         }
@@ -177,4 +180,6 @@ public class JHW_BulletMove : MonoBehaviour
             speed = 0.5f * JHW_GameManager.instance.windPower + 25.0f;
         }
     }
+
+
 }

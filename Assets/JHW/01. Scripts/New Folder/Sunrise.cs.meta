@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 54cd1064b0f89594ba324f3507f8cac1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - sunrise: {fileID: 2210797215086569508, guid: 2687df9a8c739f74b8239ee0ab08622c, type: 3}
+  - sunset: {fileID: 5647470164626226001, guid: 538823b6104c109419b566c1a8516303, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -8,7 +8,7 @@ public class Sunrise : MonoBehaviour
     public Transform sunset; //포물선 종료위치
     public float journeyTime = 1.0F; //시작위치에서 종료위치까지 도달하는 시간, 값이 높을수록 느리게 간다.
     private float startTime;
-    public float reduceHeight = 1f; //Center값을 줄이기, 해당 값이 높을수록 포물선의 높이는 낮아진다.
+    public float reduceHeight = 0.2f; //Center값을 줄이기, 해당 값이 높을수록 포물선의 높이는 낮아진다.
 
     void Start()
     {

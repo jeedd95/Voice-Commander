@@ -68,13 +68,13 @@ public class JHW_UnitInfo : MonoBehaviour
             return moveSpeed;
         }
     }
-    public float ATTACK_SPEED  //UseOffensive를 썻을 경우 공격속도 30퍼 증가
+    public float ATTACK_SPEED  //UseOffensive를 썻을 경우 공격속도 35퍼 증가
     {
         get
         {
             if (UseOffensive)
             {
-                return attackSpeed * 1.3f;
+                return attackSpeed * 1.35f;
             }
             return attackSpeed;
         }

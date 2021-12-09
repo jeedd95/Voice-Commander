@@ -54,12 +54,12 @@ public class JHW_UnitManager : MonoBehaviour
         navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance; //유닛 겹치기
 
         SetState(State.Move); // 초기 상태
-        if (JHW_GameManager.instance.isCaptureCreateMode && unitinfo.isEnemy==false)
+        if (JHW_GameManager.instance.isCaptureCreateMode && unitinfo.isEnemy == false && !unitinfo.isAirForce)
         {
             SetState(State.CaptureMove); //점령 모드로 생성된 유닛은 점령상태로 초기화
             unitinfo.isCaptureUnit = true;
             GameObject.Find("Canvas/CaptureMode").GetComponent<Toggle>().isOn = false;
-        } 
+        }
     }
 
     public void SetState(State next)
@@ -85,7 +85,7 @@ public class JHW_UnitManager : MonoBehaviour
             {
                 navAgent.isStopped = false;  // 이동한다
             }
-            
+
         }
 
         if (state == State.Hide || state == State.HideAttack) //방어태세를 했을때
@@ -117,7 +117,7 @@ public class JHW_UnitManager : MonoBehaviour
                 JHW_GameManager.instance.hidingUnits[i].unitinfo.isBehindWall = false;
             }
         }
-        
+
     }
 
     void Update()
@@ -131,10 +131,9 @@ public class JHW_UnitManager : MonoBehaviour
             //print("내 유닛 이동속도 : " + unitinfo.MOVE_SPEED) ;
         }
 
-
         navAgent.speed = unitinfo.MOVE_SPEED; //nav mesh와 속도 동기화
 
-        if(unitinfo.isEnemy==false && Vector3.Distance(gameObject.transform.position,targetpos) <=1)
+        if (unitinfo.isEnemy == false && Vector3.Distance(gameObject.transform.position, targetpos) <= 1)
         {
             unitinfo.isBehindWall = true;
         }
@@ -163,7 +162,7 @@ public class JHW_UnitManager : MonoBehaviour
                 break;
 
             case State.CaptureAttack:
-                if(UnitCaptureAttackting()==false)
+                if (UnitCaptureAttackting() == false)
                 {
                     if (isfire == false) //총을 쏘고있지 않다면 총을 쏜다
                     {
@@ -222,7 +221,7 @@ public class JHW_UnitManager : MonoBehaviour
         StopCoroutine("CreateBullet");
         neareastObject = FindNearestObjectzByLayer("EnemyTeam");
 
-        if(neareastObject!=null && Vector3.Distance(gameObject.transform.position, neareastObject.transform.position) <= unitinfo.ATTACK_RANGE)
+        if (neareastObject != null && Vector3.Distance(gameObject.transform.position, neareastObject.transform.position) <= unitinfo.ATTACK_RANGE)
         {
             SetState(State.CaptureAttack);
         }
@@ -265,8 +264,8 @@ public class JHW_UnitManager : MonoBehaviour
 
 
         if (neareastObject == null || (Vector3.Distance(gameObject.transform.position,
-            neareastObject.transform.position) > unitinfo.ATTACK_RANGE)) 
-            //가까이 있는 오브젝트가 없거나 가까운 오브젝트가 사거리 안에 없을때
+            neareastObject.transform.position) > unitinfo.ATTACK_RANGE))
+        //가까이 있는 오브젝트가 없거나 가까운 오브젝트가 사거리 안에 없을때
         {
             SetState(State.CaputureDetect); // 탐지상태로 간다
             return true;
@@ -319,23 +318,31 @@ public class JHW_UnitManager : MonoBehaviour
 
         for (int i = 0; i < cols.Length; i++) //가장 가까운 애의 인덱스 부여
         {
-            float temp = Vector3.Distance(transform.position, cols[i].transform.position);
-            
-                if (temp < dist)
-                {
-                    dist = temp;
-                    chooseIndex = i;
-                }
-        }
+            if (cols[i].transform.parent != null)
+            {
 
-        //if (!unitinfo.canSkyAttack && cols[i].gameObject.GetComponentInParent<JHW_UnitInfo>().isAirForce)
-        //{
-        //    print("11111111111111111111");
-        //}
-        //if (!unitinfo.canGroundAttack && !cols[i].gameObject.GetComponentInParent<JHW_UnitInfo>().isAirForce)
-        //{
-        //    print("222222222222222222");
-        //}
+                if (!unitinfo.canSkyAttack && cols[i].GetComponentInParent<JHW_UnitInfo>().isAirForce)
+                {
+                    print("공중공격 할 수 없지만 공중 유닛 발견");
+                    continue;
+                }
+                if (!unitinfo.canGroundAttack && !cols[i].gameObject.GetComponentInParent<JHW_UnitInfo>().isAirForce)
+                {
+                    print("지상 공격을 할 수 없지만 지상 유닛 발견");
+                    continue;
+                }
+
+            }
+
+
+            float temp = Vector3.Distance(transform.position, cols[i].transform.position);
+
+            if (temp < dist)
+            {
+                dist = temp;
+                chooseIndex = i;
+            }
+        }
 
 
         if (chooseIndex == -1) //사거리 안에 있는 적이 없음
@@ -348,37 +355,57 @@ public class JHW_UnitManager : MonoBehaviour
         }
     }
 
-    public void AllNearestObjectByLayer(string layer)
+    public void AllNearestObjectByLayer(string layer) //Attack 상태일때 실행됨
     {
         //모든 적들을 찾았다 근데 배열의 첫번째 요소가 커맨드센터이고 두번째가 병력일경우는 공격을 병력한테 한다
         //nearestObject를 두번째 요소로 한다
         int layerMask = 1 << LayerMask.NameToLayer(layer);
         cols2 = Physics.OverlapSphere(transform.position, unitinfo.ATTACK_RANGE, layerMask);
 
-        if(cols2.Length>1) //cols2가 없지 않다
+        if (cols2.Length > 1) //cols2의 요소가 2개 이상이다
         {
-            if (cols2[0].name == "EnemyCommand"  || cols2[0].name == "EnemyTurret")
+            if (cols2[0].name == "EnemyCommand" || cols2[0].name == "EnemyTurret")
             {
-                if (cols2[1] != null)
+                if(!unitinfo.canSkyAttack && cols2[1].GetComponentInParent<JHW_UnitInfo>().isAirForce)
+                {
+                    return;
+                }
+                if(!unitinfo.canGroundAttack && !cols2[1].gameObject.GetComponentInParent<JHW_UnitInfo>().isAirForce)
+                {
+                    return;
+                }
+                else
                 {
                     neareastObject = cols2[1].gameObject;
-                    
                 }
             }
+            else { return; }
 
-            if (cols2[0].name == "TeamCommand" || cols2[0].name == "TeamTurret")
+            if (neareastObject.name == "TeamCommand" || neareastObject.name == "TeamTurret")
             {
-                if (cols2[1] != null)
+                if (cols2[0].name == "EnemyCommand" || cols2[0].name == "EnemyTurret")
                 {
-                    neareastObject = cols2[1].gameObject;
+                    if (!unitinfo.canSkyAttack && cols2[1].GetComponentInParent<JHW_UnitInfo>().isAirForce)
+                    {
+                        return;
+                    }
+                    if (!unitinfo.canGroundAttack && !cols2[1].gameObject.GetComponentInParent<JHW_UnitInfo>().isAirForce)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        neareastObject = cols2[1].gameObject;
+                    }
                 }
+                else { return; }
             }
         }
-
-        if (cols2.Length <1)
+        if (cols2.Length < 1)
         {
             return;
         }
+
         //int chooseIndex = -1;
 
         //if (chooseIndex == -1) //사거리 안에 있는 적이 없음
@@ -396,12 +423,12 @@ public class JHW_UnitManager : MonoBehaviour
         if (unitinfo.isEnemy == false) //우리팀일때
         {
             offset = enemyCommand.transform.position;
-           // transform.LookAt(Vector3.right);
+            // transform.LookAt(Vector3.right);
         }
         if (unitinfo.isEnemy == true) //적팀일때
         {
             offset = TeamCommand.transform.position;
-           // transform.LookAt(Vector3.left);
+            // transform.LookAt(Vector3.left);
         }
         if (navAgent.isOnNavMesh) navAgent.SetDestination(offset); // 각자의 적진으로 이동
     }
@@ -507,8 +534,8 @@ public class JHW_UnitManager : MonoBehaviour
             else //죽은 애가 우리팀일 경우
             {
                 JHW_UnitFactory.instance.myUnits.Remove(this); //내 유닛 리스트에서 삭제
-               // JHW_GameManager.instance.wholePopulationLimit -= JHW_GameManager.instance.currentPopulationArray[index];
-               // JHW_GameManager.instance.currentPopulation--; //인구수 -1
+                                                               // JHW_GameManager.instance.wholePopulationLimit -= JHW_GameManager.instance.currentPopulationArray[index];
+                                                               // JHW_GameManager.instance.currentPopulation--; //인구수 -1
 
                 for (int i = 0; i < System.Enum.GetValues(typeof(JHW_GameManager.UnitType)).Length; i++)
                 {
@@ -518,7 +545,7 @@ public class JHW_UnitManager : MonoBehaviour
                         JHW_GameManager.instance.populationSum = false;
                     }
                 }
-                
+
             }
             Destroy(unitinfo.gameObject); //죽으면 곧바로 destroy한다
         }

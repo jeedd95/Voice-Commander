@@ -10,16 +10,21 @@ public class JHW_BulletMove : MonoBehaviour
     JHW_UnitManager unit; // ÃÑ¾ËÀ» ½ð unit ÄÄÆ÷³ÍÆ®
     JHW_UnitInfo unitInfo; //½ð ¾ÖÀÇ À¯´Ö Á¤º¸
     JHW_UnitManager um;
+
     private float damage;
     private float accuracyRate;
     //string attackerName;
+    public float firingAngle; 
+    public float gravity = 9.8f;
+    public Transform Target; //ÃÑ¾ËÀ» ¸ÂÃâ ³ð (nearestObject)
+    public Transform Projectile; // ÃÑ¾Ë ³ª ÀÚ½Å
+    private Transform myTransform; //¿ÀÇÁ¼Â (¼±ÅÃ)
 
     float[][] rate;
     float defensiveDamage;
     //bool isTeam;
 
-
-
+    
 
     private void Start()
     {
@@ -30,18 +35,65 @@ public class JHW_BulletMove : MonoBehaviour
                 new float[]{1,0.5f,0.25f},
             };
 
-       um= GameObject.Find("UnitFactory").GetComponent<JHW_UnitManager>();
+     um= GameObject.Find("UnitFactory").GetComponent<JHW_UnitManager>();
     }
 
     void Update()
     {
+        print(Target);
+
+        if(unitInfo.unitName=="Artillery")
+        {
+            ParabolaBulletMove();
+        }
+        else
+        {
         transform.position += transform.up * speed * Time.deltaTime;
-        // print("ÃÑ¾Ë ¼Óµµ : " + speed);
+        }
+
         if (JHW_GameManager.instance.Flag_wind)
         {
             WindToBullet();
         }
     }
+
+    void ParabolaBulletMove()
+    {
+        Target = um.neareastObject.transform;
+
+        Projectile = transform;
+        //Projectile.position = myTransform.position + new Vector3(0, 0.0f, 0);
+
+        // Calculate distance to target
+        float target_Distance = Vector3.Distance(Projectile.position, Target.position);
+
+        // Calculate the velocity needed to throw the object to the target at specified angle.
+        float projectile_Velocity = target_Distance / (Mathf.Sin(2 * firingAngle * Mathf.Deg2Rad) / gravity);
+
+        // Extract the X  Y componenent of the velocity
+        float Vx = Mathf.Sqrt(projectile_Velocity) * Mathf.Cos(firingAngle * Mathf.Deg2Rad);
+        float Vy = Mathf.Sqrt(projectile_Velocity) * Mathf.Sin(firingAngle * Mathf.Deg2Rad);
+
+        // Calculate flight time.
+        float flightDuration = target_Distance / Vx;
+
+        // Rotate projectile to face the target.
+        Projectile.rotation = Quaternion.LookRotation(Target.position - Projectile.position);
+
+        float elapse_time = 0;
+
+        while (elapse_time < flightDuration)
+        {
+            Projectile.Translate(0, (Vy - (gravity * elapse_time)) * Time.deltaTime, Vx * Time.deltaTime);
+
+            elapse_time += Time.deltaTime;
+
+            return;
+        }
+    }
+
+
+
 
     private void OnTriggerEnter(Collider other)
     {

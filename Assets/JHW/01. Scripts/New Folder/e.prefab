@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5581195168993781242}
   - component: {fileID: 5581195168993781241}
   - component: {fileID: 5581195168993781240}
-  - component: {fileID: -6234138697310057965}
+  - component: {fileID: -5505691623965305667}
   m_Layer: 0
   m_Name: e
   m_TagString: Untagged
@@ -27,8 +27,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5581195168993781223}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0.21380882, z: 0, w: 0.97687554}
+  m_LocalPosition: {x: 12.5798025, y: 30.114729, z: 27.361387}
   m_LocalScale: {x: 0.51412, y: 0.51412, z: 0.51412}
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,7 +97,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-6234138697310057965
+--- !u!114 &-5505691623965305667
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,10 +106,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5581195168993781223}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54cd1064b0f89594ba324f3507f8cac1, type: 3}
+  m_Script: {fileID: 11500000, guid: 45f7faa37a36bd14397b35ea5651cccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sunrise: {fileID: 0}
-  sunset: {fileID: 0}
-  journeyTime: 1
-  reduceHeight: 1
+  Target: {fileID: 0}
+  firingAngle: 30
+  gravity: 9.8
+  Projectile: {fileID: 0}

@@ -213,7 +213,7 @@ public class JHW_UnitFactory : MonoBehaviour
         int randomNum = Random.Range(0, 3); // 3개중에 하나를 선택해서 생성
         int randomNum2 = Random.Range(0, 9); // 9개 중에 하나를 선택해서 생성
 
-        GameObject SelectUnit = Instantiate(Units[1]); // 1~9번까지의 유닛중에 하나 생성
+        GameObject SelectUnit = Instantiate(Units[randomNum2]); // 1~9번까지의 유닛중에 하나 생성
         SelectUnit.GetComponent<JHW_UnitInfo>().isEnemy = true; //적이다
         SelectUnit.tag = "Enemy";
         SelectUnit.layer = LayerMask.NameToLayer("EnemyTeam");

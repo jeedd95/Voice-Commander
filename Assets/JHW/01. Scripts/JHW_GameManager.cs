@@ -386,9 +386,9 @@ public class JHW_GameManager : MonoBehaviour
 
         for (int i = 0; i < playerUnits.Count; i++)
         {
-            if(playerUnits[i].GetComponent<JHW_UnitInfo>().isCaptureUnit==false) // 점령중인 유닛은 스폐셜게이지가 안먹게함
+            if(playerUnits[i].GetComponent<JHW_UnitInfo>().isCaptureUnit==false && playerUnits[i].GetComponent<JHW_UnitInfo>().isAirForce == false) // 점령중인 유닛은 스폐셜게이지가 안먹게함 ,공중유닛은 스폐셜 게이지가 안먹게함
             {
-            playerUnits[i].SetState(state);
+                playerUnits[i].SetState(state);
             }
         }
 

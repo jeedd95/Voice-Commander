@@ -109,7 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9deebc37f17a444695eae6331ceb957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firingAngle: 60
+  firingAngle: 50
   gravity: 9.8
   Target: {fileID: 0}
   Projectile: {fileID: 0}
+  exploArea: {fileID: 6511602789115366438, guid: 68f5dff2ecd14c149895cb12b436fa0e, type: 3}

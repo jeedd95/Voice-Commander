@@ -22,11 +22,12 @@ public class JHW_CaptureArea : MonoBehaviour
     //주둔지 콜라이더에 내 유닛이 하나라도 닿고 있으면 버프를 얻는다(unitinfo의 isenemy로 검증)
     IEnumerator OnTriggerEnter(Collider other)
     {
-        yield return new WaitForSeconds(capturetime);
 
             if (other.CompareTag("Player") && other.gameObject.GetComponentInParent<JHW_UnitInfo>().isEnemy == false)
             {
-                switch (this.name)
+            yield return new WaitForSeconds(capturetime);
+
+            switch (this.name)
                     {
                         case "CaptureArea_Gold(Clone)":
                             JHW_GameManager.instance.isBuff_Gold = true;

@@ -5,15 +5,15 @@ using UnityEngine;
 public class test2 : MonoBehaviour
 {
     public Transform Target; //총알이 맞는 타겟지점
-    public float firingAngle = 45.0f;
-    public float gravity = 9.8f;
+    public float firingAngle;
+    public float gravity;
     public Transform Projectile; //발사체
     private Transform myTransform; //오프셋 더 더하기 필요없으면 안써도됨
 
 
     private void Awake()
     {
-        myTransform = transform;
+       // myTransform = transform;
     }
 
     void Start()
@@ -34,7 +34,7 @@ public class test2 : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         // Move projectile to the position of throwing object + add some offset if needed.
-        Projectile.position = myTransform.position + new Vector3(0, 0.0f, 0);
+       // Projectile.position = myTransform.position + new Vector3(0, 0.0f, 0);
 
         // Calculate distance to target
         float target_Distance = Vector3.Distance(Projectile.position, Target.position);

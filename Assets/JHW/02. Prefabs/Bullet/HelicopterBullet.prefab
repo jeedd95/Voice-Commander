@@ -109,3 +109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9deebc37f17a444695eae6331ceb957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
+  accuracyRate: 0
+  firingAngle: 0
+  gravity: 9.8
+  Target: {fileID: 0}
+  Projectile: {fileID: 0}
+  exploArea: {fileID: 0}

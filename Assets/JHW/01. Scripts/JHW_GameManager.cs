@@ -68,6 +68,10 @@ public class JHW_GameManager : MonoBehaviour
     public Text GoldRateUpText;
     public Text WindText;
 
+    public Image BuffGold;
+    public Image BuffCool;
+    public Image BuffSpecial;
+
     public List<JHW_UnitManager> hidingUnits;
     public List<JHW_UnitManager> RushUnits;
    // List<GameObject> NowCaptureAreasList;  //현재 맵에 나와있는 주둔지역 리스트
@@ -350,6 +354,11 @@ public class JHW_GameManager : MonoBehaviour
         expText.text = currentExp + " / " + amountExp.ToString("N1") + " Level : "+ playerLevel;
         MedalText.text = "훈장 : " + medal.ToString();
         GoldRateUpText.text = "+" + GoldRate.ToString();
+
+        BuffGold.color = isBuff_Gold ? Color.yellow: Color.white;
+        BuffCool.color = isBuff_CoolDown ? Color.blue : Color.white;
+        BuffSpecial.color = isBuff_SpecialGauge ? Color.green :Color.white;
+
 
         Text[] tts = { RifleManText, ScoutText, SniperText, ArtilleryText, HeavyWeaponText, ArmouredText, TankText, HelicopterText, RaptorText };
 

@@ -12,6 +12,7 @@ TagManager:
   - CaptureArea
   - PlayerTurret
   - EnemyTurret
+  - Tile
   layers:
   - Default
   - TransparentFX

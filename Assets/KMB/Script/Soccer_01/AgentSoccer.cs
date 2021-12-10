@@ -163,32 +163,32 @@ public class AgentSoccer : Agent
     {
         var discreteActionsOut = actionsOut.DiscreteActions;
         //forward
-        if (Input.GetKey(KeyCode.W))
-        {
-            discreteActionsOut[0] = 1;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            discreteActionsOut[0] = 2;
-        }
-        //rotate
-        if (Input.GetKey(KeyCode.A))
-        {
-            discreteActionsOut[2] = 1;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            discreteActionsOut[2] = 2;
-        }
-        //right
-        if (Input.GetKey(KeyCode.E))
-        {
-            discreteActionsOut[1] = 1;
-        }
-        if (Input.GetKey(KeyCode.Q))
-        {
-            discreteActionsOut[1] = 2;
-        }
+        //if (Input.GetKey(KeyCode.W))
+        //{
+        //    discreteActionsOut[0] = 1;
+        //}
+        //if (Input.GetKey(KeyCode.S))
+        //{
+        //    discreteActionsOut[0] = 2;
+        //}
+        ////rotate
+        //if (Input.GetKey(KeyCode.A))
+        //{
+        //    discreteActionsOut[2] = 1;
+        //}
+        //if (Input.GetKey(KeyCode.D))
+        //{
+        //    discreteActionsOut[2] = 2;
+        //}
+        ////right
+        //if (Input.GetKey(KeyCode.E))
+        //{
+        //    discreteActionsOut[1] = 1;
+        //}
+        //if (Input.GetKey(KeyCode.Q))
+        //{
+        //    discreteActionsOut[1] = 2;
+        //}
     }
     /// <summary>
     /// Used to provide a "kick" to the ball.

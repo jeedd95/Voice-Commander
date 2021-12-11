@@ -318,7 +318,7 @@ public class JHW_UnitManager : MonoBehaviour
 
         for (int i = 0; i < cols.Length; i++) //가장 가까운 애의 인덱스 부여
         {
-            if (cols[i].transform.parent != null)
+            if (cols[i].transform.parent != null && layer!="Wall")
             {
 
                 if (!unitinfo.canSkyAttack && cols[i].GetComponentInParent<JHW_UnitInfo>().isAirForce)

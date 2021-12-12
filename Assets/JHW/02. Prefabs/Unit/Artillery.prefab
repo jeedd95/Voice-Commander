@@ -194,6 +194,7 @@ MonoBehaviour:
   enemyCommand: {fileID: 8283047153395507706, guid: 3849ca7fb7c99824bb4302725f61b4a7, type: 3}
   targetpos: {x: 0, y: 0, z: 0}
   cols: []
+  colsTemp: []
   cols2: []
   state: 0
   neareastObject: {fileID: 0}

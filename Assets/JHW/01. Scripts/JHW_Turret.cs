@@ -33,12 +33,8 @@ public class JHW_Turret : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        lr=gameObject.GetComponent<LineRenderer>();
-        //lr.startWidth = 0.3f;
-        //lr.startWidth = 0.3f;
-        //lr.startColor = Color.red;
-        //lr.endColor = Color.red;
-
+        lr = gameObject.GetComponent<LineRenderer>();
+        
         turretHp = 5000f;
         //um = JHW_UnitFactory.instance.GetComponent<JHW_UnitManager>();
         state = State.Detect;
@@ -47,7 +43,7 @@ public class JHW_Turret : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        print(hit.transform);
         //if (this.name == "TeamTurret") print(state);
 
         //if (this.name == "EnemyTurret") print("적군 터렛 상태 : " + state);
@@ -104,10 +100,12 @@ public class JHW_Turret : MonoBehaviour
         if (nearestUnit == null) //가까이에 있는 유닛이 없다면 기다리는걸 끝냄
             yield break;
 
-        if (Physics.Raycast(firePos.transform.position, dir, out hit, MaxDistance))
+        int layerMask = (-1) - (1 << LayerMask.NameToLayer("Default"));
+
+        if (Physics.Raycast(firePos.transform.position, dir, out hit, MaxDistance, layerMask))
         {
             lr.enabled = true;
-           // Debug.DrawRay(firePos.transform.position , dir , Color.red,0.1f);
+            //Debug.DrawRay(firePos.transform.position , dir , Color.red,0.1f);
             lr.SetPosition(0, firePos.transform.position);
             lr.SetPosition(1, nearestUnit.transform.position);
             Invoke("InvokeRay", 0.1f);

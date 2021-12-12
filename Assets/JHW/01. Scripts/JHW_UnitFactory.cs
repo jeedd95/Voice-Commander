@@ -17,6 +17,7 @@ public class JHW_UnitFactory : MonoBehaviour
     public Transform[] MyCreatePoint; //우리 생성포인트 3개
     public Transform[] MyCreatePoint_Sky; //우리 공중 생성포인트 3개
     public Transform[] EnemyCreatePoint; //적팀 생성 포인트 3개
+    public Transform[] EnemyCreatePoint_Sky;
 
     public GameObject[] Units; //유닛 프리팹들
     public JHW_UnitInfo units; //유닛 프리팹들의 유닛인포
@@ -220,9 +221,18 @@ public class JHW_UnitFactory : MonoBehaviour
         Collider col = SelectUnit.GetComponentInChildren<Collider>();
         col.gameObject.tag = SelectUnit.tag;
         col.gameObject.layer = SelectUnit.layer;
+
+        if (SelectUnit.GetComponent<JHW_UnitInfo>().isAirForce == true)
+        {
+            Transform mcp = EnemyCreatePoint_Sky[randomNum]; // 1~3번 생성포인트 중에 하나 생성
+            SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
+        }
+        else
+        {
         Transform mcp = EnemyCreatePoint[randomNum]; // 1~3번 생성포인트 중에 하나 생성
         SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
 
+        }
         enemyUnits.Add(SelectUnit.GetComponent<JHW_UnitManager>());
     }
 

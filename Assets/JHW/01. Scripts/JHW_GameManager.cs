@@ -441,6 +441,7 @@ public class JHW_GameManager : MonoBehaviour
     {
         if (medal >= 1)
         {
+            medal--;
             Gold += GoldRate;   
         }
         else
@@ -456,7 +457,8 @@ public class JHW_GameManager : MonoBehaviour
         {
             if(GoldRate <=130)
             {
-            GoldRate += 15;
+                medal--;
+                GoldRate += 15;
             }
             else
             {

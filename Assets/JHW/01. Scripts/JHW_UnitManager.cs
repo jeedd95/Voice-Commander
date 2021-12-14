@@ -11,6 +11,7 @@ public class JHW_UnitManager : MonoBehaviour
     public JHW_UnitInfo unitinfo;
     // GameObject enemyTarget;
     NavMeshAgent navAgent;
+    Animator animator;
 
     public GameObject[] Bullet; //총알
     public GameObject FirePos; //발사 포지션
@@ -45,6 +46,8 @@ public class JHW_UnitManager : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponentInChildren<Animator>();
+
         colsTemp = new List<Collider>();
 
         unitinfo = GetComponent<JHW_UnitInfo>();
@@ -147,6 +150,7 @@ public class JHW_UnitManager : MonoBehaviour
         switch (state)
         {
             case State.Move:
+                animator.SetInteger("Run", 0); //=====================
                 UnitMove();
                 UnitDetect(false);
                 break;

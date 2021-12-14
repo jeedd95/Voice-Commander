@@ -80,6 +80,7 @@ public class JHW_UnitManager : MonoBehaviour
             if (state == State.Attack || state == State.HideAttack) //공격일때
             {
                 navAgent.isStopped = true;  // 멈춘다
+                navAgent.velocity = Vector3.zero;
             }
             else
             {
@@ -122,9 +123,10 @@ public class JHW_UnitManager : MonoBehaviour
 
     void Update()
     {
-        if (unitinfo.isEnemy)
+        if (!unitinfo.isEnemy)
         {
-            //print(state);
+            //print(navAgent.destination);
+            print(state);
             // print(navAgent.remainingDistance);
             //print("내 유닛 사거리 : " + unitinfo.ATTACK_RANGE);
             //print("내 유닛 공격속도 : " + unitinfo.ATTACK_SPEED);
@@ -133,7 +135,7 @@ public class JHW_UnitManager : MonoBehaviour
 
         navAgent.speed = unitinfo.MOVE_SPEED; //nav mesh와 속도 동기화
 
-        if (unitinfo.isEnemy == false && Vector3.Distance(gameObject.transform.position, targetpos) <= 1)
+        if (unitinfo.isEnemy == false && Vector3.Distance(gameObject.transform.position, targetpos) <=1f)
         {
             unitinfo.isBehindWall = true;
         }
@@ -218,6 +220,7 @@ public class JHW_UnitManager : MonoBehaviour
     void UnitCapturerDectecting()
     {
         navAgent.isStopped = true;
+        navAgent.velocity = Vector3.zero;
         StopCoroutine("CreateBullet");
         neareastObject = FindNearestObjectzByLayer("EnemyTeam");
 
@@ -422,12 +425,14 @@ public class JHW_UnitManager : MonoBehaviour
 
         if (unitinfo.isEnemy == false) //우리팀일때
         {
-            offset = enemyCommand.transform.position;
+            offset = GameObject.Find("EnemyCommand").transform.position;
+            //offset = enemyCommand.transform.position;
             // transform.LookAt(Vector3.right);
         }
         if (unitinfo.isEnemy == true) //적팀일때
         {
-            offset = TeamCommand.transform.position;
+            offset = GameObject.Find("TeamCommand").transform.position;
+            //offset = TeamCommand.transform.position;
             // transform.LookAt(Vector3.left);
         }
         if (navAgent.isOnNavMesh) navAgent.SetDestination(offset); // 각자의 적진으로 이동
@@ -438,7 +443,7 @@ public class JHW_UnitManager : MonoBehaviour
         neareastWall = FindNearestObjectzByLayer("Wall");
         if (neareastWall == null)
             return;
-        targetpos = new Vector3(neareastWall.transform.position.x - 5, transform.position.y, neareastWall.transform.position.z);
+        targetpos = new Vector3(neareastWall.transform.position.x + 5, transform.position.y, neareastWall.transform.position.z);
 
         if (unitinfo.isEnemy == false) // 플레이어 팀일때 벽의 왼쪽으로 숨음
         {
@@ -453,6 +458,7 @@ public class JHW_UnitManager : MonoBehaviour
         if (neareastObject != null)
         {
             transform.LookAt(neareastObject.transform);
+            //navAgent.isStopped = true;
         }
 
         switch (gameObject.name) // 유닛에 따라 다른 총알을 쓰도록

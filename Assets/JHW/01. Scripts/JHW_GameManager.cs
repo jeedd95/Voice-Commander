@@ -470,7 +470,7 @@ public class JHW_GameManager : MonoBehaviour
             print("훈장이 부족합니다");
         }
     }
-     public float CaptureInstantiateTime ; //주둔지 생성 시간
+    public float CaptureInstantiateTime ; //주둔지 생성 시간
     public float RemainTime ; //주둔지 유지 시간
     float currentTime4;
 
@@ -483,15 +483,17 @@ public class JHW_GameManager : MonoBehaviour
             //랜덤 위치를 만들자
             float xRange = Random.Range(-40, 40);
             float zRange = Random.Range(-20, 20);
-            Vector3 RandomCapturePos = new Vector3(xRange, 0, zRange);
-            
+            Vector3 RandomCapturePos = GameObject.Find("Tiles").transform.position + new Vector3(xRange,0,zRange);
+            //new Vector3(-258.1f+xRange, 0, -234.7f+zRange);
+
             //주둔지 뭘 만들지 랜덤으로 정하기
             GameObject RandomCaptureType = CaptureAreaType[Random.Range(0, CaptureAreaType.Length)];
             CaptureArea = Instantiate(RandomCaptureType);
             CaptureArea.transform.position = RandomCapturePos;
+            CaptureArea.transform.rotation = GameObject.Find("Tiles").transform.rotation;
             //리스트에 넣기
             //NowCaptureAreasList.Add(CaptureArea);
-            
+
             currentTime4 = 0;
         }
 
@@ -561,6 +563,7 @@ public class JHW_GameManager : MonoBehaviour
             //isPlayerSkillMode = false;
             GameObject.Find("Canvas/PlayerSkillMode").GetComponent<Toggle>().isOn = false;
             GameObject PS_B = Instantiate(PlayerSkill_Bomb_prefabs);
+            PS_B.transform.rotation = GameObject.Find("Tiles").transform.rotation;
             PS_B.transform.position = JHW_OrderManager.instance.DesinationAreaObj.transform.position;
             anim = PS_B.GetComponent<Animation>();
             anim.Play();
@@ -578,6 +581,7 @@ public class JHW_GameManager : MonoBehaviour
             //isPlayerSkillMode = false;
             GameObject.Find("Canvas/PlayerSkillMode").GetComponent<Toggle>().isOn = false;
             GameObject PS_S = Instantiate(PlayerSkill_Smoke_prefabs);
+            PS_S.transform.rotation = GameObject.Find("Tiles").transform.rotation;
             PS_S.transform.position = JHW_OrderManager.instance.DesinationAreaObj.transform.position;
             anim = PS_S.GetComponent<Animation>();
             anim.Play();

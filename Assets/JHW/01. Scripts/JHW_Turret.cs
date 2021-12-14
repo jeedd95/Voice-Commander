@@ -43,7 +43,6 @@ public class JHW_Turret : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(hit.transform);
         //if (this.name == "TeamTurret") print(state);
 
         //if (this.name == "EnemyTurret") print("적군 터렛 상태 : " + state);

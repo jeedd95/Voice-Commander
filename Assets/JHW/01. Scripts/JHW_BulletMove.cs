@@ -195,6 +195,7 @@ public class JHW_BulletMove : MonoBehaviour
         }
         else if (other.CompareTag("PlayerCommand"))
         {
+            GameObject.Find("TeamCommand").GetComponentInChildren<JHW_Command>().Hp -= (int)damage;
             Destroy(gameObject);
         }
         else if (other.CompareTag("EnemyCommand"))

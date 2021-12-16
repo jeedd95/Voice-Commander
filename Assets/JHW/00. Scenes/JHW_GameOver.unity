@@ -33484,6 +33484,7 @@ GameObject:
   - component: {fileID: 738178165985586701}
   - component: {fileID: 1213639817}
   - component: {fileID: 1388432765875367294}
+  - component: {fileID: 1388432765875367295}
   m_Layer: 11
   m_Name: TeamCommand
   m_TagString: PlayerCommand
@@ -33504,6 +33505,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0933098, y: 1.0817091, z: 1.1403878}
   m_Center: {x: -0.028724045, y: 0.096761465, z: -0.01378119}
+--- !u!114 &1388432765875367295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388432765875367293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded70e678efbf2746950cd37a159c3e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hp: 0
 --- !u!64 &2522262757126218268
 MeshCollider:
   m_ObjectHideFlags: 0

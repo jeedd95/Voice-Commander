@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class JHW_GameManager : MonoBehaviour
@@ -74,7 +75,7 @@ public class JHW_GameManager : MonoBehaviour
 
     public List<JHW_UnitManager> hidingUnits;
     public List<JHW_UnitManager> RushUnits;
-   // List<GameObject> NowCaptureAreasList;  //현재 맵에 나와있는 주둔지역 리스트
+    // List<GameObject> NowCaptureAreasList;  //현재 맵에 나와있는 주둔지역 리스트
 
     private void Awake()
     {
@@ -118,29 +119,30 @@ public class JHW_GameManager : MonoBehaviour
 
     private void Start()
     {
-        windPower =50.0f;
+            windPower = 50.0f;
 
-        currentPopulationArray = new int[_UnitLoad.Length]; //현재 인구수 배열
+            currentPopulationArray = new int[_UnitLoad.Length]; //현재 인구수 배열
 
-        CoolDownReady = new bool[_cooldown.Length]; // 쿨타임레디상태 배열
-        for (int i = 0; i < CoolDownReady.Length; i++)
-        {
-            CoolDownReady[i] = true;
-        }
+            CoolDownReady = new bool[_cooldown.Length]; // 쿨타임레디상태 배열
+            for (int i = 0; i < CoolDownReady.Length; i++)
+            {
+                CoolDownReady[i] = true;
+            }
 
-        currentCool = new float[_cooldown.Length];
-        for (int j = 0; j < currentCool.Length; j++) //현재 쿨타임 배열
-        {
-            currentCool[j] = _cooldown[j];
-        }
+            currentCool = new float[_cooldown.Length];
+            for (int j = 0; j < currentCool.Length; j++) //현재 쿨타임 배열
+            {
+                currentCool[j] = _cooldown[j];
+            }
 
-        amountExpArray = new float[maxlevel+1];
-        amountExpArray[0] = 100; //초기 경험치
-        amountExp = amountExpArray[0];
-        for (int i = 0; i < maxlevel; i++) //경험치 배열
-        {
-            amountExpArray[i + 1] = amountExpArray[i] * 1.75f;
-        }
+            amountExpArray = new float[maxlevel + 1];
+            amountExpArray[0] = 100; //초기 경험치
+            amountExp = amountExpArray[0];
+            for (int i = 0; i < maxlevel; i++) //경험치 배열
+            {
+                amountExpArray[i + 1] = amountExpArray[i] * 1.75f;
+            }
+
 
         //unitMaxCount = new int[JHW_UnitFactory.instance.Units.Length];
 

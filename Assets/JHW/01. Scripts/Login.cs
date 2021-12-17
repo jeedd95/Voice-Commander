@@ -7,30 +7,30 @@ using UnityEngine.SceneManagement;
 
 public class Login : MonoBehaviour
 {
-    public static Login instance; //ΩÃ±€≈Ê
+   // public static Login instance; //ΩÃ±€≈Ê
 
     public InputField id;
     public InputField password;
 
-    private void Awake()
-    {
+    //private void Awake()
+    //{
         
-            if (instance == null)
-            {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else if (instance != this)
-            {
-                Destroy(gameObject);
-            }
+    //        if (instance == null)
+    //        {
+    //            instance = this;
+    //            DontDestroyOnLoad(gameObject);
+    //        }
+    //        else if (instance != this)
+    //        {
+    //            Destroy(gameObject);
+    //        }
         
 
-        Backend.Initialize();
-    }
+    //    
+    //}
     private void Start()
     {
-        
+        Backend.Initialize();
     }
 
     public void OnClickSignUp()

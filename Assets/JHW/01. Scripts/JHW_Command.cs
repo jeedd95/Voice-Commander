@@ -24,11 +24,12 @@ public class JHW_Command : MonoBehaviour
             print("게임 오버");
             MainCam.transform.position = CamPos1.transform.position;
             MainCam.transform.rotation = CamPos1.transform.rotation;
+            Invoke("MainSceneToScoreBoard", 5f);
         }
     }
 
-    void MainScene2ScoreBoard()
+    void MainSceneToScoreBoard()
     {
-
+        SceneManager.LoadScene("JHW_ScoreBoard");
     }
 }

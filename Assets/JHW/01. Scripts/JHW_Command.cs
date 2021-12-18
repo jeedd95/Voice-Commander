@@ -9,6 +9,9 @@ public class JHW_Command : MonoBehaviour
     public float Hp;
     Camera MainCam;
     public GameObject CamPos1;
+    public GameObject CommandExploEffect;
+    public Canvas MainCanvas;
+    public Canvas GameOverCanvas;
 
     // Start is called before the first frame update
     void Start()
@@ -26,13 +29,16 @@ public class JHW_Command : MonoBehaviour
             print("게임 오버");
             if(flag==false)
             {
-                DataInsert();
+               // DataInsert();
                 flag = true;
             }
 
+            MainCanvas.enabled = false;
             MainCam.transform.position = CamPos1.transform.position;
             MainCam.transform.rotation = CamPos1.transform.rotation;
-            Invoke("MainSceneToScoreBoard", 5f);
+            CommandExploEffect.SetActive(true);
+            Invoke("StopTime", 5.3f);
+           // Invoke("MainSceneToScoreBoard", 6f);
         }
     }
 
@@ -54,7 +60,14 @@ public class JHW_Command : MonoBehaviour
         }
     }
 
-    void MainSceneToScoreBoard()
+    void StopTime()
+    {
+        GameOverCanvas.gameObject.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+
+    public void MainSceneToScoreBoard()
     {
         SceneManager.LoadScene("JHW_ScoreBoard");
     }

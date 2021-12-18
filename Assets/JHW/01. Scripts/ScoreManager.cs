@@ -15,14 +15,15 @@ public class ScoreManager : MonoBehaviour
         string[] select = { "Level", "score", "playTime" };
         Where where = new Where();
 
-        BackendReturnObject bro = Backend.GameData.Get("custom", where,select);
-       // BackendReturnObject bro2 = Backend.GameData.GetMyData("custom", "rowIndate", select);
+        var bro = Backend.GameData.Get("custom",new Where(),select);
         if (bro.IsSuccess() == false)
         {
             return;
         }
-        int level = (int)bro.Rows()[4]["Level"]["N"];
-        print(level);
+        bro.FlattenRows();
+        print(bro);
+
+        ScoreBoard.text = bro.ToString();
     }
 
     void Update()

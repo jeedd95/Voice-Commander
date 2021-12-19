@@ -27,7 +27,7 @@ public class JHW_GameManager : MonoBehaviour
     public int playerLevel; //플레이어 레벨
     public float currentExp; //현재 경험치
     public float amountExp; //총 경험치
-    public int maxlevel = 20; //만렙
+    public int maxlevel = 9999999; //만렙
     public int medal;
     public GameObject[] CaptureAreaType; //주둔지역 타입 Gold, Cooldown,Special Gauge
     public GameObject CaptureArea;
@@ -49,6 +49,7 @@ public class JHW_GameManager : MonoBehaviour
 
     public Text scoreT; //점수 텍스트
     public Text goldT; //골드 텍스트
+    public Text ExpT;
     public Text specialgageT; //스폐셜 게이지 텍스트(방어태세)
     public Text text4; //스폐셜 게이지 텍스트(공격태세)
     public Text Population; //인구수 관련 텍스트
@@ -64,7 +65,7 @@ public class JHW_GameManager : MonoBehaviour
     public Text HelicopterText;
     public Text RaptorText;
     //==
-    public Text expText;
+    public Text levelText;
     public Text MedalText;
     public Text GoldRateUpText;
     public Text WindText;
@@ -155,6 +156,7 @@ public class JHW_GameManager : MonoBehaviour
 
     private void Update()
     {
+
         //print("현재 인구수 : " + currentPopulation + " 전체 인구수 : " + wholePopulationLimit);
         // print("isCaptureCreateMode : " + isCaptureCreateMode);
 
@@ -198,6 +200,8 @@ public class JHW_GameManager : MonoBehaviour
         LevelUp();
         InstantiateCaptureArea();
         WindTextMove();
+        SpecialGageFilled();
+        EXPGageFilled();
 
         PlayerSkill_Bomb();
         PlayerSkill_Smoke();
@@ -348,14 +352,15 @@ public class JHW_GameManager : MonoBehaviour
 
     void TextManager()
     {
-        scoreT.text = "플레이어 점수 : " + Score;
-        goldT.text = "골드 : " + Gold;
-        specialgageT.text = string.Format("{0,3:N0}", specialGauge) + " %";
+        scoreT.text = "SCORE :  " + Score;
+        goldT.text = Gold.ToString();
+        specialgageT.text = string.Format("{0,3:N0}", specialGauge) + "%";
         text4.text = specialgageT.text;
         Population.text = currentPopulation + " / " + wholePopulationLimit;
-        expText.text = currentExp + " / " + amountExp.ToString("N1") + " Level : "+ playerLevel;
-        MedalText.text = "훈장 : " + medal.ToString();
+        levelText.text = "LEVEL : " + playerLevel;
+        MedalText.text = medal.ToString();
         GoldRateUpText.text = "+" + GoldRate.ToString();
+        ExpT.text = currentExp + " / " + amountExp;
 
         BuffGold.color = isBuff_Gold ? Color.yellow: Color.white;
         BuffCool.color = isBuff_CoolDown ? Color.blue : Color.white;
@@ -592,6 +597,17 @@ public class JHW_GameManager : MonoBehaviour
                 Destroy(PS_S);
             }
         }
+    }
+
+    void SpecialGageFilled()
+    {
+        GameObject.Find("Defensive").GetComponent<Image>().fillAmount = specialGauge / 100;
+        GameObject.Find("Offensive").GetComponent<Image>().fillAmount = specialGauge / 100;
+    }
+
+    void EXPGageFilled()
+    {
+        GameObject.Find("EXP").GetComponent<Slider>().value = currentExp/amountExp*100f;
     }
 }
 

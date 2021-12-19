@@ -369,8 +369,13 @@ public class JHW_UnitManager : MonoBehaviour
 
         if (cols2.Length > 1) //cols2의 요소가 2개 이상이다
         {
-            if (cols2[0].name == "EnemyCommand" || cols2[0].name == "EnemyTurret")
+            if (cols2[0].name == "EnemyCommand" || cols2[0].name == "EnemyTurret") //첫번째 요소가 커맨드거나 터렛이다
             {
+                if(cols2[1].name == "EnemyCommand" || cols2[1].name == "EnemyTurret")
+                {
+                    neareastObject = cols2[2].gameObject;
+                }
+
                 if(!unitinfo.canSkyAttack && cols2[1].GetComponentInParent<JHW_UnitInfo>().isAirForce)
                 {
                     return;
@@ -529,8 +534,11 @@ public class JHW_UnitManager : MonoBehaviour
 
     void UnitDie() //피가 닳면 죽는 함수
     {
+
         if (unitinfo.health <= 0)
         {
+            Destroy(unitinfo.gameObject); //죽으면 곧바로 destroy한다
+
             if (unitinfo.isEnemy == true) //죽은애가 적일경우
             {
                 JHW_GameManager.instance.Score += unitinfo.score;
@@ -555,7 +563,7 @@ public class JHW_UnitManager : MonoBehaviour
                 }
 
             }
-            Destroy(unitinfo.gameObject); //죽으면 곧바로 destroy한다
+            
         }
     }
 

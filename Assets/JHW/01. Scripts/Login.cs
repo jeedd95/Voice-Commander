@@ -7,27 +7,24 @@ using UnityEngine.SceneManagement;
 
 public class Login : MonoBehaviour
 {
-   // public static Login instance; //½Ì±ÛÅæ
+    public static Login instance; //½Ì±ÛÅæ
 
     public InputField id;
     public InputField password;
+    public InputField Nickname;
 
-    //private void Awake()
-    //{
-        
-    //        if (instance == null)
-    //        {
-    //            instance = this;
-    //            DontDestroyOnLoad(gameObject);
-    //        }
-    //        else if (instance != this)
-    //        {
-    //            Destroy(gameObject);
-    //        }
-        
-
-    //    
-    //}
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+          //  DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
         Backend.Initialize();
@@ -49,6 +46,7 @@ public class Login : MonoBehaviour
     public void OnClickLogin()
     {
         BackendReturnObject bro = Backend.BMember.CustomLogin(id.text, password.text);
+        Backend.BMember.CreateNickname(Nickname.text);
         if (bro.IsSuccess())
         {
             Debug.Log("·Î±×ÀÎ¿¡ ¼º°øÇß½À´Ï´Ù");

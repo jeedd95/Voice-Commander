@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using BackEnd;
+using System;
 
 public class JHW_Command : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class JHW_Command : MonoBehaviour
             print("게임 오버");
             if(flag==false)
             {
-               // DataInsert();
+                DataInsert();
                 flag = true;
             }
 
@@ -45,9 +46,10 @@ public class JHW_Command : MonoBehaviour
     void DataInsert()
     {
         Param param = new Param();
+        param.Add("NickName", Login.instance.Nickname.text);
         param.Add("Level", JHW_GameManager.instance.playerLevel);
         param.Add("score", JHW_GameManager.instance.Score);
-        param.Add("playTime", JHW_GameManager.instance.playTime);
+        param.Add("playTime",Math.Round(JHW_GameManager.instance.playTime,3));
 
         BackendReturnObject BRO = Backend.GameData.Insert("custom", param);
         if (BRO.IsSuccess())

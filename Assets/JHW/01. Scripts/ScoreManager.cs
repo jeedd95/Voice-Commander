@@ -38,21 +38,20 @@ public class ScoreManager : MonoBehaviour
 
         Backend.URank.User.UpdateUserScore("85eb2800-6158-11ec-85ad-571b56ff94ac", "custom", json[0]["inDate"].ToString(), param); //전체 랭킹을 업데이트함
 
-        var bro2 =  Backend.URank.User.GetMyRank("85eb2800-6158-11ec-85ad-571b56ff94ac", 5); // 내 밑위 5명 불러옴
-        JsonData json2 = bro2.FlattenRows(); //json2는 내 스코어와 5+- 스코어를 담아둠
+        var bro2 =  Backend.URank.User.GetRankList("85eb2800-6158-11ec-85ad-571b56ff94ac", 100); 
+        JsonData json2 = bro2.FlattenRows(); //json2는 모든 스코어를 담아둠
         JsonData totalCount = bro2.GetFlattenJSON(); //totoalCountjson에는 다른방식으로 파싱함
         string a = totalCount["totalCount"].ToString();
 
-        
 
         for (int i = 0; i < json2.Count; i++)
         {
-            ScoreBoard.text += "\n " +
-                                      json2[i]["rank"] + " / " + "\t" +
-                                      json2[i]["gamerInDate"].ToString().Substring(0,10) + "\t" +
-                                      json2[i]["nickname"].ToString() + "\t" +
-                                      json2[i]["score"].ToString() + "\t" +
-                                      json2[i]["playTime"].ToString() + "\t";
+            ScoreBoard.text += "\n\n" +"        "+
+                                      json2[i]["rank"] + "  \t\t" +
+                                      json2[i]["gamerInDate"].ToString().Substring(0,10) + "\t\t        " +
+                                      json2[i]["nickname"].ToString() + "\t\t\t                   " +
+                                      json2[i]["score"].ToString() + "\t\t\t              " +
+                                      json2[i]["playTime"].ToString();
         }
 
 

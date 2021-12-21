@@ -53,27 +53,15 @@ public class Login : MonoBehaviour
     public void OnClickSignUp()
     {
         BackendReturnObject BRO = Backend.BMember.CustomSignUp(id2.text, password2.text);
-        BackendReturnObject bro2 = Backend.BMember.CreateNickname(Nickname.text);
-
-
-
-
-
-
         if(!BRO.IsSuccess())
         {
             MessageBox2.SetActive(true);
-            MessageBoxText2.text = "중복된 ID입니다";
+            MessageBoxText2.text = "회원 가입에 실패했습니다\n아이디가 중복이거나 유효하지 않습니다";
         }
-        if (!bro2.IsSuccess())
+        else
         {
             MessageBox2.SetActive(true);
-            MessageBoxText2.text = "닉네임 생성에 실패했습니다\n20자 이상, 닉네임 중복, 앞뒤 공백이 있는 경우 사용할 수 없습니다";
-        }
-        if(BRO.IsSuccess() && bro2.IsSuccess())
-        {
-            MessageBox2.SetActive(true);
-            MessageBoxText2.text = "회원가입에 성공했습니다";
+            MessageBoxText2.text = "회원 가입에 성공했습니다!";
         }
 
     }
@@ -81,20 +69,25 @@ public class Login : MonoBehaviour
     public void OnClickLogin()
     {
         BackendReturnObject bro = Backend.BMember.CustomLogin(id.text, password.text);
-
-        if (bro.IsSuccess())
-        {
-            MessageBox.SetActive(true);
-            MessageBoxText.text = "로그인에 성공했습니다 \n 잠시 후 게임이 시작됩니다";
-
-            Invoke("OnClickToPlayScene", 20f);
-
-            //Debug.Log("로그인에 성공했습니다");
-        }
-        else
+        if(!bro.IsSuccess())
         {
             MessageBox.SetActive(true);
             MessageBoxText.text = "로그인에 실패했습니다\n 아이디와 비밀번호를 확인해주십시오";
+        }
+        Backend.BMember.UpdateNickname("c2q6d6c7t9a6z3z2zzx");
+        BackendReturnObject bro2 = Backend.BMember.CreateNickname(Nickname.text);
+
+        if (bro.IsSuccess() && bro2.IsSuccess())
+        {
+            MessageBox.SetActive(true);
+            MessageBoxText.text = "로그인에 성공했습니다 \n 잠시 후 게임이 시작됩니다";
+            Invoke("OnClickToPlayScene", 30f);
+            //Debug.Log("로그인에 성공했습니다");
+        }
+        else if(!bro2.IsSuccess())
+        {
+            MessageBox.SetActive(true);
+            MessageBoxText.text = "닉네임 생성에 실패했습니다\n20자 이상, 닉네임 중복, 앞뒤 공백이 있는 경우 사용할 수 없습니다";
         }
     }
 
@@ -119,4 +112,5 @@ public class Login : MonoBehaviour
         SignUpWindow.SetActive(false);
         exitBtn.SetActive(true);
     }
+    
 }

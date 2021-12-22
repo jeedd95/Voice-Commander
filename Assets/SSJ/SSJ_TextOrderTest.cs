@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class SSJ_TextOrderTest : MonoBehaviour
 {
     // Start is called before the first frame update

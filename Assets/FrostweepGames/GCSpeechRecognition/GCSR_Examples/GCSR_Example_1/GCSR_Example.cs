@@ -20,6 +20,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 		private Image _speechRecognitionState;
 
 		private Text _resultText;
+		public Text[] _orderText; // 내가 말한 한 문장(5개정도로)
 
 		private Toggle _voiceDetectionToggle,
 					   _recognizeDirectlyToggle,
@@ -99,7 +100,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 				_languageDropdown.options.Add(new Dropdown.OptionData(((Enumerators.LanguageCode)i).Parse()));
 			}
 
-			_languageDropdown.value = _languageDropdown.options.IndexOf(_languageDropdown.options.Find(x => x.text == Enumerators.LanguageCode.en_GB.Parse()));
+			_languageDropdown.value = _languageDropdown.options.IndexOf(_languageDropdown.options.Find(x => x.text == Enumerators.LanguageCode.ko_KR.Parse()));
 
 			RefreshMicsButtonOnClickHandler();
 		}
@@ -172,7 +173,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 			_speechRecognition.SetMicrophoneDevice(_speechRecognition.GetMicrophoneDevices()[value]);
 		}
 
-		private void StartRecordButtonOnClickHandler()
+		public void StartRecordButtonOnClickHandler()
 		{
 			_startRecordButton.interactable = false;
 			_stopRecordButton.interactable = true;
@@ -182,7 +183,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 			_speechRecognition.StartRecord(_voiceDetectionToggle.isOn);
 		}
 
-		private void StopRecordButtonOnClickHandler()
+		public void StopRecordButtonOnClickHandler()
 		{
 			_stopRecordButton.interactable = false;
 			_startRecordButton.interactable = true;
@@ -387,13 +388,29 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 
 		private void InsertRecognitionResponseInfo(RecognitionResponse recognitionResponse)
 		{
-			if (recognitionResponse == null || recognitionResponse.results.Length == 0)
+			int index=0;
+
+			if (recognitionResponse == null || recognitionResponse.results.Length == 0) // 마이크 입력한게 없을때 나오는 문구
 			{
 				_resultText.text = "\nWords not detected.";
 				return;
 			}
 
 			_resultText.text += "\n" + recognitionResponse.results[0].alternatives[0].transcript;
+
+			switch(index)
+            {
+				case 0 :
+					_orderText[0].text = recognitionResponse.results[0].alternatives[0].transcript;
+					index++;
+					break;
+				case 1 :
+					_orderText[1].text = recognitionResponse.results[0].alternatives[0].transcript;
+					index++;
+					break;
+
+            }
+
 
 			var words = recognitionResponse.results[0].alternatives[0].words;
 

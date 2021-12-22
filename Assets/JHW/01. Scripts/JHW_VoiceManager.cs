@@ -2,33 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using FrostweepGames.Plugins.Core;
 
-public class JHW_VoiceManager : MonoBehaviour
+
+
+namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 {
-    public bool isRecord;
-    public Button Button;
-
-    // Start is called before the first frame update
-    void Start()
+    public class JHW_VoiceManager : MonoBehaviour
     {
-        
-    }
+        GCSR_Example gCSR_Example;
+        public Text FinalOrderText;
 
-    // Update is called once per frame
-    void Update()
-    {
-        Test();   
-    }
-
-    void Test()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
+        // Start is called before the first frame update
+        void Start()
         {
-            isRecord = true;
+            gCSR_Example = transform.GetComponent<GCSR_Example>();
         }
-        if(Input.GetKeyUp(KeyCode.Space))
+
+        // Update is called once per frame
+        void Update()
         {
-            isRecord = false;
+            GetkeyOrder();
+        }
+
+        void GetkeyOrder()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                gCSR_Example.StartRecordButtonOnClickHandler();
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                gCSR_Example.StopRecordButtonOnClickHandler();
+                CombineOrder();
+            }
+
+        }
+
+        void CombineOrder()
+        {
+            for (int i = 0; i < gCSR_Example._orderText.Length; i++)
+            {
+                FinalOrderText.text += gCSR_Example._orderText[i].text;
+            }
         }
     }
 }

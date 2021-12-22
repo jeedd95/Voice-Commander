@@ -62,11 +62,12 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 				_languageDropdown.options.Add(new Dropdown.OptionData(((Enumerators.LanguageCode)i).Parse()));
 			}
 
-			_languageDropdown.value = _languageDropdown.options.IndexOf(_languageDropdown.options.Find(x => x.text == Enumerators.LanguageCode.en_GB.Parse()));
+            //_languageDropdown.value = _languageDropdown.options.IndexOf(_languageDropdown.options.Find(x => x.text == Enumerators.LanguageCode.ko_KR.Parse()));
+            _languageDropdown.value = _languageDropdown.options.IndexOf(_languageDropdown.options.Find(x => x.text == Enumerators.LanguageCode.en_GB.Parse()));
 
 
-			// select first microphone device
-			if (_speechRecognition.HasConnectedMicrophoneDevices())
+            // select first microphone device
+            if (_speechRecognition.HasConnectedMicrophoneDevices())
 			{
 				_speechRecognition.SetMicrophoneDevice(_speechRecognition.GetMicrophoneDevices()[0]);
 			}

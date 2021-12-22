@@ -81,7 +81,7 @@ public class Login : MonoBehaviour
         {
             MessageBox.SetActive(true);
             MessageBoxText.text = "로그인에 성공했습니다 \n 잠시 후 게임이 시작됩니다";
-            Invoke("OnClickToPlayScene", 30f);
+            Invoke("OnClickToPlayScene", 25f);
             //Debug.Log("로그인에 성공했습니다");
         }
         else if(!bro2.IsSuccess())

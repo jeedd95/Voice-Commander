@@ -11,8 +11,12 @@ public class ScoreManager : MonoBehaviour
 {
 
     public Text MyText;
-    public Text ScoreBoard;
-    
+    public Text MyRank;
+    public Text ScoreBoard_rank;
+    public Text ScoreBoard_gamerInDate;
+    public Text ScoreBoard_nickname;
+    public Text ScoreBoard_score;
+    public Text ScoreBoard_playTime;
 
     void Start()
     {
@@ -28,7 +32,6 @@ public class ScoreManager : MonoBehaviour
         
         JsonData json = bro.FlattenRows(); 
         MyText.text = "NickName : "+ json[0]["NickName"].ToString()+  " / Level : " + json[0]["Level"].ToString() + " / Score : " + json[0]["score"].ToString() + " / PlayTime : " + json[0]["playTime"].ToString(); // 내 레벨,스코어,플레이타임
-
         Param param = new Param();
         //param.Add("updatedAt", json[0]["updatedAt"].ToString());
         //param.Add("Level", JHW_GameManager.instance.playerLevel);
@@ -41,18 +44,32 @@ public class ScoreManager : MonoBehaviour
         var bro2 =  Backend.URank.User.GetRankList("85eb2800-6158-11ec-85ad-571b56ff94ac", 100); 
         JsonData json2 = bro2.FlattenRows(); //json2는 모든 스코어를 담아둠
         JsonData totalCount = bro2.GetFlattenJSON(); //totoalCountjson에는 다른방식으로 파싱함
+        var bro3 = Backend.URank.User.GetMyRank("85eb2800-6158-11ec-85ad-571b56ff94ac");
+        JsonData json3 = bro3.FlattenRows();
+        string b = json3[0]["rank"].ToString();
         string a = totalCount["totalCount"].ToString();
 
 
+        MyRank.text = b + " / " + a;
         for (int i = 0; i < json2.Count; i++)
         {
-            ScoreBoard.text += "\n\n" +"        "+
-                                      json2[i]["rank"] + "  \t\t" +
-                                      json2[i]["gamerInDate"].ToString().Substring(0,10) + "\t\t        " +
-                                      json2[i]["nickname"].ToString() + "\t\t\t                   " +
-                                      json2[i]["score"].ToString() + "\t\t\t              " +
-                                      json2[i]["playTime"].ToString();
+            ScoreBoard_rank.text += "\n" + json2[i]["rank"];
+            ScoreBoard_gamerInDate.text += "\n" + json2[i]["gamerInDate"].ToString().Substring(0, 10);
+            ScoreBoard_nickname.text += "\n" + json2[i]["nickname"];
+            ScoreBoard_score.text += "\n" + json2[i]["score"];
+            ScoreBoard_playTime.text += "\n" + json2[i]["playTime"];
         }
+
+
+        //for (int i = 0; i < json2.Count; i++)
+        //{
+        //    ScoreBoard.text += "\n\n" +"        "+
+        //                              json2[i]["rank"] + "  \t\t" +
+        //                              json2[i]["gamerInDate"].ToString().Substring(0,10) + "\t\t        " +
+        //                              json2[i]["nickname"].ToString() + "\t\t\t                   " +
+        //                              json2[i]["score"].ToString() + "\t\t\t              " +
+        //                              json2[i]["playTime"].ToString();
+        //}
 
 
     }

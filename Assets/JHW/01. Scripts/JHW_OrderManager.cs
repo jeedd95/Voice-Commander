@@ -36,7 +36,7 @@ public class JHW_OrderManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        OrderManagerStart();
+        CoordinatesSet();
     }
 
     // Update is called once per frame
@@ -44,7 +44,7 @@ public class JHW_OrderManager : MonoBehaviour
     {
         //print(DesinationAreaObj);
 
-        if (Input.GetKeyDown(KeyCode.Return) && string.IsNullOrEmpty(inputFieldOrder.text) == false)
+        if (Input.GetKeyDown(KeyCode.Return) && string.IsNullOrEmpty(inputFieldOrder.text) == false) //엔터키
         {
             StringOrder();
         }
@@ -52,7 +52,7 @@ public class JHW_OrderManager : MonoBehaviour
        if(DesinationAreaObj !=null) DestinationText.text = "설정 지역 : " + DesinationAreaObj.name;
     }
 
-    public void StringOrder()
+    public void StringOrder() //텍스트로 점령지를 정함
     {
         order = inputFieldOrder.text;
 
@@ -62,12 +62,13 @@ public class JHW_OrderManager : MonoBehaviour
             {
                 DesinationAreaObj = GameObject.Find(Coordinates[i]).gameObject;
             }
+
         }
         
         inputFieldOrder.text = "";
     }
 
-    void OrderManagerStart()
+    void CoordinatesSet()
     {
         DesinationAreaObj = null;
 

@@ -6637,6 +6637,10 @@ PrefabInstance:
       propertyPath: apiKey
       value: AIzaSyBFJ9GkMLnZnn32Zhs9txhR2dMEuGCAA2M
       objectReference: {fileID: 0}
+    - target: {fileID: 114000013716498916, guid: 73477f779c490234d82ad11f2536dbd9, type: 3}
+      propertyPath: isFullDebugLogIfError
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73477f779c490234d82ad11f2536dbd9, type: 3}
 --- !u!1 &2082881378

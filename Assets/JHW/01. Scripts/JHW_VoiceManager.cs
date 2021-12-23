@@ -23,6 +23,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
         void Update()
         {
             GetkeyOrder();
+            FinalOrderText.text = gCSR_Example._orderText;
         }
 
         void GetkeyOrder()
@@ -34,16 +35,63 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 gCSR_Example.StopRecordButtonOnClickHandler();
-                CombineOrder();
             }
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                gCSR_Example._orderText = "";
+            }
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+               VoiceOrder();
+            }
+
+            //if (Input.GetKeyDown(KeyCode.X)) //모두 삭제
+            //{
+            //    for (int i = 0; i < 5; i++)
+            //    {
+            //        gCSR_Example._orderText[i].text = "";
+            //        gCSR_Example.index = 0;
+            //    }
+            //}
+            //if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Backspace)) //하나 지우기
+            //{
+            //    int index = 0;
+            //    //비어있지 않은 배열 중에서 인덱스가 가장큰 애의 내용을 지우고 싶다
+            //    for (int i = 0; i < gCSR_Example._orderText.Length; i++)
+            //    {
+            //        if (gCSR_Example._orderText[i].text != "")
+            //        {
+            //            index = i;
+            //        }
+            //    }
+
+            //    gCSR_Example._orderText[index].text = "";
+            //    gCSR_Example.index = index;
+            //}
+
 
         }
 
-        void CombineOrder()
+        //void CombineOrder()
+        //{
+        //for (int i = 0; i < gCSR_Example._orderText.Length; i++)
+        //{
+        //    FinalOrderText.text += gCSR_Example._orderText[i].text;
+        //}
+        //+ gCSR_Example._orderText[1].text + gCSR_Example._orderText[2].text + gCSR_Example._orderText[3].text + gCSR_Example._orderText[4].text;
+        //}
+
+        void VoiceOrder()
         {
-            for (int i = 0; i < gCSR_Example._orderText.Length; i++)
+           if(FinalOrderText.text.Contains("보병") && FinalOrderText.text.Contains("생성"))
             {
-                FinalOrderText.text += gCSR_Example._orderText[i].text;
+                print("111111111111");
+            }
+           else
+            {
+                print("22222222222222222");
             }
         }
     }

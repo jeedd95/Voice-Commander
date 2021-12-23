@@ -15,11 +15,11 @@ public class Login : MonoBehaviour
     public InputField id;
     public InputField password;
     public GameObject exitBtn;
+    public InputField Nickname;
 
     //회원가입페이지
     public InputField id2;
     public InputField password2;
-    public InputField Nickname;
     public GameObject SignUpWindow;
     public GameObject MessageBox2;
     public Text MessageBoxText2;
@@ -41,6 +41,45 @@ public class Login : MonoBehaviour
     private void Start()
     {
         Backend.Initialize();
+    }
+
+    private void Update()
+    {
+        if(id.isFocused==true)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                password.Select();
+            }
+        }
+        if(password.isFocused==true)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                Nickname.Select();
+            }
+        }
+        if(Nickname.isFocused==true)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                id.Select();
+            }
+        }
+        if (id2.isFocused == true)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                password2.Select();
+            }
+        }
+        if (password2.isFocused == true)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                id2.Select();
+            }
+        }
     }
 
     public void OnClickSignUpUI()

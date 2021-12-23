@@ -20,7 +20,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 		private Image _speechRecognitionState;
 
 		private Text _resultText;
-		public Text[] _orderText; // 내가 말한 한 문장(5개정도로)
+		public string _orderText;
 
 		private Toggle _voiceDetectionToggle,
 					   _recognizeDirectlyToggle,
@@ -34,7 +34,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 
 		private Image _voiceLevelImage;
 
-		private void Start()
+        private void Start()
 		{
 			_speechRecognition = GCSpeechRecognition.Instance;
 			_speechRecognition.RecognizeSuccessEvent += RecognizeSuccessEventHandler;
@@ -385,10 +385,9 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
                 _resultText.text = "Long Running Recognize Success. Words not detected.";
             }
         }
-
+		public int index = 0;
 		private void InsertRecognitionResponseInfo(RecognitionResponse recognitionResponse)
 		{
-			int index=0;
 
 			if (recognitionResponse == null || recognitionResponse.results.Length == 0) // 마이크 입력한게 없을때 나오는 문구
 			{
@@ -398,18 +397,30 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 
 			_resultText.text += "\n" + recognitionResponse.results[0].alternatives[0].transcript;
 
-			switch(index)
-            {
-				case 0 :
-					_orderText[0].text = recognitionResponse.results[0].alternatives[0].transcript;
-					index++;
-					break;
-				case 1 :
-					_orderText[1].text = recognitionResponse.results[0].alternatives[0].transcript;
-					index++;
-					break;
-
-            }
+			_orderText  = recognitionResponse.results[0].alternatives[0].transcript;
+			//switch (index)
+			//{
+			//    case 0:
+			//        _orderText[0].text = recognitionResponse.results[0].alternatives[0].transcript;
+			//        index++;
+			//        break;
+			//    case 1:
+			//        _orderText[1].text = recognitionResponse.results[0].alternatives[0].transcript;
+			//        index++;
+			//        break;
+			//    case 2:
+			//        _orderText[2].text = recognitionResponse.results[0].alternatives[0].transcript;
+			//        index++;
+			//        break;
+			//    case 3:
+			//        _orderText[3].text = recognitionResponse.results[0].alternatives[0].transcript;
+			//        index++;
+			//        break;
+			//    case 4:
+			//        _orderText[4].text = recognitionResponse.results[0].alternatives[0].transcript;
+			//        index++;
+			//        break;
+			//}
 
 
 			var words = recognitionResponse.results[0].alternatives[0].words;

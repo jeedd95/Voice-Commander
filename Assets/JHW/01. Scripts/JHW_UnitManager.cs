@@ -59,7 +59,7 @@ public class JHW_UnitManager : MonoBehaviour
         {
             SetState(State.CaptureMove); //점령 모드로 생성된 유닛은 점령상태로 초기화
             unitinfo.isCaptureUnit = true;
-            GameObject.Find("Canvas/CaptureMode").GetComponent<Toggle>().isOn = false;
+            GameObject.Find("MainCanvas/CaptureMode").GetComponent<Toggle>().isOn = false;
         }
     }
 

@@ -397,7 +397,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 
 			_resultText.text += "\n" + recognitionResponse.results[0].alternatives[0].transcript;
 
-			_orderText  = recognitionResponse.results[0].alternatives[0].transcript;
+			_orderText  += recognitionResponse.results[0].alternatives[0].transcript;
 			//switch (index)
 			//{
 			//    case 0:

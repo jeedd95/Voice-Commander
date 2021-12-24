@@ -33,61 +33,61 @@ public class JHW_UnitFactory : MonoBehaviour
 
     void Update()
     {
-        if (!JHW_OrderManager.instance.inputFieldOrder.isFocused)
-        {
-            CreateUnit();
+        //if (!JHW_OrderManager.instance.inputFieldOrder.isFocused)
+        //{
+        //    CreateUnit();
 
-            if (Input.GetKeyDown(KeyCode.Alpha2)) //2번키를 누르면 적 랜덤 생성
-            {
-                CreateUnit2();
-            }
-        }
+        //    if (Input.GetKeyDown(KeyCode.Alpha2)) //2번키를 누르면 적 랜덤 생성
+        //    {
+        //        CreateUnit2();
+        //    }
+        //}
     }
 
 
     int unitIndex = -1; //아래 함수에서 쓰이는 변수
-    public void CreateUnit() //아군을 생성하는 코드
+    public void CreateUnit(int unitIndex) //아군을 생성하는 코드
     {
-        if (Input.anyKeyDown) //유닛에 해당하는 버튼을 누른다
-        {
-            switch (Input.inputString)
-            {
-                case "q":
-                    unitIndex = 0; // RifleMan
-                    break;
-                case "w": //Scout
-                    unitIndex = 1;
-                    break;
-                case "e": //Sniper
-                    unitIndex = 2;
-                    break;
-                case "r": //Artillery
-                    unitIndex = 3;
-                    break;
-                case "t": //Armoured
-                    unitIndex = 4;
-                    break;
-                case "y": //Tank
-                    unitIndex = 5;
-                    break;
-                case "u": //Helicopter
-                    unitIndex = 6;
-                    break;
-                case "i": //HeavyWeapon
-                    unitIndex = 7;
-                    break;
-                case "o": //Raptor
-                    unitIndex = 8;
-                    break;
-                default:
-                    unitIndex = -1;
-                    break;
-            }
+        //if (Input.anyKeyDown) //유닛에 해당하는 버튼을 누른다
+        //{
+            //switch (Input.inputString)
+            // {
+            //case "q":
+            //        unitIndex = 0; // RifleMan
+            //        break;
+            //    case "w": //Scout
+            //        unitIndex = 1;
+            //        break;
+            //    case "e": //Sniper
+            //        unitIndex = 2;
+            //        break;
+            //    case "r": //Artillery
+            //        unitIndex = 3;
+            //        break;
+            //    case "t": //Armoured
+            //        unitIndex = 4;
+            //        break;
+            //    case "y": //Tank
+            //        unitIndex = 5;
+            //        break;
+            //    case "u": //Helicopter
+            //        unitIndex = 6;
+            //        break;
+            //    case "i": //HeavyWeapon
+            //        unitIndex = 7;
+            //        break;
+            //    case "o": //Raptor
+            //        unitIndex = 8;
+            //        break;
+            //    default:
+            //        unitIndex = -1;
+            //        break;
+            //}
 
-            if (unitIndex == -1)
-            {
-                return;
-            }
+            //if (unitIndex == -1)
+            //{
+            //    return;
+            //}
 
             units = Units[unitIndex].GetComponent<JHW_UnitInfo>(); //각 유닛의 정보를 가져온다
 
@@ -206,7 +206,7 @@ public class JHW_UnitFactory : MonoBehaviour
             {
                 print("최대 인구수가 부족합니다");
             }
-        }
+      //  }
     }
 
     public void CreateUnit2() //적을 생성하는 코드

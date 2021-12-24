@@ -37,14 +37,19 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
                 gCSR_Example.StopRecordButtonOnClickHandler();
             }
 
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKeyDown(KeyCode.X)) //초기화
             {
                 gCSR_Example._orderText = "";
+            }
+            if(Input.GetKeyDown(KeyCode.C)) //한글자씩 지우기
+            {
+                gCSR_Example._orderText = gCSR_Example._orderText.Substring(0, gCSR_Example._orderText.Length - 1);
             }
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-               VoiceOrder();
+                VoiceOrder();
+                gCSR_Example._orderText = "";
             }
 
             //if (Input.GetKeyDown(KeyCode.X)) //모두 삭제
@@ -85,14 +90,58 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 
         void VoiceOrder()
         {
-           if(FinalOrderText.text.Contains("보병") && FinalOrderText.text.Contains("생성"))
+
+            if(FinalOrderText.text.Contains("생산"))
             {
-                print("111111111111");
+                if(FinalOrderText.text.Contains("보병"))
+                {
+                    JHW_UnitFactory.instance.CreateUnit(0);
+                }
+                if(FinalOrderText.text.Contains("정찰병"))
+                {
+                    JHW_UnitFactory.instance.CreateUnit(1);
+                }
+                if (FinalOrderText.text.Contains("저격수"))
+                {
+                    JHW_UnitFactory.instance.CreateUnit(2);
+                }
+                if (FinalOrderText.text.Contains("포병"))
+                {
+                    JHW_UnitFactory.instance.CreateUnit(3);
+                }
+                if (FinalOrderText.text.Contains("기관총"))
+                {
+                    JHW_UnitFactory.instance.CreateUnit(4);
+                }
+                if (FinalOrderText.text.Contains("장갑차"))
+                {
+                    JHW_UnitFactory.instance.CreateUnit(5);
+                }
+                if (FinalOrderText.text.Contains("탱크"))
+                {
+                    JHW_UnitFactory.instance.CreateUnit(6);
+                }
+                if (FinalOrderText.text.Contains("헬기"))
+                {
+                    JHW_UnitFactory.instance.CreateUnit(7);
+                }
+                if (FinalOrderText.text.Contains("전투기"))
+                {
+                    JHW_UnitFactory.instance.CreateUnit(8);
+                }
             }
-           else
+
+            if(FinalOrderText.text.Contains("점령"))
             {
-                print("22222222222222222");
+
+            }
+
+
+            else
+            {
+                print("알수없는 명령어 입니다");
             }
         }
+
     }
 }

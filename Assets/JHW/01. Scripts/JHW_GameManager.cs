@@ -378,7 +378,7 @@ public class JHW_GameManager : MonoBehaviour
 
             if(!isBuff_CoolDown) 
             {
-                tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + currentCool[i].ToString("N2");
+                tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + currentCool[i].ToString("N1");
                 if (currentCool[i] <=0)
                 {
                     tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n";
@@ -386,7 +386,7 @@ public class JHW_GameManager : MonoBehaviour
             }
             else 
             {
-                tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + (currentCool[i] * 0.75f).ToString("N2");
+                tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + (currentCool[i] * 0.75f).ToString("N1");
                 if (currentCool[i] <= 0)
                 {
                     tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n";

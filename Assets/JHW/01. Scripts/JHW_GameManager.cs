@@ -64,7 +64,19 @@ public class JHW_GameManager : MonoBehaviour
     public Text TankText;
     public Text HelicopterText;
     public Text RaptorText;
+
+
+    public Image RifleManPortrait;
+    public Image ScoutPortrait;
+    public Image SniperPortrait;
+    public Image ArtilleryPortrait;
+    public Image HeavyWeaponPortrait;
+    public Image ArmouredPortrait;
+    public Image TankPortrait;
+    public Image HelicopterPortrait;
+    public Image RaptorPortrait;
     //==
+
     public Text levelText;
     public Text MedalText;
     public Text GoldRateUpText;
@@ -349,6 +361,7 @@ public class JHW_GameManager : MonoBehaviour
         }
     }
 
+    Image Portrait_Rifle;
 
     void TextManager()
     {
@@ -368,6 +381,7 @@ public class JHW_GameManager : MonoBehaviour
 
 
         Text[] tts = { RifleManText, ScoutText, SniperText, ArtilleryText, HeavyWeaponText, ArmouredText, TankText, HelicopterText, RaptorText };
+        Image[] uts = { RifleManPortrait, ScoutPortrait, SniperPortrait, ArtilleryPortrait, HeavyWeaponPortrait, ArmouredPortrait, TankPortrait, HelicopterPortrait, RaptorPortrait };
 
         string[] CDRText = new string[_cooldown.Length];
 
@@ -378,19 +392,30 @@ public class JHW_GameManager : MonoBehaviour
 
             if(!isBuff_CoolDown) 
             {
-                tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + currentCool[i].ToString("N1");
+                tts[i].text = /*((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + */currentCool[i].ToString("N1");
                 if (currentCool[i] <=0)
                 {
-                    tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n";
+                    // tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n";
+                    tts[i].text = "";
                 }
             }
             else 
             {
-                tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + (currentCool[i] * 0.75f).ToString("N1");
+                tts[i].text = /*((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + */(currentCool[i] * 0.75f).ToString("N1");
                 if (currentCool[i] <= 0)
                 {
-                    tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n";
+                    //tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n";
+                    tts[i].text = "";
                 }
+            }
+            if(_cooldown[i] == currentCool[i])
+            {
+                tts[i].text = "";
+            }
+
+            if(_cooldown[i] - currentCool[i] != 0)
+            {
+            uts[i].GetComponent<Image>().fillAmount =  (_cooldown[i]-currentCool[i])/_cooldown[i];
             }
 
         }

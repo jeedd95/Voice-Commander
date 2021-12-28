@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using FrostweepGames.Plugins.Core;
-
+using System.Text.RegularExpressions;
+using System;
 
 
 namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
@@ -12,7 +13,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
     {
         GCSR_Example gCSR_Example;
         public Text FinalOrderText;
-
+        
         // Start is called before the first frame update
         void Start()
         {
@@ -41,7 +42,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
             {
                 gCSR_Example._orderText = "";
             }
-            if(Input.GetKeyDown(KeyCode.C)) //한글자씩 지우기
+            if(Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Backspace)) //한글자씩 지우기
             {
                 gCSR_Example._orderText = gCSR_Example._orderText.Substring(0, gCSR_Example._orderText.Length - 1);
             }
@@ -91,7 +92,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
         void VoiceOrder()
         {
 
-            if(FinalOrderText.text.Contains("생산"))
+            if(FinalOrderText.text.Contains("생산") && !FinalOrderText.text.Contains("점령"))
             {
                 if(FinalOrderText.text.Contains("보병"))
                 {
@@ -131,15 +132,30 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
                 }
             }
 
-            if(FinalOrderText.text.Contains("점령"))
+           
+
+            if (FinalOrderText.text.Contains("점령") && !FinalOrderText.text.Contains("생산"))
             {
+                JHW_GameManager.instance.isCaptureCreateMode = true;
+
+                //내가 말한 파이널오더텍스트 중에서 점령지 이름이 있는지 확인한다
+                //있다면 그 점령지 텍스를 오더매니저 함수에 파라미터로 넣는다
+
+                Regex regex = new Regex("A");
+                Match m = regex.Match(FinalOrderText.text);
+                if (m.Success)
+                {
+                    print(m.Index); // 위에 문자가 시작되는 인덱스
+                    print(m.Value); //그 문자
+                    //Console.WriteLine("{0}:{1}", m.Index, m.Value);
+                }
 
             }
 
 
             else
             {
-                print("알수없는 명령어 입니다");
+                print("알 수 없는 명령어 입니다");
             }
         }
 

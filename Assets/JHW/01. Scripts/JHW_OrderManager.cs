@@ -44,17 +44,17 @@ public class JHW_OrderManager : MonoBehaviour
     {
         //print(DesinationAreaObj);
 
-        if (Input.GetKeyDown(KeyCode.Return) && string.IsNullOrEmpty(inputFieldOrder.text) == false) //엔터키
-        {
-            StringOrder();
-        }
+        //if (Input.GetKeyDown(KeyCode.Return) && string.IsNullOrEmpty(inputFieldOrder.text) == false) //엔터키
+        //{
+        //    StringOrder();
+        //}
 
        if(DesinationAreaObj !=null) DestinationText.text = "설정 지역 : " + DesinationAreaObj.name;
     }
 
-    public void StringOrder() //텍스트로 점령지를 정함
+    public void StringOrder(string order) //텍스트로 점령지를 정함
     {
-        order = inputFieldOrder.text;
+       // order = inputFieldOrder.text;
 
         for (int i = 0; i < num.Length * word.Length; i++)
         {
@@ -65,7 +65,7 @@ public class JHW_OrderManager : MonoBehaviour
 
         }
         
-        inputFieldOrder.text = "";
+        //inputFieldOrder.text = "";
     }
 
     void CoordinatesSet()

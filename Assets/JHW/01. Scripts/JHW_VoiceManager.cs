@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using FrostweepGames.Plugins.Core;
 using System.Text.RegularExpressions;
-using System;
+//using System;
 
 
 namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
@@ -92,72 +92,169 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
         void VoiceOrder()
         {
 
-            if(FinalOrderText.text.Contains("생산") && !FinalOrderText.text.Contains("점령"))
+            if (FinalOrderText.text.Contains("생산"))
             {
-                if(FinalOrderText.text.Contains("보병"))
+                ProduceUnit();
+            }
+
+            if (FinalOrderText.text.Contains("점령"))
+            {
+
+                DestinationSet();
+                ProduceUnit();
+                //Match m = regex.Match(FinalOrderText.text);
+                //if (m.Success)
+                //{
+                //    //print(m.Index); // 위에 문자가 시작되는 인덱스
+                //    print(FinalOrderText.text.Substring(m.Index, m.Index + 1));
+                //    //print(m.Value); //그 문자
+                //    //Console.WriteLine("{0}:{1}", m.Index, m.Value);
+                //}
+            }
+
+            if (FinalOrderText.text.Contains("폭격"))
                 {
-                    JHW_UnitFactory.instance.CreateUnit(0);
+                JHW_GameManager.instance.isPlayerSkillMode = true;
+                DestinationSet();
+                JHW_GameManager.instance.PlayerSkill_Bomb();
+            }
+
+            if (FinalOrderText.text.Contains("연막") )
+            {
+                JHW_GameManager.instance.isPlayerSkillMode = true;
+                DestinationSet();
+                JHW_GameManager.instance.PlayerSkill_Smoke();
+            }
+
+            if(FinalOrderText.text.Contains("방어태세"))
+            {
+                if(FinalOrderText.text.Contains("실행"))
+                {
+                    JHW_GameManager.instance.OnClickDefense();
                 }
-                if(FinalOrderText.text.Contains("정찰병"))
+                if(FinalOrderText.text.Contains("중단"))
                 {
-                    JHW_UnitFactory.instance.CreateUnit(1);
+                    JHW_GameManager.instance.NotClickDefense();
                 }
-                if (FinalOrderText.text.Contains("저격수"))
+            }
+            if(FinalOrderText.text.Contains("공격태세"))
+            {
+                if (FinalOrderText.text.Contains("실행"))
                 {
-                    JHW_UnitFactory.instance.CreateUnit(2);
+                    JHW_GameManager.instance.OnClickOffense();
                 }
-                if (FinalOrderText.text.Contains("포병"))
+                if (FinalOrderText.text.Contains("중단"))
                 {
-                    JHW_UnitFactory.instance.CreateUnit(3);
-                }
-                if (FinalOrderText.text.Contains("기관총"))
-                {
-                    JHW_UnitFactory.instance.CreateUnit(4);
-                }
-                if (FinalOrderText.text.Contains("장갑차"))
-                {
-                    JHW_UnitFactory.instance.CreateUnit(5);
-                }
-                if (FinalOrderText.text.Contains("탱크"))
-                {
-                    JHW_UnitFactory.instance.CreateUnit(6);
-                }
-                if (FinalOrderText.text.Contains("헬기"))
-                {
-                    JHW_UnitFactory.instance.CreateUnit(7);
-                }
-                if (FinalOrderText.text.Contains("전투기"))
-                {
-                    JHW_UnitFactory.instance.CreateUnit(8);
+                    JHW_GameManager.instance.NotClickOffense();
                 }
             }
 
-           
-
-            if (FinalOrderText.text.Contains("점령") && !FinalOrderText.text.Contains("생산"))
+            if(FinalOrderText.text.Contains("인구증가"))
             {
-                JHW_GameManager.instance.isCaptureCreateMode = true;
-
-                //내가 말한 파이널오더텍스트 중에서 점령지 이름이 있는지 확인한다
-                //있다면 그 점령지 텍스를 오더매니저 함수에 파라미터로 넣는다
-
-                Regex regex = new Regex("A");
-                Match m = regex.Match(FinalOrderText.text);
-                if (m.Success)
-                {
-                    print(m.Index); // 위에 문자가 시작되는 인덱스
-                    print(m.Value); //그 문자
-                    //Console.WriteLine("{0}:{1}", m.Index, m.Value);
-                }
-
+                JHW_GameManager.instance.OnClickWholePopulationUp();
             }
-
+            if(FinalOrderText.text.Contains("골드획득"))
+            {
+                JHW_GameManager.instance.OnClickGetGold();
+            }
+            if(FinalOrderText.text.Contains("골드업그레이드"))
+            {
+                JHW_GameManager.instance.OnClickGetGoldRateUP();
+            }
 
             else
             {
                 print("알 수 없는 명령어 입니다");
             }
+
         }
 
+        void DestinationSet()
+        {
+            string head;
+            string tail;
+            JHW_GameManager.instance.isCaptureCreateMode = true;
+
+            Regex regex = new Regex("[0-9]");
+            Match m = regex.Match(FinalOrderText.text);
+            //if (m.Success)
+            //{
+            //    print(m.Value);
+            //}
+
+            if (FinalOrderText.text.Contains("알파"))
+            {
+                head = "A";
+                tail = m.Value.ToString();
+                string order = head + tail; //A1
+                JHW_OrderManager.instance.StringOrder(order);
+            }
+
+            if (FinalOrderText.text.Contains("브라보"))
+            {
+                head = "B";
+                tail = m.Value.ToString();
+                string order = head + tail; //A1
+                JHW_OrderManager.instance.StringOrder(order);
+            }
+
+            if (FinalOrderText.text.Contains("찰리"))
+            {
+                head = "C";
+                tail = m.Value.ToString();
+                string order = head + tail; //A1
+                JHW_OrderManager.instance.StringOrder(order);
+            }
+            if (FinalOrderText.text.Contains("델타"))
+            {
+                head = "D";
+                tail = m.Value.ToString();
+                string order = head + tail; //A1
+                JHW_OrderManager.instance.StringOrder(order);
+            }
+        }
+
+        void ProduceUnit()
+        {
+            if (FinalOrderText.text.Contains("보병"))
+            {
+                JHW_UnitFactory.instance.CreateUnit(0);
+            }
+            if (FinalOrderText.text.Contains("정찰병"))
+            {
+                JHW_UnitFactory.instance.CreateUnit(1);
+            }
+            if (FinalOrderText.text.Contains("저격수"))
+            {
+                JHW_UnitFactory.instance.CreateUnit(2);
+            }
+            if (FinalOrderText.text.Contains("포병"))
+            {
+                JHW_UnitFactory.instance.CreateUnit(3);
+            }
+            if (FinalOrderText.text.Contains("기관총"))
+            {
+                JHW_UnitFactory.instance.CreateUnit(4);
+            }
+            if (FinalOrderText.text.Contains("장갑차"))
+            {
+                JHW_UnitFactory.instance.CreateUnit(5);
+            }
+            if (FinalOrderText.text.Contains("탱크"))
+            {
+                JHW_UnitFactory.instance.CreateUnit(6);
+            }
+            if (FinalOrderText.text.Contains("헬기"))
+            {
+                JHW_UnitFactory.instance.CreateUnit(7);
+            }
+            if (FinalOrderText.text.Contains("전투기"))
+            {
+                JHW_UnitFactory.instance.CreateUnit(8);
+            }
+        }
+
+
     }
+
 }

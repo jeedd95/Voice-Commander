@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
 
 namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 {
@@ -34,8 +36,13 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 
 		private Image _voiceLevelImage;
 
-        private void Start()
+		public List<string> result;
+
+
+		private void Start()
 		{
+			
+
 			_speechRecognition = GCSpeechRecognition.Instance;
 			_speechRecognition.RecognizeSuccessEvent += RecognizeSuccessEventHandler;
 			_speechRecognition.RecognizeFailedEvent += RecognizeFailedEventHandler;
@@ -103,6 +110,31 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 			_languageDropdown.value = _languageDropdown.options.IndexOf(_languageDropdown.options.Find(x => x.text == Enumerators.LanguageCode.ko_KR.Parse()));
 
 			RefreshMicsButtonOnClickHandler();
+
+
+			_contextPhrasesInputField.text = "생산, 점령, 폭격, 연막, 방어태세, 공격태세, 실행, 중단, 인구증가, 골드획득, 골드업그레이드,"; 
+
+			// 알파 1, 알파 2,
+			// 브라보 1, 브라보 2 
+			// 이런식으로 텍스트 안에 추가한다
+			string[] a = { "1", "2", "3", "4", "5", "6", "7", "8" };
+			string[] b = { "알파", "브라보", "찰리", "델타" };
+			result = new List<string>();
+            for (int i = 0; i < a.Length; i++)
+            {
+                for (int j = 0; j < b.Length; j++)
+                {
+					result.Add(" "+b[j] +" "+ a[i]+",");
+                }
+            }
+            for (int i = 0; i < result.Count; i++)
+            {
+				_contextPhrasesInputField.text += result[i];
+            }
+			
+			_speechRecognition.GetListOperations();
+
+
 		}
 
 		private void OnDestroy()

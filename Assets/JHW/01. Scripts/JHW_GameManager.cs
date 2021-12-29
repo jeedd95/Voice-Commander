@@ -579,20 +579,20 @@ public class JHW_GameManager : MonoBehaviour
 
     IEnumerator WindTextAnim(string dir)
     {
-        WindText.text = dir;
+        WindText.text = dir + "\t"+(-50+windPower).ToString("F1");
         yield return new WaitForSeconds(1);
-        WindText.text = dir + "\t" + dir;
+        WindText.text = dir + "\t" + dir + "\t"+(-50 + windPower).ToString("F1");
         yield return new WaitForSeconds(1);
         isWindOn = false;
     }
 
 
-    void PlayerSkill_Bomb()
+    public void PlayerSkill_Bomb()
     {
-        if(isPlayerSkillMode && JHW_OrderManager.instance.DesinationAreaObj !=null && Input.GetKeyDown(KeyCode.Z))
+        if(isPlayerSkillMode && JHW_OrderManager.instance.DesinationAreaObj !=null /*&& Input.GetKeyDown(KeyCode.Z)*/)
         {
             print("플레이어 스킬 _ 폭격");
-            //isPlayerSkillMode = false;
+            isPlayerSkillMode = false;
             GameObject.Find("MainCanvas/PlayerSkillMode").GetComponent<Toggle>().isOn = false;
             GameObject PS_B = Instantiate(PlayerSkill_Bomb_prefabs);
             PS_B.transform.rotation = GameObject.Find("Tiles").transform.rotation;
@@ -605,12 +605,12 @@ public class JHW_GameManager : MonoBehaviour
             }
         }
     }
-    void PlayerSkill_Smoke()
+    public void PlayerSkill_Smoke()
     {
-        if (isPlayerSkillMode && JHW_OrderManager.instance.DesinationAreaObj != null && Input.GetKeyDown(KeyCode.X))
+        if (isPlayerSkillMode && JHW_OrderManager.instance.DesinationAreaObj != null /*&& Input.GetKeyDown(KeyCode.X)*/)
         {
             print("플레이어 스킬 _ 연막");
-            //isPlayerSkillMode = false;
+            isPlayerSkillMode = false;
             GameObject.Find("MainCanvas/PlayerSkillMode").GetComponent<Toggle>().isOn = false;
             GameObject PS_S = Instantiate(PlayerSkill_Smoke_prefabs);
             PS_S.transform.rotation = GameObject.Find("Tiles").transform.rotation;

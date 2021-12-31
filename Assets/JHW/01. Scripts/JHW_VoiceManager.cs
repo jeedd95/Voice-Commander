@@ -117,6 +117,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
                 JHW_GameManager.instance.isPlayerSkillMode = true;
                 DestinationSet();
                 JHW_GameManager.instance.PlayerSkill_Bomb();
+                JHW_GameManager.instance.skill_Bomb_Cool();
             }
 
             if (FinalOrderText.text.Contains("¿¬¸·") )

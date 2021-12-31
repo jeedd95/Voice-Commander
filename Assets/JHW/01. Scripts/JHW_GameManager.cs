@@ -634,5 +634,34 @@ public class JHW_GameManager : MonoBehaviour
     {
         GameObject.Find("EXP").GetComponent<Slider>().value = currentExp/amountExp*100f;
     }
+    [SerializeField]
+    bool isSkill_Bomb_Ready;
+    bool isSkill_Smoke_Ready;
+    [SerializeField]
+    float Skill_Bomb_CoolTime = 0;
+    float Skill_Smoke_CoolTime= 0;
+    //처음 0에서 시작 해서 시간에 따라 60까지 증가
+    //60에 도달하면 더이상 늘어나지 않고 사용하면 다시 0으로 초기화
+    
+    public void skill_Bomb_Cool()
+    {
+        if(!isSkill_Bomb_Ready)
+        {
+            StartCoroutine("CoolDown");
+        }
+    }
+    IEnumerator CoolDown()
+    {
+        isSkill_Bomb_Ready = false;
+
+        while (Skill_Bomb_CoolTime <= 60)
+        {
+            Skill_Bomb_CoolTime += 0.01f;
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        Skill_Bomb_CoolTime = 60;
+        isSkill_Bomb_Ready = true;
+    }
 }
 

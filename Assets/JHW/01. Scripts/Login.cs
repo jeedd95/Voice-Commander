@@ -80,6 +80,10 @@ public class Login : MonoBehaviour
                 id2.Select();
             }
         }
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            OnClickLogin();
+        }
     }
 
     public void OnClickSignUpUI()
@@ -132,7 +136,7 @@ public class Login : MonoBehaviour
 
     public void OnClickToPlayScene()
     {
-        SceneManager.LoadScene("JHW_TestScene+Map");
+        SceneManager.LoadScene("JHW_StartCine");
     }
     public void OnClickExit()
     {

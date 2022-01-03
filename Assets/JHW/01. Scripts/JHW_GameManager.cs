@@ -593,7 +593,8 @@ public class JHW_GameManager : MonoBehaviour
         {
             print("플레이어 스킬 _ 폭격");
             isPlayerSkillMode = false;
-            GameObject.Find("MainCanvas/PlayerSkillMode").GetComponent<Toggle>().isOn = false;
+            //GameObject.Find("MainCanvas/PlayerSkillMode").GetComponent<Toggle>().isOn = false;
+            isPlayerSkillMode = true;
             GameObject PS_B = Instantiate(PlayerSkill_Bomb_prefabs);
             PS_B.transform.rotation = GameObject.Find("Tiles").transform.rotation;
             PS_B.transform.position = JHW_OrderManager.instance.DesinationAreaObj.transform.position;
@@ -611,7 +612,7 @@ public class JHW_GameManager : MonoBehaviour
         {
             print("플레이어 스킬 _ 연막");
             isPlayerSkillMode = false;
-            GameObject.Find("MainCanvas/PlayerSkillMode").GetComponent<Toggle>().isOn = false;
+            //GameObject.Find("MainCanvas/PlayerSkillMode").GetComponent<Toggle>().isOn = false;
             GameObject PS_S = Instantiate(PlayerSkill_Smoke_prefabs);
             PS_S.transform.rotation = GameObject.Find("Tiles").transform.rotation;
             PS_S.transform.position = JHW_OrderManager.instance.DesinationAreaObj.transform.position;

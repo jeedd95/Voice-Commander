@@ -99,7 +99,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 
             if (FinalOrderText.text.Contains("Á¡·É"))
             {
-
+                JHW_GameManager.instance.isCaptureCreateMode = true;
                 DestinationSet();
                 ProduceUnit();
                 //Match m = regex.Match(FinalOrderText.text);
@@ -113,14 +113,14 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
             }
 
             if (FinalOrderText.text.Contains("Æø°Ý"))
-                {
+            {
                 JHW_GameManager.instance.isPlayerSkillMode = true;
                 DestinationSet();
                 JHW_GameManager.instance.PlayerSkill_Bomb();
-                JHW_GameManager.instance.skill_Bomb_Cool();
+                //JHW_GameManager.instance.skill_Bomb_Cool();
             }
 
-            if (FinalOrderText.text.Contains("¿¬¸·") )
+            if (FinalOrderText.text.Contains("¿¬¸·"))
             {
                 JHW_GameManager.instance.isPlayerSkillMode = true;
                 DestinationSet();
@@ -174,7 +174,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
         {
             string head;
             string tail;
-            JHW_GameManager.instance.isCaptureCreateMode = true;
+            
 
             Regex regex = new Regex("[0-9]");
             Match m = regex.Match(FinalOrderText.text);
@@ -195,7 +195,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
             {
                 head = "B";
                 tail = m.Value.ToString();
-                string order = head + tail; //A1
+                string order = head + tail; //B1
                 JHW_OrderManager.instance.StringOrder(order);
             }
 
@@ -203,14 +203,14 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
             {
                 head = "C";
                 tail = m.Value.ToString();
-                string order = head + tail; //A1
+                string order = head + tail; //C1
                 JHW_OrderManager.instance.StringOrder(order);
             }
             if (FinalOrderText.text.Contains("µ¨Å¸"))
             {
                 head = "D";
                 tail = m.Value.ToString();
-                string order = head + tail; //A1
+                string order = head + tail; //D1
                 JHW_OrderManager.instance.StringOrder(order);
             }
         }

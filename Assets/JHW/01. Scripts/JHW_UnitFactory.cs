@@ -37,11 +37,11 @@ public class JHW_UnitFactory : MonoBehaviour
         //{
         //    CreateUnit();
 
-        //    if (Input.GetKeyDown(KeyCode.Alpha2)) //2번키를 누르면 적 랜덤 생성
-        //    {
-        //        CreateUnit2();
-        //    }
         //}
+        if (Input.GetKeyDown(KeyCode.Alpha2)) //2번키를 누르면 적 랜덤 생성
+        {
+            CreateUnit2();
+        }
     }
 
 

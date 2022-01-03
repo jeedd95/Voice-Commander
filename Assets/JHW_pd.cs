@@ -18,14 +18,14 @@ public class JHW_pd : MonoBehaviour
     void Update()
     {
 
-        if(pd.time == 374.0667)
-        {
-            ToplayScene();
-        }
-        //if(pd.state==PlayState.Paused)
+        //if (pd.time == 374.0667)
         //{
         //    ToplayScene();
         //}
+        if (pd.state == PlayState.Paused)
+        {
+            ToplayScene();
+        }
     }
     void ToplayScene()
     {

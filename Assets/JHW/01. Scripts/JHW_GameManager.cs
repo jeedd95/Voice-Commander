@@ -85,6 +85,7 @@ public class JHW_GameManager : MonoBehaviour
     public Image BuffGold;
     public Image BuffCool;
     public Image BuffSpecial;
+    public Image PauseMsgBox;
 
     public List<JHW_UnitManager> hidingUnits;
     public List<JHW_UnitManager> RushUnits;
@@ -372,7 +373,7 @@ public class JHW_GameManager : MonoBehaviour
         Population.text = currentPopulation + " / " + wholePopulationLimit;
         levelText.text = "LEVEL : " + playerLevel;
         MedalText.text = medal.ToString();
-        GoldRateUpText.text = "+" + GoldRate.ToString();
+        GoldRateUpText.text = GoldRate.ToString();
         ExpT.text = currentExp + " / " + amountExp;
 
         BuffGold.color = isBuff_Gold ? Color.yellow: Color.white;
@@ -663,6 +664,17 @@ public class JHW_GameManager : MonoBehaviour
 
         Skill_Bomb_CoolTime = 60;
         isSkill_Bomb_Ready = true;
+    }
+
+    public void OnClickPause()
+    {
+            PauseMsgBox.gameObject.SetActive(true);
+            Time.timeScale = 0;
+    }
+    public void OnClickPauseDis()
+    {
+        PauseMsgBox.gameObject.SetActive(false);
+        Time.timeScale = 1;
     }
 }
 

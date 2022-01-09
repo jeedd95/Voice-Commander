@@ -32,7 +32,15 @@ public class Unit_Anim : MonoBehaviour
         /*============================================*/
         if(um.unitinfo.unitName == "Scout")
         {
-
+            switch (um.state)
+            {
+                case JHW_UnitManager.State.Move:
+                    animator.SetInteger("Flag", 0);
+                    break;
+                case JHW_UnitManager.State.Attack:
+                    animator.SetInteger("Flag", 1);
+                    break;
+            }
         }
         /*============================================*/
         if(um.unitinfo.unitName == "Sniper")
@@ -54,6 +62,22 @@ public class Unit_Anim : MonoBehaviour
             {
                 case JHW_UnitManager.State.Move:
                     animator.SetInteger("Flag", 0);
+                    break;
+                case JHW_UnitManager.State.Attack:
+                    animator.SetInteger("Flag", 1);
+                    break;
+            }
+        }
+        /*============================================*/
+        if (um.unitinfo.unitName == "Heavy Weapon")
+        {
+            switch (um.state)
+            {
+                case JHW_UnitManager.State.Move:
+                    animator.SetInteger("Flag", 0);
+                    break;
+                case JHW_UnitManager.State.Attack:
+                    animator.SetInteger("Flag", 1);
                     break;
             }
         }

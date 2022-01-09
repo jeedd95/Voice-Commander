@@ -163,10 +163,10 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
                 JHW_GameManager.instance.OnClickGetGoldRateUP();
             }
 
-            else
-            {
-                print("알 수 없는 명령어 입니다");
-            }
+            //else
+            //{
+            //    print("알 수 없는 명령어 입니다");
+            //}
 
         }
 
@@ -249,7 +249,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
             {
                 JHW_UnitFactory.instance.CreateUnit(7);
             }
-            if (FinalOrderText.text.Contains("전투기"))
+            if (FinalOrderText.text.Contains("제트기"))
             {
                 JHW_UnitFactory.instance.CreateUnit(8);
             }

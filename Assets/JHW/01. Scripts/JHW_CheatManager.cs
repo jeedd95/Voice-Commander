@@ -36,6 +36,7 @@ public class JHW_CheatManager : MonoBehaviour
         JHW_GameManager.instance.Gold   += 999999;
         JHW_GameManager.instance.specialGauge += 90;
         JHW_GameManager.instance.medal += 9999;
+        JHW_GameManager.instance.wholePopulationLimit += 100;
     }
     public void OnClickGG()
     {

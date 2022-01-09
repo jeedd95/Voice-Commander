@@ -14,6 +14,7 @@ public class JHW_UnitManager : MonoBehaviour
 
     public GameObject[] Bullet; //총알
     public GameObject FirePos; //발사 포지션
+    public GameObject FirePos2; //제트기에만 해당되는 다른 공격
     int bulletnum; //총알의 번호
     bool isfire; // 공격상태인지 아닌지
     public GameObject TeamCommand; //우리의 기지
@@ -520,6 +521,18 @@ public class JHW_UnitManager : MonoBehaviour
         if (neareastObject == null) //가까이에 있는 유닛이 없다면 기다리는걸 끝냄
             yield break;
 
+        if(unitinfo.unitName =="Raptor")
+        {
+            GameObject bullet2 = Instantiate(Bullet[bulletnum]); //유닛에 따라 다른 총알쓰기
+            bullet2.transform.position = FirePos2.transform.position; //총알의 위치를 발사 위치랑 일치
+            Vector3 dir2 = neareastObject.transform.position - FirePos2.transform.position; //제일 가까운애랑 나랑의 벡터
+            dir2.Normalize();
+            bullet2.transform.up = dir2; //총알의 방향을 발사 방향이랑 일치
+            bullet2.GetComponent<JHW_BulletMove>().SetCreator(this); // 총알에게 나(총알을 쏜놈)를 알려주고싶다.
+
+            bullet2.layer = LayerMask.NameToLayer(unitinfo.isEnemy ? "EnemyBullet" : "PlayerBullet"); //총알의 레이어 설정
+        }
+
         GameObject bullet = Instantiate(Bullet[bulletnum]); //유닛에 따라 다른 총알쓰기
         bullet.transform.position = FirePos.transform.position; //총알의 위치를 발사 위치랑 일치
         Vector3 dir = neareastObject.transform.position - FirePos.transform.position; //제일 가까운애랑 나랑의 벡터
@@ -528,6 +541,8 @@ public class JHW_UnitManager : MonoBehaviour
         bullet.GetComponent<JHW_BulletMove>().SetCreator(this); // 총알에게 나(총알을 쏜놈)를 알려주고싶다.
 
         bullet.layer = LayerMask.NameToLayer(unitinfo.isEnemy ? "EnemyBullet" : "PlayerBullet"); //총알의 레이어 설정
+
+
 
         isfire = false;
     }

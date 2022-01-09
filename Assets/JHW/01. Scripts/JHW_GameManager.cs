@@ -676,5 +676,6 @@ public class JHW_GameManager : MonoBehaviour
         PauseMsgBox.gameObject.SetActive(false);
         Time.timeScale = 1;
     }
+
 }
 

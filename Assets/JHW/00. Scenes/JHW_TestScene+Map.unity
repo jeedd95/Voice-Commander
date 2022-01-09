@@ -2209,7 +2209,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 50
+  m_Text: 15
 --- !u!222 &105068116
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3334,7 +3334,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 50
+  m_Text: 100
 --- !u!222 &137265428
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8340,7 +8340,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 50
+  m_Text: 60
 --- !u!222 &374175701
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10087,7 +10087,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uC7A5\uAC11\uCC28"
+  m_Text: "\uD0F1\uD06C"
 --- !u!222 &453999373
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11876,7 +11876,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 50
+  m_Text: 80
 --- !u!222 &513219452
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14178,7 +14178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &578094071
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14196,7 +14196,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 671, y: 155.69678}
+  m_AnchoredPosition: {x: 763, y: 485}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &578094072
@@ -15323,7 +15323,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 50
+  m_Text: 80
 --- !u!222 &611673719
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16307,7 +16307,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 7
+  m_Text: 1
 --- !u!222 &649721359
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -23379,7 +23379,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 7
+  m_Text: 2
 --- !u!222 &964201961
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -25750,7 +25750,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 7
+  m_Text: 6
 --- !u!222 &1056457428
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27425,7 +27425,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 50
+  m_Text: 45
 --- !u!222 &1148509910
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28315,7 +28315,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 7
+  m_Text: 3
 --- !u!222 &1190081191
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28788,7 +28788,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 7
+  m_Text: 4
 --- !u!222 &1201906903
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -37448,7 +37448,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 7
+  m_Text: 1
 --- !u!222 &1524582869
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -37738,7 +37738,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 50
+  m_Text: 25
 --- !u!222 &1541783797
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -46218,6 +46218,7 @@ GameObject:
   - component: {fileID: 1934929094}
   - component: {fileID: 1934929093}
   - component: {fileID: 1934929092}
+  - component: {fileID: 1934929095}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -46290,6 +46291,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 54.898, y: -3.979, z: 0.001}
+--- !u!114 &1934929095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934929091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9694f04e382aecd48b0d706de29bafaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0.2
 --- !u!4 &1935227776 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4015855275581272, guid: 2f828a1ab8533744581e38e57960f2e1, type: 3}
@@ -46991,7 +47005,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uAC1C\uD2C0\uB9C1"
+  m_Text: "\uAE30\uAD00\uCD1D"
 --- !u!222 &1972232137
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -47932,7 +47946,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 7
+  m_Text: 2
 --- !u!222 &1987847951
 CanvasRenderer:
   m_ObjectHideFlags: 0

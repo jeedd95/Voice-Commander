@@ -13,6 +13,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
     {
         GCSR_Example gCSR_Example;
         public Text FinalOrderText;
+        public Text LastOrderText;
         
         // Start is called before the first frame update
         void Start()
@@ -47,10 +48,16 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
                 gCSR_Example._orderText = gCSR_Example._orderText.Substring(0, gCSR_Example._orderText.Length - 1);
             }
 
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F) && gCSR_Example._orderText != string.Empty)
             {
                 VoiceOrder();
                 gCSR_Example._orderText = "";
+                LastOrderText.text = FinalOrderText.text;
+            }
+
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                gCSR_Example._orderText = LastOrderText.text;
             }
 
             //if (Input.GetKeyDown(KeyCode.X)) //모두 삭제
@@ -114,7 +121,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 
             if (FinalOrderText.text.Contains("폭격"))
             {
-                JHW_GameManager.instance.isPlayerSkillMode = true;
+               // JHW_GameManager.instance.isPlayerSkillMode = true;
                 DestinationSet();
                 JHW_GameManager.instance.PlayerSkill_Bomb();
                 //JHW_GameManager.instance.skill_Bomb_Cool();
@@ -122,7 +129,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 
             if (FinalOrderText.text.Contains("연막"))
             {
-                JHW_GameManager.instance.isPlayerSkillMode = true;
+                //JHW_GameManager.instance.isPlayerSkillMode = true;
                 DestinationSet();
                 JHW_GameManager.instance.PlayerSkill_Smoke();
             }
@@ -174,7 +181,6 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
         {
             string head;
             string tail;
-            
 
             Regex regex = new Regex("[0-9]");
             Match m = regex.Match(FinalOrderText.text);

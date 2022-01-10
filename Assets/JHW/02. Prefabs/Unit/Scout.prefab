@@ -151,7 +151,7 @@ MonoBehaviour:
   coolDown: 10
   price: 10
   populationLimit: 2
-  exp: 10
+  exp: 100
   score: 170
 --- !u!114 &3565129255294036550
 MonoBehaviour:

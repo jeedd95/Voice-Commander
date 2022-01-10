@@ -34,7 +34,9 @@ public class JHW_GameManager : MonoBehaviour
     public float windPower;
     public GameObject PlayerSkill_Bomb_prefabs;
     public GameObject PlayerSkill_Smoke_prefabs;
-    
+    public GameObject TeamCommand;
+    JHW_Command command;
+
 
     public bool[] CoolDownReady; // 유닛 쿨타임이 다 돌았는지
     bool isClickSpecialGauge = false; //스폐셜 게이지를 쓰고있는지
@@ -50,11 +52,15 @@ public class JHW_GameManager : MonoBehaviour
     public Text scoreT; //점수 텍스트
     public Text goldT; //골드 텍스트
     public Text ExpT;
+    public Text HpT;
     public Text specialgageT; //스폐셜 게이지 텍스트(방어태세)
     public Text text4; //스폐셜 게이지 텍스트(공격태세)
     public Text Population; //인구수 관련 텍스트
     public Text timer; // 플레이 타임 시간 분초
-    //==유닛 개별 UI
+    public Text Bomb_CoolT;
+    public Text Smoke_CoolT;
+
+    //=========유닛 개별 UI
     public Text RifleManText; 
     public Text ScoutText;
     public Text SniperText;
@@ -64,8 +70,6 @@ public class JHW_GameManager : MonoBehaviour
     public Text TankText;
     public Text HelicopterText;
     public Text RaptorText;
-
-
     public Image RifleManPortrait;
     public Image ScoutPortrait;
     public Image SniperPortrait;
@@ -75,7 +79,7 @@ public class JHW_GameManager : MonoBehaviour
     public Image TankPortrait;
     public Image HelicopterPortrait;
     public Image RaptorPortrait;
-    //==
+    //===================
 
     public Text levelText;
     public Text MedalText;
@@ -118,7 +122,7 @@ public class JHW_GameManager : MonoBehaviour
 
     // public int[] _maxUnit = { 3, 2, 2, 999, 999, 999, 999, 5, 5 }; //최대 인구수
     public float[] _cooldown = { 5, 7, 10, 10, 15, 17, 18, 24, 27 }; //고정 쿨타임
-    public int[] _UnitLoad = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }; //유닛 부하량
+    public int[] _UnitLoad = { 1, 1, 2, 2, 3, 4, 6, 7, 7 }; //유닛 부하량
     public float[] amountExpArray= { }; //총 경험치
 
 
@@ -154,9 +158,10 @@ public class JHW_GameManager : MonoBehaviour
             amountExp = amountExpArray[0];
             for (int i = 0; i < maxlevel; i++) //경험치 배열
             {
-                amountExpArray[i + 1] = amountExpArray[i] * 1.75f;
+                amountExpArray[i + 1] = amountExpArray[i] * 1.125f;
             }
 
+        command = TeamCommand.GetComponent<JHW_Command>();
 
         //unitMaxCount = new int[JHW_UnitFactory.instance.Units.Length];
 
@@ -362,7 +367,6 @@ public class JHW_GameManager : MonoBehaviour
         }
     }
 
-    Image Portrait_Rifle;
 
     void TextManager()
     {
@@ -375,6 +379,8 @@ public class JHW_GameManager : MonoBehaviour
         MedalText.text = medal.ToString();
         GoldRateUpText.text = GoldRate.ToString();
         ExpT.text = currentExp + " / " + amountExp;
+        HpT.text = command.Hp.ToString() + " / " + command.OriginHp.ToString();
+        Bomb_CoolT.text = PlayerSkill_BombCurrentCool.ToString("N0");
 
         BuffGold.color = isBuff_Gold ? Color.yellow: Color.white;
         BuffCool.color = isBuff_CoolDown ? Color.blue : Color.white;
@@ -587,15 +593,23 @@ public class JHW_GameManager : MonoBehaviour
         isWindOn = false;
     }
 
+    float PlayerSkill_BombCoolTime = 60f;
+    float PlayerSkill_BombCurrentCool=60f;
+    bool PlayerSkill_Bomb_IsReady=true;
+
+    float PlayerSkill_SmokeCoolTime;
+    float PlayerSkill_SmokeCurrentCool;
+    bool PlayerSkill_Smoke_IsReady=true;
 
     public void PlayerSkill_Bomb()
     {
-        if(isPlayerSkillMode && JHW_OrderManager.instance.DesinationAreaObj !=null /*&& Input.GetKeyDown(KeyCode.Z)*/)
+        if(/*isPlayerSkillMode && */JHW_OrderManager.instance.DesinationAreaObj !=null && PlayerSkill_Bomb_IsReady /*&& Input.GetKeyDown(KeyCode.Z)*/)
         {
             print("플레이어 스킬 _ 폭격");
-            isPlayerSkillMode = false;
+            PlayerSkill_Bomb_IsReady = false;
+            //isPlayerSkillMode = false;
             //GameObject.Find("MainCanvas/PlayerSkillMode").GetComponent<Toggle>().isOn = false;
-            isPlayerSkillMode = true;
+            //isPlayerSkillMode = true;
             GameObject PS_B = Instantiate(PlayerSkill_Bomb_prefabs);
             PS_B.transform.rotation = GameObject.Find("Tiles").transform.rotation;
             PS_B.transform.position = JHW_OrderManager.instance.DesinationAreaObj.transform.position;
@@ -605,14 +619,18 @@ public class JHW_GameManager : MonoBehaviour
             {
                 Destroy(PS_B);
             }
+            PlayerSkill_BombCurrentCool = PlayerSkill_BombCoolTime;
+            StartCoroutine("CD_Bomb");
         }
+       
     }
     public void PlayerSkill_Smoke()
     {
-        if (isPlayerSkillMode && JHW_OrderManager.instance.DesinationAreaObj != null /*&& Input.GetKeyDown(KeyCode.X)*/)
+        if (/*isPlayerSkillMode &&*/ JHW_OrderManager.instance.DesinationAreaObj != null && PlayerSkill_Smoke_IsReady/*&& Input.GetKeyDown(KeyCode.X)*/)
         {
             print("플레이어 스킬 _ 연막");
-            isPlayerSkillMode = false;
+            PlayerSkill_Smoke_IsReady = false;
+            //isPlayerSkillMode = false;
             //GameObject.Find("MainCanvas/PlayerSkillMode").GetComponent<Toggle>().isOn = false;
             GameObject PS_S = Instantiate(PlayerSkill_Smoke_prefabs);
             PS_S.transform.rotation = GameObject.Find("Tiles").transform.rotation;
@@ -623,18 +641,50 @@ public class JHW_GameManager : MonoBehaviour
             {
                 Destroy(PS_S);
             }
+            PlayerSkill_SmokeCurrentCool = PlayerSkill_SmokeCoolTime;
+            StartCoroutine("CD_Smoke");
         }
+    }
+
+    IEnumerator CD_Bomb()
+    {
+        //PlayerSkill_Bomb_IsReady = false;
+
+        while(PlayerSkill_BombCurrentCool>0)
+        {
+            PlayerSkill_BombCurrentCool -= 0.01f;
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        PlayerSkill_Bomb_IsReady = true;
+    }
+
+    IEnumerator CD_Smoke()
+    {
+        //PlayerSkill_Smoke_IsReady = false;
+
+        while (PlayerSkill_SmokeCurrentCool > 0)
+        {
+            PlayerSkill_SmokeCurrentCool -= 0.01f;
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        PlayerSkill_Smoke_IsReady = true;
     }
 
     void SpecialGageFilled()
     {
         GameObject.Find("Defensive").GetComponent<Image>().fillAmount = specialGauge / 100;
         GameObject.Find("Offensive").GetComponent<Image>().fillAmount = specialGauge / 100;
+        //스킬
+        GameObject.Find("skill_bomb").GetComponent<Image>().fillAmount = (PlayerSkill_BombCoolTime-PlayerSkill_BombCurrentCool) / PlayerSkill_BombCoolTime;
+
     }
 
     void EXPGageFilled()
     {
         GameObject.Find("EXP").GetComponent<Slider>().value = currentExp/amountExp*100f;
+        GameObject.Find("Commandhp").GetComponent<Slider>().value = command.Hp / command.OriginHp;
     }
     [SerializeField]
     bool isSkill_Bomb_Ready;

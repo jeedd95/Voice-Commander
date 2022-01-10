@@ -7,6 +7,7 @@ using System;
 
 public class JHW_Command : MonoBehaviour
 {
+    public float OriginHp=5000;
     public float Hp;
     Camera MainCam;
     public GameObject CamPos1;
@@ -17,7 +18,7 @@ public class JHW_Command : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Hp = 5000f;
+        Hp = OriginHp;
         MainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 

@@ -823,7 +823,7 @@ MonoBehaviour:
   coolDown: 10
   price: 10
   populationLimit: 999
-  exp: 20
+  exp: 400
   score: 800
 --- !u!114 &-8712778871140618858
 MonoBehaviour:
@@ -849,6 +849,7 @@ MonoBehaviour:
   - {fileID: 7732385021513877985, guid: 82eca8c4afdb3744ba63ae094ec83845, type: 3}
   - {fileID: 7732385021513877985, guid: b8b59ffecf06aad4195dcdaa16f94342, type: 3}
   FirePos: {fileID: 5681812618614475487}
+  FirePos2: {fileID: 0}
   TeamCommand: {fileID: 8146030571281266687, guid: e7e27fd7d1615ed4cb59eccd3dd8512c, type: 3}
   enemyCommand: {fileID: 8283047153395507706, guid: 3849ca7fb7c99824bb4302725f61b4a7, type: 3}
   targetpos: {x: 0, y: 0, z: 0}

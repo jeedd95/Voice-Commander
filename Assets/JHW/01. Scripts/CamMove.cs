@@ -31,14 +31,14 @@ public class CamMove : MonoBehaviour
             this.transform.Translate(moveSpeed, 0, 0);
         }
 
-        if(Input.GetKeyDown(KeyCode.W) || Input.GetAxis("Mouse ScrollWheel") > 0 && count ==0)
+        if((Input.GetKeyDown(KeyCode.W) || Input.GetAxis("Mouse ScrollWheel") > 0) && count ==0)
         {
             //transform.position = Vector3.Lerp(transform.position, target, 0.01f);
             //transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, transform.position.y - 21.2f, transform.position.z + 9.41444f), ref velo, 1f);
             this.transform.Translate(0, -21.2f, 9.41444f,Space.World);
             count = 1;
         }
-        if(Input.GetKeyDown(KeyCode.S) || Input.GetAxis("Mouse ScrollWheel") < 0 && count==1)
+        if((Input.GetKeyDown(KeyCode.S) || Input.GetAxis("Mouse ScrollWheel") < 0) && count==1)
         {
             this.transform.Translate(0, 21.2f, -9.41444f, Space.World);
             count = 0;

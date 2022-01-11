@@ -97,7 +97,7 @@ public class JHW_UnitFactory : MonoBehaviour
                 if (JHW_GameManager.instance.CoolDownReady[unitIndex]) //쿨타임까지 준비됬을때
                 {
                     InstantiateUnit(unitIndex); //유닛을 생성한다
-                    ValueChanger(unitIndex); //가격과 인구수를 올린다
+                    ValueChanger(unitIndex); //인구수를 올린다 + 쿨타임을 돌린다
                     CoolTimeSetter(unitIndex);
                 }
                 else //쿨타임이 준비 안됬을때

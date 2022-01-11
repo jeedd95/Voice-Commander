@@ -388,7 +388,7 @@ MonoBehaviour:
   attackRange: 80
   accuracyRate: 80
   coolDown: 25
-  price: 0
+  price: 15
   populationLimit: 3
   exp: 75
   score: 100

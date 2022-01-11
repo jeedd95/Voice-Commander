@@ -112,7 +112,8 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
 			RefreshMicsButtonOnClickHandler();
 
 
-			_contextPhrasesInputField.text = "생산, 점령, 폭격, 연막, 방어태세, 공격태세, 실행, 중단, 인구증가, 골드획득, 골드업그레이드,"; 
+			_contextPhrasesInputField.text = "생산, 점령, 폭격, 연막, 방어태세, 공격태세, 실행, 중단, 인구증가, 골드획득, 골드업그레이드," +
+				"보병, 정찰병, 저격수, 포병, 기관총, 장갑차, 탱크, 헬리콥터, 제트기, 보병 생산, 정찰병 생산, 저격수 생산, 포병 생산, 기관총 생산, 장갑차 생산, 탱크 생산, 헬리콥터 생산, 제트기 생산,"; 
 
 			// 알파 1, 알파 2,
 			// 브라보 1, 브라보 2 

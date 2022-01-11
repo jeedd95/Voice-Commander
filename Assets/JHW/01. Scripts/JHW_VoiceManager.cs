@@ -14,6 +14,8 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
         GCSR_Example gCSR_Example;
         public Text FinalOrderText;
         public Text LastOrderText;
+
+        public Image info;
         
         // Start is called before the first frame update
         void Start()
@@ -55,9 +57,27 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
                 LastOrderText.text = FinalOrderText.text;
             }
 
-            if(Input.GetKeyDown(KeyCode.R))
+            if(Input.GetKeyDown(KeyCode.R) && LastOrderText.text != string.Empty)
             {
-                gCSR_Example._orderText = LastOrderText.text;
+                FinalOrderText.text = LastOrderText.text;
+                VoiceOrder();
+                gCSR_Example._orderText = "";
+            }
+
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                info.rectTransform.anchoredPosition = new Vector2(622f, info.rectTransform.anchoredPosition.y);
+                Color color = info.color;
+                color.a = 1f;
+                info.color = color;
+
+            }
+            if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                info.rectTransform.anchoredPosition = new Vector2(1315.839f, info.rectTransform.anchoredPosition.y);
+                Color color = info.color;
+                color.a = 0.7f;
+                info.color = color;
             }
 
             //if (Input.GetKeyDown(KeyCode.X)) //모두 삭제
@@ -134,7 +154,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
                 JHW_GameManager.instance.PlayerSkill_Smoke();
             }
 
-            if(FinalOrderText.text.Contains("방어태세"))
+            if (FinalOrderText.text.Contains("방어태세"))
             {
                 if(FinalOrderText.text.Contains("실행"))
                 {
@@ -251,7 +271,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
             {
                 JHW_UnitFactory.instance.CreateUnit(6);
             }
-            if (FinalOrderText.text.Contains("헬기"))
+            if (FinalOrderText.text.Contains("헬리콥터"))
             {
                 JHW_UnitFactory.instance.CreateUnit(7);
             }

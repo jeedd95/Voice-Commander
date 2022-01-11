@@ -15,7 +15,7 @@ public class JHW_GameManager : MonoBehaviour
 
     /// <summary> 레이어 점수 </summary>
     public int Score = 0;
-    public int Gold = 25; //플레이어 골드
+    public int Gold = 25; //플레이어 시작골드
     public int GoldRate = 60; //상승 되는 골드
     public float specialGauge; //스폐셜 게이지
     public int[] currentPopulationArray; //현재 인구수 배열
@@ -209,6 +209,11 @@ public class JHW_GameManager : MonoBehaviour
         //else CanProduce = false; //아니면 불가능
 
         //CoolTimer(RifleManCurrentPopulation,0);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (PauseMsgBox.gameObject.activeSelf == false) OnClickPause();
+            else OnClickPauseDis();
+        }
 
         SpecialGageManager();
         PlusScore();
@@ -221,8 +226,8 @@ public class JHW_GameManager : MonoBehaviour
         SpecialGageFilled();
         EXPGageFilled();
 
-        PlayerSkill_Bomb();
-        PlayerSkill_Smoke();
+        //PlayerSkill_Bomb();
+        //PlayerSkill_Smoke();
 
         //for (int i = 0; i < unitCurrentCount.Length; i++)
         //{
@@ -258,8 +263,8 @@ public class JHW_GameManager : MonoBehaviour
         currentTime2 += Time.deltaTime;
         if (currentTime2 > goldEarnTime)
         {
-            if (isBuff_Gold) Gold += 8;
-            else Gold += 5;
+            if (isBuff_Gold) Gold += 50;
+            else Gold += 25;
 
             currentTime2 = 0;
         }
@@ -381,6 +386,15 @@ public class JHW_GameManager : MonoBehaviour
         ExpT.text = currentExp + " / " + amountExp;
         HpT.text = command.Hp.ToString() + " / " + command.OriginHp.ToString();
         Bomb_CoolT.text = PlayerSkill_BombCurrentCool.ToString("N0");
+        if (PlayerSkill_BombCurrentCool <=0)
+        {
+            Bomb_CoolT.text = "";
+        }
+        Smoke_CoolT.text = PlayerSkill_SmokeCurrentCool.ToString("N0");
+        if (PlayerSkill_SmokeCurrentCool <= 0)
+        {
+            Smoke_CoolT.text = "";
+        }
 
         BuffGold.color = isBuff_Gold ? Color.yellow: Color.white;
         BuffCool.color = isBuff_CoolDown ? Color.blue : Color.white;
@@ -494,10 +508,10 @@ public class JHW_GameManager : MonoBehaviour
     {
         if (medal >= 1)
         {
-            if(GoldRate <=130)
+            if(GoldRate <=260)
             {
                 medal--;
-                GoldRate += 15;
+                GoldRate += 25;
             }
             else
             {
@@ -594,11 +608,11 @@ public class JHW_GameManager : MonoBehaviour
     }
 
     float PlayerSkill_BombCoolTime = 60f;
-    float PlayerSkill_BombCurrentCool=60f;
+    float PlayerSkill_BombCurrentCool=0f;
     bool PlayerSkill_Bomb_IsReady=true;
 
-    float PlayerSkill_SmokeCoolTime;
-    float PlayerSkill_SmokeCurrentCool;
+    float PlayerSkill_SmokeCoolTime = 45f;
+    float PlayerSkill_SmokeCurrentCool=0f;
     bool PlayerSkill_Smoke_IsReady=true;
 
     public void PlayerSkill_Bomb()
@@ -678,7 +692,8 @@ public class JHW_GameManager : MonoBehaviour
         GameObject.Find("Offensive").GetComponent<Image>().fillAmount = specialGauge / 100;
         //스킬
         GameObject.Find("skill_bomb").GetComponent<Image>().fillAmount = (PlayerSkill_BombCoolTime-PlayerSkill_BombCurrentCool) / PlayerSkill_BombCoolTime;
-
+        GameObject.Find("skill_smokeIcon").GetComponent<Image>().fillAmount = (PlayerSkill_SmokeCoolTime - PlayerSkill_SmokeCurrentCool) / PlayerSkill_SmokeCoolTime;
+        GameObject.Find("skill_smokeIcon2").GetComponent<Image>().fillAmount = (PlayerSkill_SmokeCoolTime - PlayerSkill_SmokeCurrentCool) / PlayerSkill_SmokeCoolTime;
     }
 
     void EXPGageFilled()
@@ -686,38 +701,40 @@ public class JHW_GameManager : MonoBehaviour
         GameObject.Find("EXP").GetComponent<Slider>().value = currentExp/amountExp*100f;
         GameObject.Find("Commandhp").GetComponent<Slider>().value = command.Hp / command.OriginHp;
     }
-    [SerializeField]
-    bool isSkill_Bomb_Ready;
-    bool isSkill_Smoke_Ready;
-    [SerializeField]
-    float Skill_Bomb_CoolTime = 0;
-    float Skill_Smoke_CoolTime= 0;
-    //처음 0에서 시작 해서 시간에 따라 60까지 증가
-    //60에 도달하면 더이상 늘어나지 않고 사용하면 다시 0으로 초기화
+    //[SerializeField]
+    //bool isSkill_Bomb_Ready;
+    //bool isSkill_Smoke_Ready;
+    //[SerializeField]
+    //float Skill_Bomb_CoolTime = 0;
+    //float Skill_Smoke_CoolTime= 0;
+    ////처음 0에서 시작 해서 시간에 따라 60까지 증가
+    ////60에 도달하면 더이상 늘어나지 않고 사용하면 다시 0으로 초기화
     
-    public void skill_Bomb_Cool()
-    {
-        if(!isSkill_Bomb_Ready)
-        {
-            StartCoroutine("CoolDown");
-        }
-    }
-    IEnumerator CoolDown()
-    {
-        isSkill_Bomb_Ready = false;
+    //public void skill_Bomb_Cool()
+    //{
+    //    if(!isSkill_Bomb_Ready)
+    //    {
+    //        StartCoroutine("CoolDown");
+    //    }
+    //}
+    //IEnumerator CoolDown()
+    //{
+    //    isSkill_Bomb_Ready = false;
 
-        while (Skill_Bomb_CoolTime <= 60)
-        {
-            Skill_Bomb_CoolTime += 0.01f;
-            yield return new WaitForSeconds(0.01f);
-        }
+    //    while (Skill_Bomb_CoolTime <= 60)
+    //    {
+    //        Skill_Bomb_CoolTime += 0.01f;
+    //        yield return new WaitForSeconds(0.01f);
+    //    }
 
-        Skill_Bomb_CoolTime = 60;
-        isSkill_Bomb_Ready = true;
-    }
+    //    Skill_Bomb_CoolTime = 60;
+    //    isSkill_Bomb_Ready = true;
+    //}
 
     public void OnClickPause()
     {
+        
+
             PauseMsgBox.gameObject.SetActive(true);
             Time.timeScale = 0;
     }

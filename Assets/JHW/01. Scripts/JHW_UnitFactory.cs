@@ -229,8 +229,8 @@ public class JHW_UnitFactory : MonoBehaviour
         }
         else
         {
-        Transform mcp = EnemyCreatePoint[randomNum]; // 1~3번 생성포인트 중에 하나 생성
-        SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
+            Transform mcp = EnemyCreatePoint[randomNum]; // 1~3번 생성포인트 중에 하나 생성
+            SelectUnit.transform.position = mcp.position; // 유닛들을 생성 포인트에 놓는다
 
         }
         enemyUnits.Add(SelectUnit.GetComponent<JHW_UnitManager>());

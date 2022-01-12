@@ -468,8 +468,9 @@ MonoBehaviour:
   - 27
   _UnitLoad: 010000000100000002000000020000000300000004000000060000000700000007000000
   amountExpArray: []
-  CaptureInstantiateTime: 10
-  RemainTime: 30
+  CaptureInstantiateTime: 20
+  RemainTime: 90
+  allTiles: []
   isWindOn: 0
 --- !u!1 &42480593
 GameObject:
@@ -39770,7 +39771,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4752802238223526, guid: 5abc52526538b3342b6beceb54c8bd58, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.965244
+      value: 12.71
       objectReference: {fileID: 0}
     - target: {fileID: 4752802238223526, guid: 5abc52526538b3342b6beceb54c8bd58, type: 3}
       propertyPath: m_LocalPosition.y
@@ -39778,7 +39779,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4752802238223526, guid: 5abc52526538b3342b6beceb54c8bd58, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 46.88778
+      value: 52.17
       objectReference: {fileID: 0}
     - target: {fileID: 4752802238223526, guid: 5abc52526538b3342b6beceb54c8bd58, type: 3}
       propertyPath: m_LocalRotation.w
@@ -47129,7 +47130,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uBCF4\uBCD1 \uC0DD\uC0B0"
+  m_Text: 
 --- !u!222 &1900054570
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -48113,6 +48114,7 @@ MonoBehaviour:
   units: {fileID: 0}
   myUnits: []
   enemyUnits: []
+  Product_TRUE: 22
 --- !u!4 &1929388449
 Transform:
   m_ObjectHideFlags: 0

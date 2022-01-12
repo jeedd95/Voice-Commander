@@ -137,7 +137,12 @@ public class JHW_GameManager : MonoBehaviour
 
     private void Start()
     {
-            windPower = 50.0f;
+        for (int i = 0; i < 32; i++)
+        {
+            allTiles.Add(GameObject.Find("Tiles").transform.GetChild(i));
+        }
+
+        windPower = 50.0f;
 
             currentPopulationArray = new int[_UnitLoad.Length]; //현재 인구수 배열
 
@@ -527,25 +532,44 @@ public class JHW_GameManager : MonoBehaviour
     public float RemainTime ; //주둔지 유지 시간
     float currentTime4;
 
+    [SerializeField]
+    List<Transform> allTiles;
+
     void InstantiateCaptureArea()
     {
         currentTime4 += Time.deltaTime;
        //주둔지(3개중 랜덤)를 시작한지 10초 후 생성하고 이후에는 2분마다 생성하고 싶다
         if(currentTime4 > CaptureInstantiateTime)
         {
-            //랜덤 위치를 만들자
-            float xRange = Random.Range(-40, 40);
-            float zRange = Random.Range(-20, 20);
-            Vector3 RandomCapturePos = GameObject.Find("Tiles").transform.position + new Vector3(xRange,0,zRange);
-            //new Vector3(-258.1f+xRange, 0, -234.7f+zRange);
+            //Tiles의 자식들을 배열에다가 넣음
+            //그 배열중에 랜덤으로 뽑아다가
+            //뽑은 타일위 조금 떨어진 곳에 생성
 
-            //주둔지 뭘 만들지 랜덤으로 정하기
-            GameObject RandomCaptureType = CaptureAreaType[Random.Range(0, CaptureAreaType.Length)];
+           
+
+            int rand = Random.Range(0, 31);
+            Transform FinalTile = allTiles[rand];
+
+            GameObject RandomCaptureType = CaptureAreaType[Random.Range(0, CaptureAreaType.Length)];  // 세개중에 하나
             CaptureArea = Instantiate(RandomCaptureType);
-            CaptureArea.transform.position = RandomCapturePos;
-            CaptureArea.transform.rotation = GameObject.Find("Tiles").transform.rotation;
-            //리스트에 넣기
-            //NowCaptureAreasList.Add(CaptureArea);
+            CaptureArea.transform.rotation = FinalTile.rotation;
+            CaptureArea.transform.position = new Vector3(FinalTile.position.x, FinalTile.position.y + 0.6f, FinalTile.position.z);
+
+
+            //=========================================
+            //랜덤 위치를 만들자
+            //float xRange = Random.Range(-40, 40);
+            //float zRange = Random.Range(-20, 20);
+            //Vector3 RandomCapturePos = GameObject.Find("Tiles").transform.position + new Vector3(xRange,0,zRange);
+            ////new Vector3(-258.1f+xRange, 0, -234.7f+zRange);
+
+            ////주둔지 뭘 만들지 랜덤으로 정하기
+            //GameObject RandomCaptureType = CaptureAreaType[Random.Range(0, CaptureAreaType.Length)];
+            //CaptureArea = Instantiate(RandomCaptureType);
+            //CaptureArea.transform.position = RandomCapturePos;
+            //CaptureArea.transform.rotation = GameObject.Find("Tiles").transform.rotation;
+            ////리스트에 넣기
+            ////NowCaptureAreasList.Add(CaptureArea);
 
             currentTime4 = 0;
         }

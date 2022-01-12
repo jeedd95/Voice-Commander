@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class JHW_CaptureArea : MonoBehaviour
 {
-    float capturetime = 15; //주둔지 점령해야하는 시간
+    float capturetime = 10; //주둔지 점령해야하는 시간
 
     private void Start()
     {

@@ -29,6 +29,7 @@ public class JHW_UnitFactory : MonoBehaviour
 
     void Start()
     {
+        
     }
 
     void Update()
@@ -209,6 +210,7 @@ public class JHW_UnitFactory : MonoBehaviour
       //  }
     }
 
+
     public void CreateUnit2() //적을 생성하는 코드
     {
         int randomNum = Random.Range(0, 3); // 3개중에 하나를 선택해서 생성
@@ -235,6 +237,8 @@ public class JHW_UnitFactory : MonoBehaviour
         }
         enemyUnits.Add(SelectUnit.GetComponent<JHW_UnitManager>());
     }
+
+
 
     void ValueChanger(int index)
     {
@@ -301,6 +305,18 @@ public class JHW_UnitFactory : MonoBehaviour
         }
 
         myUnits.Add(SelectUnit.GetComponent<JHW_UnitManager>()); //생성하면 리스트에 넣는다
+    }
+
+    public int Chance_3;
+    public int Chance_2;
+    public int Chance_1;
+    public int Chance_0;
+    public int[] ProductHowMany = {0,1,2,3};
+
+    void EnemyProduct() //코루틴으로
+    {
+        int RandomChoice = Random.Range(1,101);
+        
     }
 
 }

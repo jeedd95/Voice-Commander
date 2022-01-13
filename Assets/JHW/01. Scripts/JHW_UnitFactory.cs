@@ -29,7 +29,6 @@ public class JHW_UnitFactory : MonoBehaviour
 
     void Start()
     {
-        
     }
 
     void Update()
@@ -43,6 +42,13 @@ public class JHW_UnitFactory : MonoBehaviour
         {
             CreateUnit2();
         }
+
+       if(!CoroutineFlag)
+        {
+            CoroutineFlag = true;
+            StartCoroutine("EnemyProduct");
+        }
+
     }
 
 
@@ -307,18 +313,104 @@ public class JHW_UnitFactory : MonoBehaviour
         myUnits.Add(SelectUnit.GetComponent<JHW_UnitManager>()); //생성하면 리스트에 넣는다
     }
 
-    public int Chance_3;
-    public int Chance_2;
-    public int Chance_1;
-    public int Chance_0;
-    public int[] ProductHowMany = {0,1,2,3};
+    //[Range(1,100)]
+    //public float Chance_3;
+    //[Range(1, 100)]
+    //public float Chance_2;
+    //[Range(1, 100)]
+    //public float Chance_1;
+    //[Range(1, 100)]
+    //public float Chance_0 ; //맨 처음 초기확률 70퍼센트
 
-    void EnemyProduct() //코루틴으로
+    public float rate=10;
+    public float temp;
+    public int[] ProductHowMany = {1,2,3};
+    public float[] Chances = new float[4]; //chance[i] =>i가 나올 확률
+    public float second=3;
+
+    bool CoroutineFlag;
+    //int ChanceFlag =0;
+    IEnumerator EnemyProduct() //코루틴으로 생산타이밍 3초 -> 1.5초 까지 줄어듦
     {
+        yield return new WaitForSeconds(second);
         int RandomChoice = Random.Range(1,101);
-        
+
+
+        //유닛을 생산하기
+        if (JHW_GameManager.instance.WholePlayTime>=0 && JHW_GameManager.instance.WholePlayTime < 300) //플레이타임 0~5분
+        {
+            print("0~5분");
+            RateCalc(1);
+        }
+        if(JHW_GameManager.instance.WholePlayTime >= 300 && JHW_GameManager.instance.WholePlayTime < 600) //5~10분
+        {
+            print("5~10분");
+            RateCalc(1);
+            RateCalc(2);
+        }
+        if (JHW_GameManager.instance.WholePlayTime >= 600) //10분 이후
+        {
+            print("10분 이후");
+            RateCalc(1);
+            RateCalc(2);
+            RateCalc(3);
+        }
+
+        if (second > 1.5) //생산 시간을 1.5초를 하한선으로 함
+        {
+            second -= 0.005f;
+        }
+
+        if (Chances[0] > 0)
+        {
+            Chances[0] -= 0.1f;
+        }
+        if(Chances[0]<=0 && Chances[1]>0)
+        {
+            Chances[0] = 0;
+            Chances[1] -= 0.1f;
+        }
+
+
+
+        CoroutineFlag = false;
     }
 
+
+    void RateCalc(int i)
+    {
+        if (i == 1) //Chances[1]은 단순히 [0]에서 뺀거로 계산
+        {
+            Chances[i] = 100 - Chances[i-1];
+            return;
+        }
+
+        Chances[i] = Chances[i - 1] * 0.5f;
+        Chances[i-1] *= 0.5f;
+
+        //temp = Chances[i - 1] - Chances[i];
+        //Chances[i - 1] = temp;
+    }
+
+    //void SwitchChance()
+    //{
+    //    switch (ChanceFlag)
+    //    {
+    //        case 0:
+    //            Chances[0] -= 0.1f;
+    //            break;
+    //        case 1:
+    //            Chances[1] -= 0.1f;
+    //            break;
+    //        case 2:
+    //            Chances[2] -= 0.1f;
+    //            break;
+    //        default:
+    //            Chances[3] = 100;
+    //            break;
+
+    //    }
+    //}
 }
 
 

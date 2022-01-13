@@ -23,6 +23,7 @@ public class JHW_GameManager : MonoBehaviour
     public int wholePopulationLimit; //전체 인구수 제한 (초기4)
     public float playTime; //플레이타임 시간 전체 second
     int _Min; //플레이타임 시간 분으로 환산
+    public float WholePlayTime;
     public float[] currentCool; //유닛별 현재 쿨타임 배열
     public int playerLevel; //플레이어 레벨
     public float currentExp; //현재 경험치
@@ -333,6 +334,7 @@ public class JHW_GameManager : MonoBehaviour
     void Timer() //플레이타임 기록
     {
         playTime += Time.deltaTime;
+        WholePlayTime += Time.deltaTime;
 
         timer.text = string.Format("{0:D2} : {1:D2}",_Min,(int)playTime);
         if((int)playTime > 59)

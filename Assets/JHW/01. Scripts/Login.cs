@@ -80,9 +80,13 @@ public class Login : MonoBehaviour
                 id2.Select();
             }
         }
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) && SignUpWindow.activeSelf==false)
         {
             OnClickLogin();
+        }
+        if(SignUpWindow.activeSelf && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)))
+        {
+            OnClickSignUp();
         }
     }
 

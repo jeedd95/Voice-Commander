@@ -144,7 +144,7 @@ MonoBehaviour:
   isAirForce: 0
   damage: 5
   health: 50
-  moveSpeed: 30
+  moveSpeed: 25
   attackSpeed: 250
   attackRange: 40
   accuracyRate: 60

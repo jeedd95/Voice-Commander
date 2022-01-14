@@ -186,8 +186,8 @@ public class JHW_UnitManager : MonoBehaviour
                         StartCoroutine("CreateBullet");
                     }
 
-                    if (unitinfo.isEnemy == false) AllNearestObjectByLayer("EnemyTeam");
-                    if (unitinfo.isEnemy == true) AllNearestObjectByLayer("PlayerTeam");
+                    //if (unitinfo.isEnemy == false) AllNearestObjectByLayer("EnemyTeam");
+                    //if (unitinfo.isEnemy == true) AllNearestObjectByLayer("PlayerTeam");
                 }
                 break;
 

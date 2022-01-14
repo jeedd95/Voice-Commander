@@ -14670,7 +14670,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &578094071
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32349,7 +32349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1279554720
 RectTransform:
   m_ObjectHideFlags: 0
@@ -48115,13 +48115,13 @@ MonoBehaviour:
   units: {fileID: 0}
   myUnits: []
   enemyUnits: []
-  second: 3
+  second: 7
   Chances:
   - 70
   - 0
   - 0
   - 0
-  IsChancesOn: 00000000
+  RandomChoice: 0
 --- !u!4 &1929388449
 Transform:
   m_ObjectHideFlags: 0

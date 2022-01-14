@@ -144,7 +144,7 @@ public class JHW_BulletMove : MonoBehaviour
                 return;
             }
 
-            if (unitInfo.unitName == "Artillery" || unitInfo.unitName == "Tank" || unitInfo.unitName =="Raptor")
+            if (unitInfo.unitName == "Artillery" || unitInfo.unitName == "Tank" || unitInfo.unitName =="Raptor") //Æø¹ßÇü À¯´Öµé
             {
                 GameObject explo= Instantiate(exploArea);
                 explo.transform.position = other.transform.position;

@@ -38,10 +38,10 @@ public class JHW_UnitFactory : MonoBehaviour
         //    CreateUnit();
 
         //}
-        if (Input.GetKeyDown(KeyCode.Alpha2)) //2번키를 누르면 적 랜덤 생성
-        {
-            CreateUnit2();
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha2)) //2번키를 누르면 적 랜덤 생성
+        //{
+        //    CreateUnit2();
+        //}
 
 
         if (!CoroutineFlag)
@@ -221,7 +221,24 @@ public class JHW_UnitFactory : MonoBehaviour
     public void CreateUnit2() //적을 생성하는 코드
     {
         int randomNum = Random.Range(0, 3); // 3개중에 하나를 선택해서 생성
-        int randomNum2 = Random.Range(0, 9); // 9개 중에 하나를 선택해서 생성
+        int randomNum2=0; /*= Random.Range(0, 9); // 9개 중에 하나를 선택해서 생성*/
+
+        int random3 = Random.Range(0, 3);
+        int random6 = Random.Range(0, 6);
+        int random9 = Random.Range(0, 9);
+
+        if(JHW_GameManager.instance.WholePlayTime >= 0 && JHW_GameManager.instance.WholePlayTime < 300)
+        {
+            randomNum2 = random3;
+        }
+        if (JHW_GameManager.instance.WholePlayTime >= 300 && JHW_GameManager.instance.WholePlayTime < 600)
+        {
+            randomNum2 = random6;
+        }
+        if (JHW_GameManager.instance.WholePlayTime >= 600)
+        {
+            randomNum2 = random9;
+        }
 
         GameObject SelectUnit = Instantiate(Units[randomNum2]); // 1~9번까지의 유닛중에 하나 생성
         SelectUnit.GetComponent<JHW_UnitInfo>().isEnemy = true; //적이다
@@ -327,50 +344,146 @@ public class JHW_UnitFactory : MonoBehaviour
     public float second = 3;
     bool CoroutineFlag;
     public float[] Chances;
+    [SerializeField]
+    int RandomChoice;
 
     IEnumerator EnemyProduct() //코루틴으로 생산타이밍 3초 -> 1.5초 까지 줄어듦
     {
         yield return new WaitForSeconds(second);
-        int RandomChoice = Random.Range(1, 101);
+
+        RandomChoice = Random.Range(1, 101);
 
         //유닛을 생산하기
         if (JHW_GameManager.instance.WholePlayTime >= 0 && JHW_GameManager.instance.WholePlayTime < 300) //플레이타임 0~5분
         {
-            print("0~5분");
             Chances[1] = 100 - Chances[0];
+
+            if(RandomChoice >= 1 && RandomChoice <= Chances[0])
+            {
+                print("생산 0회");
+            }
+            else
+            {
+                print("생산 1회");
+                CreateUnit2();
+            }
         }
+
         if (JHW_GameManager.instance.WholePlayTime >= 300 && JHW_GameManager.instance.WholePlayTime < 600) //5~10분
         {
-            print("5~10분");
 
             if(Chances[0] <= 0 && Chances[1] > 0)
             {
                 Chances[2] = 100 - Chances[1];
+
+                if(RandomChoice >=1 && RandomChoice<=Chances[1])
+                {
+                    print("생산 1회");
+                    CreateUnit2();
+                }
+                else
+                {
+                    print("생산 2회");
+                    CreateUnit2();
+                    CreateUnit2();
+                }
             }
-            else
+            if(Chances[0]>0)
             {
                 Chances[2] = (100 - Chances[0]) * 0.5f;
                 Chances[1] = Chances[2];
+
+                if(RandomChoice >=1 && RandomChoice<=Chances[0])
+                {
+                    print("생산 0회");
+                }
+                else if(RandomChoice>Chances[0] && RandomChoice<=Chances[0] + Chances[1])
+                {
+                    print("생산 1회");
+                    CreateUnit2();
+                }
+                else if(RandomChoice > Chances[0] + Chances[1])
+                {
+                    print("생산 2회");
+                    CreateUnit2();
+                    CreateUnit2();
+                }
             }
+
 
         }
         if (JHW_GameManager.instance.WholePlayTime >= 600) //10분 이후
         {
-            print("10분 이후");
-            if (Chances[0] <= 0 && Chances[1] <= 0 && Chances[2]>0)
+            if (Chances[0] <= 0 && Chances[1] <= 0 && Chances[2]>0)  // [0]과 [1]이 0일떄
             {
                 Chances[3] = 100 - Chances[2];
+
+                if(RandomChoice>=1 && RandomChoice <=Chances[2])
+                {
+                    print("생산 2회");
+                    CreateUnit2();
+                    CreateUnit2();
+                }
+                else
+                {
+                    print("생산 3회");
+                    CreateUnit2();
+                    CreateUnit2();
+                    CreateUnit2();
+                }
             }
-            if(Chances[0] <=0 &&Chances[1]>0 )
+            if(Chances[0] <=0 &&Chances[1]>0 ) // [0]이 0일때
             {
                 Chances[3] = (100 - Chances[1]) * 0.5f;
                 Chances[2] = Chances[3];
+
+                if(RandomChoice>=1 && RandomChoice<=Chances[1])
+                {
+                    print("생산 1회");
+                    CreateUnit2();
+                }
+                else if(RandomChoice> Chances[1] && RandomChoice <= Chances[1]+Chances[2])
+                {
+                    print("생산 2회");
+                    CreateUnit2();
+                    CreateUnit2();
+                }
+                else
+                {
+                    print("생산 3회");
+                    CreateUnit2();
+                    CreateUnit2();
+                    CreateUnit2();
+                }
             }
             if(Chances[0] > 0 )
             {
                 Chances[3] = (100 - Chances[0]) * 0.5f * 0.5f;
                 Chances[2] = Chances[3];
                 Chances[1] = (100 - Chances[0]) * 0.5f;
+
+                if(RandomChoice>=1 && RandomChoice<=Chances[0])
+                {
+                    print("생산 0회");
+                }
+                else if(RandomChoice>Chances[0] && RandomChoice<= Chances[0] +Chances[1])
+                {
+                    print("생산 1회");
+                    CreateUnit2();
+                }
+                else if(RandomChoice > Chances[1] && RandomChoice<= Chances[0] + Chances[1] + Chances[2])
+                {
+                    print("생산 2회");
+                    CreateUnit2();
+                    CreateUnit2();
+                }
+                else
+                {
+                    print("생산 3회");
+                    CreateUnit2();
+                    CreateUnit2();
+                    CreateUnit2();
+                }
             }
         }
 
@@ -383,29 +496,33 @@ public class JHW_UnitFactory : MonoBehaviour
             second = 1.5f;
         }
 
-        if(Chances[0]>0)
+        ChanceReduce();
+
+        CoroutineFlag = false;
+    }
+
+    void ChanceReduce()
+    {
+        if (Chances[0] > 0)
         {
             Chances[0] -= 0.1f;
         }
-        else if(Chances[1]>0)
+        else if (Chances[1] > 0)
         {
             Chances[0] = 0;
             Chances[1] -= 0.1f;
         }
-        else if(Chances[2]>0)
+        else if (Chances[2] > 0)
         {
             Chances[0] = 0;
             Chances[1] = 0;
             Chances[2] -= 0.1f;
         }
-        else if(Chances[2]<=0)
+        else if (Chances[2] <= 0)
         {
             Chances[2] = 0;
         }
-
-        CoroutineFlag = false;
     }
-
 }
 
 

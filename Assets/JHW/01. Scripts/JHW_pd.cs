@@ -41,8 +41,9 @@ public class JHW_pd : MonoBehaviour
         //    print(pd.time);
         //}
     }
-    void ToplayScene()
+    public void ToplayScene()
     {
         SceneManager.LoadScene("JHW_TestScene+Map");
     }
+
 }

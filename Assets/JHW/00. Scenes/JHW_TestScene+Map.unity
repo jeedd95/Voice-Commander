@@ -48115,15 +48115,13 @@ MonoBehaviour:
   units: {fileID: 0}
   myUnits: []
   enemyUnits: []
-  rate: 10
-  temp: 0
-  ProductHowMany: 010000000200000003000000
+  second: 3
   Chances:
   - 70
   - 0
   - 0
   - 0
-  second: 3
+  IsChancesOn: 00000000
 --- !u!4 &1929388449
 Transform:
   m_ObjectHideFlags: 0

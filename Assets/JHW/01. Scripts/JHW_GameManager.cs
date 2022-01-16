@@ -62,7 +62,7 @@ public class JHW_GameManager : MonoBehaviour
     public Text Smoke_CoolT;
 
     //=========유닛 개별 UI
-    public Text RifleManText; 
+    public Text RifleManText;
     public Text ScoutText;
     public Text SniperText;
     public Text ArtilleryText;
@@ -124,7 +124,7 @@ public class JHW_GameManager : MonoBehaviour
     // public int[] _maxUnit = { 3, 2, 2, 999, 999, 999, 999, 5, 5 }; //최대 인구수
     public float[] _cooldown = { 5, 7, 10, 10, 15, 17, 18, 24, 27 }; //고정 쿨타임
     public int[] _UnitLoad = { 1, 1, 2, 2, 3, 4, 6, 7, 7 }; //유닛 부하량
-    public float[] amountExpArray= { }; //총 경험치
+    public float[] amountExpArray = { }; //총 경험치
 
 
     //public void SetMaxUnit(UnitType unitType, int amount)
@@ -145,27 +145,27 @@ public class JHW_GameManager : MonoBehaviour
 
         windPower = 50.0f;
 
-            currentPopulationArray = new int[_UnitLoad.Length]; //현재 인구수 배열
+        currentPopulationArray = new int[_UnitLoad.Length]; //현재 인구수 배열
 
-            CoolDownReady = new bool[_cooldown.Length]; // 쿨타임레디상태 배열
-            for (int i = 0; i < CoolDownReady.Length; i++)
-            {
-                CoolDownReady[i] = true;
-            }
+        CoolDownReady = new bool[_cooldown.Length]; // 쿨타임레디상태 배열
+        for (int i = 0; i < CoolDownReady.Length; i++)
+        {
+            CoolDownReady[i] = true;
+        }
 
-            currentCool = new float[_cooldown.Length];
-            for (int j = 0; j < currentCool.Length; j++) //현재 쿨타임 배열
-            {
-                currentCool[j] = _cooldown[j];
-            }
+        currentCool = new float[_cooldown.Length];
+        for (int j = 0; j < currentCool.Length; j++) //현재 쿨타임 배열
+        {
+            currentCool[j] = _cooldown[j];
+        }
 
-            amountExpArray = new float[maxlevel + 1];
-            amountExpArray[0] = 100; //초기 경험치
-            amountExp = amountExpArray[0];
-            for (int i = 0; i < maxlevel; i++) //경험치 배열
-            {
-                amountExpArray[i + 1] = amountExpArray[i] * 1.125f;
-            }
+        amountExpArray = new float[maxlevel + 1];
+        amountExpArray[0] = 100; //초기 경험치
+        amountExp = amountExpArray[0];
+        for (int i = 0; i < maxlevel; i++) //경험치 배열
+        {
+            amountExpArray[i + 1] = amountExpArray[i] * 1.125f;
+        }
 
         command = TeamCommand.GetComponent<JHW_Command>();
 
@@ -336,8 +336,8 @@ public class JHW_GameManager : MonoBehaviour
         playTime += Time.deltaTime;
         WholePlayTime += Time.deltaTime;
 
-        timer.text = string.Format("{0:D2} : {1:D2}",_Min,(int)playTime);
-        if((int)playTime > 59)
+        timer.text = string.Format("{0:D2} : {1:D2}", _Min, (int)playTime);
+        if ((int)playTime > 59)
         {
             playTime = 0;
             _Min++;
@@ -393,7 +393,7 @@ public class JHW_GameManager : MonoBehaviour
         ExpT.text = currentExp + " / " + amountExp;
         HpT.text = command.Hp.ToString() + " / " + command.OriginHp.ToString();
         Bomb_CoolT.text = PlayerSkill_BombCurrentCool.ToString("N0");
-        if (PlayerSkill_BombCurrentCool <=0)
+        if (PlayerSkill_BombCurrentCool <= 0)
         {
             Bomb_CoolT.text = "";
         }
@@ -403,9 +403,9 @@ public class JHW_GameManager : MonoBehaviour
             Smoke_CoolT.text = "";
         }
 
-        BuffGold.color = isBuff_Gold ? Color.yellow: Color.white;
+        BuffGold.color = isBuff_Gold ? Color.yellow : Color.white;
         BuffCool.color = isBuff_CoolDown ? Color.blue : Color.white;
-        BuffSpecial.color = isBuff_SpecialGauge ? Color.green :Color.white;
+        BuffSpecial.color = isBuff_SpecialGauge ? Color.green : Color.white;
 
 
         Text[] tts = { RifleManText, ScoutText, SniperText, ArtilleryText, HeavyWeaponText, ArmouredText, TankText, HelicopterText, RaptorText };
@@ -418,16 +418,16 @@ public class JHW_GameManager : MonoBehaviour
             if (CoolDownReady[i]) CDRText[i] = "쿨타임 완료";
             else CDRText[i] = "쿨타임 중...";
 
-            if(!isBuff_CoolDown) 
+            if (!isBuff_CoolDown)
             {
                 tts[i].text = /*((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + */currentCool[i].ToString("N1");
-                if (currentCool[i] <=0)
+                if (currentCool[i] <= 0)
                 {
                     // tts[i].text = ((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n";
                     tts[i].text = "";
                 }
             }
-            else 
+            else
             {
                 tts[i].text = /*((UnitType)i).ToString() + "\n" + "인구수 : " + currentPopulationArray[i] + "\n" + CDRText[i] + "\n" + */(currentCool[i] * 0.75f).ToString("N1");
                 if (currentCool[i] <= 0)
@@ -436,14 +436,14 @@ public class JHW_GameManager : MonoBehaviour
                     tts[i].text = "";
                 }
             }
-            if(_cooldown[i] == currentCool[i])
+            if (_cooldown[i] == currentCool[i])
             {
                 tts[i].text = "";
             }
 
-            if(_cooldown[i] - currentCool[i] != 0)
+            if (_cooldown[i] - currentCool[i] != 0)
             {
-            uts[i].GetComponent<Image>().fillAmount =  (_cooldown[i]-currentCool[i])/_cooldown[i];
+                uts[i].GetComponent<Image>().fillAmount = (_cooldown[i] - currentCool[i]) / _cooldown[i];
             }
 
         }
@@ -455,7 +455,7 @@ public class JHW_GameManager : MonoBehaviour
 
         for (int i = 0; i < playerUnits.Count; i++)
         {
-            if(playerUnits[i].GetComponent<JHW_UnitInfo>().isCaptureUnit==false && playerUnits[i].GetComponent<JHW_UnitInfo>().isAirForce == false) // 점령중인 유닛은 스폐셜게이지가 안먹게함 ,공중유닛은 스폐셜 게이지가 안먹게함
+            if (playerUnits[i].GetComponent<JHW_UnitInfo>().isCaptureUnit == false && playerUnits[i].GetComponent<JHW_UnitInfo>().isAirForce == false) // 점령중인 유닛은 스폐셜게이지가 안먹게함 ,공중유닛은 스폐셜 게이지가 안먹게함
             {
                 playerUnits[i].SetState(state);
             }
@@ -471,7 +471,7 @@ public class JHW_GameManager : MonoBehaviour
         {
             playerLevel++;
             medal++;
-            float temp  = currentExp - amountExp; //초과량 이관 시켜주기
+            float temp = currentExp - amountExp; //초과량 이관 시켜주기
             currentExp = 0;
             currentExp += temp;
         }
@@ -480,7 +480,7 @@ public class JHW_GameManager : MonoBehaviour
     //훈장 사용처 1.인구수 증가, 2. 돈 획득, 2. 돈의 획득량 증가
     public void OnClickWholePopulationUp() //최대 인구수 증가 버튼
     {
-        if(medal >=1)
+        if (medal >= 1)
         {
             if (wholePopulationLimit < 100)
             {
@@ -502,7 +502,7 @@ public class JHW_GameManager : MonoBehaviour
         if (medal >= 1)
         {
             medal--;
-            Gold += GoldRate;   
+            Gold += GoldRate;
         }
         else
         {
@@ -515,7 +515,7 @@ public class JHW_GameManager : MonoBehaviour
     {
         if (medal >= 1)
         {
-            if(GoldRate <=260)
+            if (GoldRate <= 260)
             {
                 medal--;
                 GoldRate += 25;
@@ -530,8 +530,8 @@ public class JHW_GameManager : MonoBehaviour
             print("훈장이 부족합니다");
         }
     }
-    public float CaptureInstantiateTime ; //주둔지 생성 시간
-    public float RemainTime ; //주둔지 유지 시간
+    public float CaptureInstantiateTime; //주둔지 생성 시간
+    public float RemainTime; //주둔지 유지 시간
     float currentTime4;
 
     [SerializeField]
@@ -540,14 +540,14 @@ public class JHW_GameManager : MonoBehaviour
     void InstantiateCaptureArea()
     {
         currentTime4 += Time.deltaTime;
-       //주둔지(3개중 랜덤)를 시작한지 10초 후 생성하고 이후에는 2분마다 생성하고 싶다
-        if(currentTime4 > CaptureInstantiateTime)
+        //주둔지(3개중 랜덤)를 시작한지 10초 후 생성하고 이후에는 2분마다 생성하고 싶다
+        if (currentTime4 > CaptureInstantiateTime)
         {
             //Tiles의 자식들을 배열에다가 넣음
             //그 배열중에 랜덤으로 뽑아다가
             //뽑은 타일위 조금 떨어진 곳에 생성
 
-           
+
 
             int rand = Random.Range(0, 31);
             Transform FinalTile = allTiles[rand];
@@ -601,16 +601,16 @@ public class JHW_GameManager : MonoBehaviour
 
     void WindTextMove()
     {
-        if(windPower<50)
+        if (windPower < 50)
         {
-            if(isWindOn==false)
+            if (isWindOn == false)
             {
                 isWindOn = true;
                 StartCoroutine(WindTextAnim("<"));
 
             }
         }
-        else if (windPower ==50)
+        else if (windPower == 50)
         {
             WindText.text = "-";
         }
@@ -626,24 +626,24 @@ public class JHW_GameManager : MonoBehaviour
 
     IEnumerator WindTextAnim(string dir)
     {
-        WindText.text = dir + "\t"+(-50+windPower).ToString("F1");
+        WindText.text = dir + "\t" + (-50 + windPower).ToString("F1");
         yield return new WaitForSeconds(1);
-        WindText.text = dir + "\t" + dir + "\t"+(-50 + windPower).ToString("F1");
+        WindText.text = dir + "\t" + dir + "\t" + (-50 + windPower).ToString("F1");
         yield return new WaitForSeconds(1);
         isWindOn = false;
     }
 
     float PlayerSkill_BombCoolTime = 60f;
-    float PlayerSkill_BombCurrentCool=0f;
-    bool PlayerSkill_Bomb_IsReady=true;
+    float PlayerSkill_BombCurrentCool = 0f;
+    bool PlayerSkill_Bomb_IsReady = true;
 
     float PlayerSkill_SmokeCoolTime = 45f;
-    float PlayerSkill_SmokeCurrentCool=0f;
-    bool PlayerSkill_Smoke_IsReady=true;
+    float PlayerSkill_SmokeCurrentCool = 0f;
+    bool PlayerSkill_Smoke_IsReady = true;
 
     public void PlayerSkill_Bomb()
     {
-        if(/*isPlayerSkillMode && */JHW_OrderManager.instance.DesinationAreaObj !=null && PlayerSkill_Bomb_IsReady /*&& Input.GetKeyDown(KeyCode.Z)*/)
+        if (/*isPlayerSkillMode && */JHW_OrderManager.instance.DesinationAreaObj != null && PlayerSkill_Bomb_IsReady /*&& Input.GetKeyDown(KeyCode.Z)*/)
         {
             print("플레이어 스킬 _ 폭격");
             PlayerSkill_Bomb_IsReady = false;
@@ -655,14 +655,14 @@ public class JHW_GameManager : MonoBehaviour
             PS_B.transform.position = JHW_OrderManager.instance.DesinationAreaObj.transform.position;
             anim = PS_B.GetComponent<Animation>();
             anim.Play();
-            if(anim.isPlaying==false)
+            if (anim.isPlaying == false)
             {
                 Destroy(PS_B);
             }
             PlayerSkill_BombCurrentCool = PlayerSkill_BombCoolTime;
             StartCoroutine("CD_Bomb");
         }
-       
+
     }
     public void PlayerSkill_Smoke()
     {
@@ -690,7 +690,7 @@ public class JHW_GameManager : MonoBehaviour
     {
         //PlayerSkill_Bomb_IsReady = false;
 
-        while(PlayerSkill_BombCurrentCool>0)
+        while (PlayerSkill_BombCurrentCool > 0)
         {
             PlayerSkill_BombCurrentCool -= 0.01f;
             yield return new WaitForSeconds(0.01f);
@@ -717,14 +717,14 @@ public class JHW_GameManager : MonoBehaviour
         GameObject.Find("Defensive").GetComponent<Image>().fillAmount = specialGauge / 100;
         GameObject.Find("Offensive").GetComponent<Image>().fillAmount = specialGauge / 100;
         //스킬
-        GameObject.Find("skill_bomb").GetComponent<Image>().fillAmount = (PlayerSkill_BombCoolTime-PlayerSkill_BombCurrentCool) / PlayerSkill_BombCoolTime;
+        GameObject.Find("skill_bomb").GetComponent<Image>().fillAmount = (PlayerSkill_BombCoolTime - PlayerSkill_BombCurrentCool) / PlayerSkill_BombCoolTime;
         GameObject.Find("skill_smokeIcon").GetComponent<Image>().fillAmount = (PlayerSkill_SmokeCoolTime - PlayerSkill_SmokeCurrentCool) / PlayerSkill_SmokeCoolTime;
         GameObject.Find("skill_smokeIcon2").GetComponent<Image>().fillAmount = (PlayerSkill_SmokeCoolTime - PlayerSkill_SmokeCurrentCool) / PlayerSkill_SmokeCoolTime;
     }
 
     void EXPGageFilled()
     {
-        GameObject.Find("EXP").GetComponent<Slider>().value = currentExp/amountExp*100f;
+        GameObject.Find("EXP").GetComponent<Slider>().value = currentExp / amountExp * 100f;
         GameObject.Find("Commandhp").GetComponent<Slider>().value = command.Hp / command.OriginHp;
     }
     //[SerializeField]
@@ -735,7 +735,7 @@ public class JHW_GameManager : MonoBehaviour
     //float Skill_Smoke_CoolTime= 0;
     ////처음 0에서 시작 해서 시간에 따라 60까지 증가
     ////60에 도달하면 더이상 늘어나지 않고 사용하면 다시 0으로 초기화
-    
+
     //public void skill_Bomb_Cool()
     //{
     //    if(!isSkill_Bomb_Ready)
@@ -759,10 +759,10 @@ public class JHW_GameManager : MonoBehaviour
 
     public void OnClickPause()
     {
-        
 
-            PauseMsgBox.gameObject.SetActive(true);
-            Time.timeScale = 0;
+
+        PauseMsgBox.gameObject.SetActive(true);
+        Time.timeScale = 0;
     }
     public void OnClickPauseDis()
     {
@@ -770,5 +770,37 @@ public class JHW_GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+   
+   public GameObject[] Guides;
+   public GameObject guidenext;
+
+
+    public void OnClickGuideNext()
+    {
+        for (int i = 0; i < Guides.Length; i++)
+        {
+            if(Guides[i].activeSelf==true)
+            {
+                if(i==5)
+                {
+                    Guides[i].SetActive(false);
+                    guidenext.SetActive(false);
+                }
+                else
+                {
+                Guides[i].SetActive(false);
+                Guides[i + 1].SetActive(true);
+                return;
+
+                }
+                   
+            }
+        }
+    }
+    public void OnClickShowGuide()
+    {
+        Guides[0].SetActive(true);
+        guidenext.SetActive(true);
+    }
 }
 

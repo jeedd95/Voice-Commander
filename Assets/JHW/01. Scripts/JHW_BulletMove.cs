@@ -61,7 +61,7 @@ public class JHW_BulletMove : MonoBehaviour
     }
 
     bool flag;
-    IEnumerator ParabolaBulletMove()
+    IEnumerator ParabolaBulletMove() //°î»çÆ÷
     {
         if(flag==false)
         {

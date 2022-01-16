@@ -104,6 +104,7 @@ public class JHW_UnitFactory : MonoBehaviour
         {
             if (JHW_GameManager.instance.CoolDownReady[unitIndex]) //쿨타임까지 준비됬을때
             {
+                JHW_SoundManager.instance.PlayOneTimeRandom(JHW_SoundManager.instance.MainScene_UnitProduce);
                 InstantiateUnit(unitIndex); //유닛을 생성한다
                 ValueChanger(unitIndex); //인구수를 올린다 + 쿨타임을 돌린다
                 CoolTimeSetter(unitIndex);
@@ -239,6 +240,7 @@ public class JHW_UnitFactory : MonoBehaviour
         {
             randomNum2 = random9;
         }
+
 
         GameObject SelectUnit = Instantiate(Units[randomNum2]); // 1~9번까지의 유닛중에 하나 생성
         SelectUnit.GetComponent<JHW_UnitInfo>().isEnemy = true; //적이다

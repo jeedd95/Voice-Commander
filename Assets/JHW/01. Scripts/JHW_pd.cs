@@ -43,6 +43,7 @@ public class JHW_pd : MonoBehaviour
     }
     public void ToplayScene()
     {
+        
         SceneManager.LoadScene("JHW_TestScene+Map");
     }
 

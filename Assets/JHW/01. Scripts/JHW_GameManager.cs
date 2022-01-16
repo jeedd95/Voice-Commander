@@ -287,30 +287,41 @@ public class JHW_GameManager : MonoBehaviour
         }
     }
 
+    bool isOnSpecialGage_Defense;
+    bool isOnSpecialGage_Offense;
+
     public void OnClickDefense() //방어태세 버튼클릭이벤트
     {
-        if (isClickSpecialGauge == false && specialGauge > 0)
+        if (isClickSpecialGauge == false && specialGauge > 0 && isOnSpecialGage_Defense == false)
         {
             isClickSpecialGauge = true;
+            isOnSpecialGage_Defense = true;
+            JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.DefensiveSound);
+
             ChangePosture(JHW_UnitManager.State.Hide);
         }
 
     }
     public void NotClickDefense() //방어태세를 뗄 때 골랐던 유닛들을 Move상태로
     {
-        if (isClickSpecialGauge == true)
+        if (isClickSpecialGauge == true && isOnSpecialGage_Defense)
         {
             isClickSpecialGauge = false;
+            isOnSpecialGage_Defense = false;
+            JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.SpecialStop);
+
             ChangePosture(JHW_UnitManager.State.Move);
         }
     }
 
     public void OnClickOffense() //공격태세 버튼클릭이벤트
     {
-        if (isClickSpecialGauge == false)
+        if (isClickSpecialGauge == false && isOnSpecialGage_Offense==false)
         {
             isClickSpecialGauge = true;
+            isOnSpecialGage_Offense = true; 
             print("공격태세 온");
+            JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.OffensiveSound);
             for (int i = 0; i < RushUnits.Count; i++)
             {
                 RushUnits[i].unitinfo.UseOffensive = true;
@@ -319,10 +330,12 @@ public class JHW_GameManager : MonoBehaviour
     }
     public void NotClickOffense()
     {
-        if (isClickSpecialGauge == true)
+        if (isClickSpecialGauge == true && isOnSpecialGage_Offense)
         {
             isClickSpecialGauge = false;
+            isOnSpecialGage_Offense = false;
             print("공격태세 오프");
+            JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.SpecialStop);
 
             for (int i = 0; i < RushUnits.Count; i++)
             {
@@ -484,6 +497,7 @@ public class JHW_GameManager : MonoBehaviour
         {
             if (wholePopulationLimit < 100)
             {
+                JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.GoldSound);
                 medal--;
                 wholePopulationLimit += 7;
             }
@@ -501,6 +515,8 @@ public class JHW_GameManager : MonoBehaviour
     {
         if (medal >= 1)
         {
+            JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.GoldSound);
+
             medal--;
             Gold += GoldRate;
         }
@@ -517,6 +533,7 @@ public class JHW_GameManager : MonoBehaviour
         {
             if (GoldRate <= 260)
             {
+                JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.GoldSound);
                 medal--;
                 GoldRate += 25;
             }
@@ -759,13 +776,14 @@ public class JHW_GameManager : MonoBehaviour
 
     public void OnClickPause()
     {
-
-
+        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
         PauseMsgBox.gameObject.SetActive(true);
         Time.timeScale = 0;
     }
     public void OnClickPauseDis()
     {
+        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+
         PauseMsgBox.gameObject.SetActive(false);
         Time.timeScale = 1;
     }
@@ -777,6 +795,8 @@ public class JHW_GameManager : MonoBehaviour
 
     public void OnClickGuideNext()
     {
+        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+
         for (int i = 0; i < Guides.Length; i++)
         {
             if(Guides[i].activeSelf==true)
@@ -799,6 +819,8 @@ public class JHW_GameManager : MonoBehaviour
     }
     public void OnClickShowGuide()
     {
+        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+
         Guides[0].SetActive(true);
         guidenext.SetActive(true);
     }

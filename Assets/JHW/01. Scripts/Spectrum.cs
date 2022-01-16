@@ -37,8 +37,14 @@ public class Spectrum : MonoBehaviour
         //Temp.transform.LookAt(Camera.main.transform);
         //지정된 오디오 소스에서 실시간으로 스펙트럼 데이터 받아오기
         //SpectrumData = Audio.GetSpectrumData(64, 0, FFTWindow.Rectangular);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.MainScene_Noise);
+
+        }
         if (Input.GetKey(KeyCode.Space))
         {
+
             for (int i = 0; i < SpectrumData.Length; i++)
             {
                 SpectrumData[i] = Random.Range(0f, 100f);

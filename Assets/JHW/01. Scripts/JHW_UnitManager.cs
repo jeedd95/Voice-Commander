@@ -535,6 +535,7 @@ public class JHW_UnitManager : MonoBehaviour
             bullet2.layer = LayerMask.NameToLayer(unitinfo.isEnemy ? "EnemyBullet" : "PlayerBullet"); //총알의 레이어 설정
         }
 
+
         GameObject bullet = Instantiate(Bullet[bulletnum]); //유닛에 따라 다른 총알쓰기
         bullet.transform.position = FirePos.transform.position; //총알의 위치를 발사 위치랑 일치
         Vector3 dir = neareastObject.transform.position - FirePos.transform.position; //제일 가까운애랑 나랑의 벡터
@@ -544,6 +545,7 @@ public class JHW_UnitManager : MonoBehaviour
 
         bullet.layer = LayerMask.NameToLayer(unitinfo.isEnemy ? "EnemyBullet" : "PlayerBullet"); //총알의 레이어 설정
 
+        JHW_SoundManager.instance.PlayOneTimeRandom(JHW_SoundManager.instance.MainScene_ShotSound);
 
 
         isfire = false;
@@ -585,6 +587,8 @@ public class JHW_UnitManager : MonoBehaviour
                 if (unitinfo.inCaputureBox_Spe && JHW_GameManager.instance.isBuff_SpecialGauge) JHW_GameManager.instance.isBuff_SpecialGauge = false;
 
             }
+
+            JHW_SoundManager.instance.PlayOneTimeRandom(JHW_SoundManager.instance.UnitDeadSound_human);
 
         }
     }

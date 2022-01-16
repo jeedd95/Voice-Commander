@@ -92,6 +92,8 @@ public class Login : MonoBehaviour
 
     public void OnClickSignUpUI()
     {
+        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+
         SignUpWindow.SetActive(true);
         exitBtn.SetActive(false);
 
@@ -99,6 +101,8 @@ public class Login : MonoBehaviour
     }
     public void OnClickSignUp()
     {
+        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+
         BackendReturnObject BRO = Backend.BMember.CustomSignUp(id2.text, password2.text);
         if(!BRO.IsSuccess())
         {
@@ -115,6 +119,8 @@ public class Login : MonoBehaviour
 
     public void OnClickLogin()
     {
+        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+
         BackendReturnObject bro = Backend.BMember.CustomLogin(id.text, password.text);
         if(!bro.IsSuccess())
         {
@@ -136,6 +142,7 @@ public class Login : MonoBehaviour
             MessageBox.SetActive(true);
             MessageBoxText.text = "닉네임 생성에 실패했습니다\n20자 이상, 닉네임 중복, 앞뒤 공백이 있는 경우 사용할 수 없습니다";
         }
+
     }
 
     public void OnClickToPlayScene()
@@ -144,6 +151,8 @@ public class Login : MonoBehaviour
     }
     public void OnClickExit()
     {
+        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+
         Application.Quit();
     }
     public void OnClickReturn()
@@ -156,6 +165,8 @@ public class Login : MonoBehaviour
     }
     public void OnClickReturn2()
     {
+        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+
         SignUpWindow.SetActive(false);
         exitBtn.SetActive(true);
     }

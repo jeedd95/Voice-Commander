@@ -40,6 +40,8 @@ public class JHW_CheatManager : MonoBehaviour
     }
     public void OnClickGG()
     {
-      GameObject.Find("TeamCommand").GetComponentInChildren<JHW_Command>().Hp = 0;
+        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+
+        GameObject.Find("TeamCommand").GetComponentInChildren<JHW_Command>().Hp = 0;
     }
 }

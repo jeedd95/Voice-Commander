@@ -44,11 +44,11 @@ public class JHW_UnitFactory : MonoBehaviour
         //}
 
 
-        if (!CoroutineFlag)
-        {
-            CoroutineFlag = true;
-            StartCoroutine("EnemyProduct");
-        }
+        //if (!CoroutineFlag)
+        //{
+        //    CoroutineFlag = true;
+        //    StartCoroutine("EnemyProduct");
+        //}
 
     }
 

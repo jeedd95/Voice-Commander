@@ -60,7 +60,7 @@ public class JHW_UnitManager : MonoBehaviour
         {
             SetState(State.CaptureMove); //점령 모드로 생성된 유닛은 점령상태로 초기화
             unitinfo.isCaptureUnit = true;
-            GameObject.Find("MainCanvas/CaptureMode").GetComponent<Toggle>().isOn = false;
+            //GameObject.Find("MainCanvas/CaptureMode").GetComponent<Toggle>().isOn = false;
         }
     }
 
@@ -162,6 +162,8 @@ public class JHW_UnitManager : MonoBehaviour
 
             case State.CaputureDetect:
                 UnitCapturerDectecting();
+                navAgent.isStopped = true;
+                navAgent.velocity = Vector3.zero;
                 isfire = false;
                 break;
 
@@ -547,6 +549,7 @@ public class JHW_UnitManager : MonoBehaviour
         isfire = false;
     }
 
+
     void UnitDie() //피가 닳면 죽는 함수
     {
 
@@ -577,8 +580,12 @@ public class JHW_UnitManager : MonoBehaviour
                     }
                 }
 
+                if (unitinfo.inCaputureBox_Gold && JHW_GameManager.instance.isBuff_Gold) JHW_GameManager.instance.isBuff_Gold = false;
+                if(unitinfo.inCaputureBox_Cool && JHW_GameManager.instance.isBuff_CoolDown) JHW_GameManager.instance.isBuff_CoolDown = false;
+                if (unitinfo.inCaputureBox_Spe && JHW_GameManager.instance.isBuff_SpecialGauge) JHW_GameManager.instance.isBuff_SpecialGauge = false;
+
             }
-            
+
         }
     }
 

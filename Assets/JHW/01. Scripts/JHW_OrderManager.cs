@@ -48,7 +48,6 @@ public class JHW_OrderManager : MonoBehaviour
         //{
         //    StringOrder();
         //}
-
        if(DesinationAreaObj !=null) DestinationText.text = "설정 지역 : " + DesinationAreaObj.name;
     }
 

@@ -24,6 +24,10 @@ public class JHW_UnitInfo : MonoBehaviour
     public bool UseOffensive; //공격 태세를 썼는지 안썼는지
     public bool isCaptureUnit; //점령유닛인지
     public bool inSmoke; //연막 안에 있는지
+    public bool inCaputureBox_Gold;
+    public bool inCaputureBox_Cool;
+    public bool inCaputureBox_Spe;
+
 
     public bool isEnemy; //우리팀인지 적팀인지
     public string unitName; //이름

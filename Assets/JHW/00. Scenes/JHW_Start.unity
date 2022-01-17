@@ -3675,6 +3675,15 @@ MonoBehaviour:
   - {fileID: 1473299890}
   StartScene_BG: {fileID: 8300000, guid: 996b5102d3b764345b628497e9e5a24f, type: 3}
   Btn_Click: {fileID: 8300000, guid: ae5fa2490d5fece4c82ed3e5aecd5846, type: 3}
+  MainScene_BG: {fileID: 0}
+  MainScene_Noise: {fileID: 0}
+  MainScene_UnitProduce: []
+  MainScene_ShotSound: []
+  UnitDeadSound_human: []
+  GoldSound: {fileID: 0}
+  DefensiveSound: {fileID: 0}
+  OffensiveSound: {fileID: 0}
+  SpecialStop: {fileID: 0}
 --- !u!82 &1473299889
 AudioSource:
   m_ObjectHideFlags: 0

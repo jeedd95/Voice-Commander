@@ -8,6 +8,7 @@ public class JHW_CheatManager : MonoBehaviour
 {
     public float[] time;
     int index;
+    public GameObject Teamcommand;
     [SerializeField]Text textSpeed;
     // Start is called before the first frame update
     void Start()
@@ -38,10 +39,10 @@ public class JHW_CheatManager : MonoBehaviour
         JHW_GameManager.instance.medal += 9999;
         JHW_GameManager.instance.wholePopulationLimit += 100;
     }
-    public void OnClickGG()
-    {
-        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+    //public void OnClickGG()
+    //{
+    //    JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
 
-        GameObject.Find("TeamCommand").GetComponentInChildren<JHW_Command>().Hp = 0;
-    }
+    //    Teamcommand.GetComponent<JHW_Command>().Hp = 0;
+    //}
 }

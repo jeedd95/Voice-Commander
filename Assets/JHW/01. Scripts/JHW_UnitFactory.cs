@@ -44,11 +44,11 @@ public class JHW_UnitFactory : MonoBehaviour
         //}
 
 
-        //if (!CoroutineFlag)
-        //{
-        //    CoroutineFlag = true;
-        //    StartCoroutine("EnemyProduct");
-        //}
+        if (!CoroutineFlag)
+        {
+            CoroutineFlag = true;
+            StartCoroutine("EnemyProduct");
+        }
 
     }
 
@@ -104,7 +104,36 @@ public class JHW_UnitFactory : MonoBehaviour
         {
             if (JHW_GameManager.instance.CoolDownReady[unitIndex]) //쿨타임까지 준비됬을때
             {
+                if (unitIndex == 0 || unitIndex == 3 || unitIndex==4)
+                {
                 JHW_SoundManager.instance.PlayOneTimeRandom(JHW_SoundManager.instance.MainScene_UnitProduce);
+                }
+                if(unitIndex==1)
+                {
+                    JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Scout);
+                }
+                if(unitIndex ==2)
+                {
+                    JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Sniper);
+                }
+                if (unitIndex == 5)
+                {
+                    JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Armourd);
+                }
+                if (unitIndex == 6)
+                {
+                    JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.TankSound);
+                }
+                if (unitIndex == 7)
+                {
+                    JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Helicopter);
+                }
+                if (unitIndex == 8)
+                {
+                    JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Raptor);
+                }
+
+
                 InstantiateUnit(unitIndex); //유닛을 생성한다
                 ValueChanger(unitIndex); //인구수를 올린다 + 쿨타임을 돌린다
                 CoolTimeSetter(unitIndex);
@@ -370,7 +399,6 @@ public class JHW_UnitFactory : MonoBehaviour
                 CreateUnit2();
             }
         }
-
         if (JHW_GameManager.instance.WholePlayTime >= 300 && JHW_GameManager.instance.WholePlayTime < 600) //5~10분
         {
 

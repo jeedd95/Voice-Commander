@@ -31,6 +31,7 @@ public class Login : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+
             //  DontDestroyOnLoad(gameObject);
         }
         else if (instance != this)
@@ -40,7 +41,12 @@ public class Login : MonoBehaviour
     }
     private void Start()
     {
+        JHW_SoundManager.instance.MyAudio[0].Stop();
+        JHW_SoundManager.instance.flag = false;
+        JHW_SoundManager.instance.state = JHW_SoundManager.State.LoginScene;
+
         Backend.Initialize();
+
     }
 
     private void Update()
@@ -135,6 +141,8 @@ public class Login : MonoBehaviour
             MessageBox.SetActive(true);
             MessageBoxText.text = "로그인에 성공했습니다 \n 잠시 후 게임이 시작됩니다";
             Invoke("OnClickToPlayScene", 25f);
+
+
             //Debug.Log("로그인에 성공했습니다");
         }
         else if(!bro2.IsSuccess())
@@ -148,6 +156,9 @@ public class Login : MonoBehaviour
     public void OnClickToPlayScene()
     {
         SceneManager.LoadScene("JHW_StartCine");
+        //JHW_SoundManager.instance.flag = false;
+        //JHW_SoundManager.instance.state = JHW_SoundManager.State.Idle;
+
     }
     public void OnClickExit()
     {

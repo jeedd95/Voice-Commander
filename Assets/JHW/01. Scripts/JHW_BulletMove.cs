@@ -48,6 +48,7 @@ public class JHW_BulletMove : MonoBehaviour
         if(unitInfo.unitName=="Artillery" || unitInfo.unitName == "Tank")
         {
           ParabolaBulletMove();
+
         }
         else
         {
@@ -137,7 +138,7 @@ public class JHW_BulletMove : MonoBehaviour
             JHW_UnitInfo hitObj = other.gameObject.transform.parent.GetComponent<JHW_UnitInfo>(); //맞은 애의 유닛정보
 
 
-            if (Random.Range(1, 100) > accuracyRate) //1~100 중에서 하나를 골라 명중률보다 높다면 안맞음으로 처리
+            if (Random.Range(1, 101) > accuracyRate) //1~100 중에서 하나를 골라 명중률보다 높다면 안맞음으로 처리
             {
                 print("빗나감");
                 Destroy(gameObject);

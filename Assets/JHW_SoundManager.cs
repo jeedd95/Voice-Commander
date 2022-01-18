@@ -25,18 +25,27 @@ public class JHW_SoundManager : MonoBehaviour
     public AudioClip Btn_Click;
     public AudioClip MainScene_BG;
     public AudioClip MainScene_Noise;
+    public AudioClip ScoreScene_BG;
     public AudioClip[] MainScene_UnitProduce;
     public AudioClip[] MainScene_ShotSound; //일반 총소리
+
     public AudioClip[] UnitDeadSound_human;
+    public AudioClip[] UnitDeadSound_mechanic;
+
     public AudioClip GoldSound;
     public AudioClip DefensiveSound;
     public AudioClip OffensiveSound;
     public AudioClip SpecialStop;
-
+    public AudioClip TankSound;
+    public AudioClip Helicopter;
+    public AudioClip Raptor;
+    public AudioClip Scout;
+    public AudioClip Sniper;
+    public AudioClip Armourd;
     // Start is called before the first frame update
     void Start()
     {
-        flag1=false;
+        //state = State.LoginScene;
 
         for (int i = 0; i < MyAudio.Length; i++)
         {
@@ -46,29 +55,61 @@ public class JHW_SoundManager : MonoBehaviour
 
     // Update is called once per frame
 
-    bool flag1;
+    public enum State
+    {
+        Idle,
+        LoginScene,
+        MainScene,
+        ScoreScene
+    }
 
+    public State state;
+
+    public bool flag;
     void Update()
     {
-        if (SceneManager.GetActiveScene().name == "JHW_Start" && !flag1)
-        {
-            MyAudio[0].PlayOneShot(StartScene_BG,0.5f);
-            flag1 = true;
-        }
-        //else if((SceneManager.GetActiveScene().name!= "JHW_Start"))
+        //if (SceneManager.GetActiveScene().name == "JHW_Start")
         //{
-        //    MyAudio[0].Stop();
+        //    state = State.LoginScene;
         //}
+        //if(SceneManager.GetActiveScene().name == "JHW_StartCine")
+        //{
+        //    state = State.Idle;
+        //}
+        //if(SceneManager.GetActiveScene().name == "JHW_TestScene+Map")
+        //{
+        //    state = State.MainScene;
+        //}
+        //if (SceneManager.GetActiveScene().name == "JHW_ScoreBoard")
+        //{
+        //    state = State.ScoreScene;
+        //}
+        if(!flag)
+        {
+            bgm();
+            flag = true;
+        }
+        print(state);
+    }
 
-        if (SceneManager.GetActiveScene().name == "JHW_TestScene+Map" && !flag1)
+    public void bgm() //0번이 배경음 1번이 클릭음 같은 1회성
+    {
+        switch (state)
         {
-            MyAudio[0].PlayOneShot(MainScene_BG,0.3f);
-            flag1 = true;
+            case State.Idle:
+                MyAudio[0].Stop();
+                break;
+            case State.LoginScene:
+                MyAudio[0].PlayOneShot(StartScene_BG, 0.5f);
+                break;
+            case State.MainScene:
+                MyAudio[0].PlayOneShot(MainScene_BG, 0.3f);
+                break;
+            case State.ScoreScene:
+                MyAudio[0].PlayOneShot(ScoreScene_BG, 1f);
+                break;
         }
-        //else if ((SceneManager.GetActiveScene().name != "JHW_TestScene+Map"))
-        //{
-        //    MyAudio[0].Stop();
-        //}
+
     }
 
     public void PlayOneTime(AudioClip audio)
@@ -89,5 +130,6 @@ public class JHW_SoundManager : MonoBehaviour
         }
     }
 
+    
 
 }

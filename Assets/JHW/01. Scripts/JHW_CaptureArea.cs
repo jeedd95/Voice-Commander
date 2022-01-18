@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 
 public class JHW_CaptureArea : MonoBehaviour
@@ -93,9 +93,13 @@ public class JHW_CaptureArea : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (SceneManager.GetActiveScene().name == "JHW_TestScene+Map" && temp != null)
+        {
         if (temp.GetComponent<JHW_UnitInfo>().inCaputureBox_Gold && JHW_GameManager.instance.isBuff_Gold) JHW_GameManager.instance.isBuff_Gold = false;
         if (temp.GetComponent<JHW_UnitInfo>().inCaputureBox_Cool && JHW_GameManager.instance.isBuff_CoolDown) JHW_GameManager.instance.isBuff_CoolDown = false;
         if (temp.GetComponent<JHW_UnitInfo>().inCaputureBox_Spe &&JHW_GameManager.instance.isBuff_SpecialGauge) JHW_GameManager.instance.isBuff_SpecialGauge = false;
+
+        }
 
     }
 

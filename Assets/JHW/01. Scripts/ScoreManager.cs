@@ -20,6 +20,9 @@ public class ScoreManager : MonoBehaviour
 
     void Start()
     {
+        JHW_SoundManager.instance.flag = false;
+        JHW_SoundManager.instance.state = JHW_SoundManager.State.ScoreScene;
+
         string[] select = { "Level", "score", "playTime" ,"updatedAt","NickName"};
         Where where = new Where();
 
@@ -86,10 +89,16 @@ public class ScoreManager : MonoBehaviour
 
     public void OnClickRetry()
     {
+       
+
         SceneManager.LoadScene("JHW_TestScene+Map");
+
     }
     public void OnClickToMain()
     {
+
         SceneManager.LoadScene("JHW_Start");
+
     }
+
 }

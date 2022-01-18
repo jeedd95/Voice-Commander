@@ -188,7 +188,7 @@ public class JHW_UnitManager : MonoBehaviour
                         StartCoroutine("CreateBullet");
                     }
 
-                    //if (unitinfo.isEnemy == false) AllNearestObjectByLayer("EnemyTeam");
+                   // if (unitinfo.isEnemy == false) AllNearestObjectByLayer("EnemyTeam");
                     //if (unitinfo.isEnemy == true) AllNearestObjectByLayer("PlayerTeam");
                 }
                 break;
@@ -453,7 +453,7 @@ public class JHW_UnitManager : MonoBehaviour
         neareastWall = FindNearestObjectzByLayer("Wall");
         if (neareastWall == null)
             return;
-        targetpos = new Vector3(neareastWall.transform.position.x + 5, transform.position.y, neareastWall.transform.position.z);
+        targetpos = new Vector3(neareastWall.transform.position.x - 5, transform.position.y, neareastWall.transform.position.z); 
 
         if (unitinfo.isEnemy == false) // ÇÃ·¹ÀÌ¾î ÆÀÀÏ¶§ º®ÀÇ ¿ÞÂÊÀ¸·Î ¼ûÀ½
         {
@@ -588,7 +588,15 @@ public class JHW_UnitManager : MonoBehaviour
 
             }
 
+            if(unitinfo.unitName== "RifleMan" || unitinfo.unitName == "Sniper" || unitinfo.unitName == "Artillery" || unitinfo.unitName == "Heavy Weapon")
+            {
             JHW_SoundManager.instance.PlayOneTimeRandom(JHW_SoundManager.instance.UnitDeadSound_human);
+            }
+            else
+            {
+                JHW_SoundManager.instance.PlayOneTimeRandom(JHW_SoundManager.instance.UnitDeadSound_mechanic);
+
+            }
 
         }
     }

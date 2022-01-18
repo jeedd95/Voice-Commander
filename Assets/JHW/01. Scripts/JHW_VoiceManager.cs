@@ -123,7 +123,6 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
             {
                 ProduceUnit();
             }
-
             if (FinalOrderText.text.Contains("점령"))
             {
                 JHW_GameManager.instance.isCaptureCreateMode = true;
@@ -138,23 +137,20 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
                 //    //Console.WriteLine("{0}:{1}", m.Index, m.Value);
                 //}
             }
-
-            if (FinalOrderText.text.Contains("폭격"))
+            else if (FinalOrderText.text.Contains("폭격"))
             {
                // JHW_GameManager.instance.isPlayerSkillMode = true;
                 DestinationSet();
                 JHW_GameManager.instance.PlayerSkill_Bomb();
                 //JHW_GameManager.instance.skill_Bomb_Cool();
             }
-
-            if (FinalOrderText.text.Contains("연막"))
+            else if (FinalOrderText.text.Contains("연막"))
             {
                 //JHW_GameManager.instance.isPlayerSkillMode = true;
                 DestinationSet();
                 JHW_GameManager.instance.PlayerSkill_Smoke();
             }
-
-            if (FinalOrderText.text.Contains("방어태세"))
+            else if (FinalOrderText.text.Contains("방어태세"))
             {
                 if(FinalOrderText.text.Contains("실행"))
                 {
@@ -165,7 +161,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
                     JHW_GameManager.instance.NotClickDefense();
                 }
             }
-            if(FinalOrderText.text.Contains("공격태세"))
+            else if(FinalOrderText.text.Contains("공격태세"))
             {
                 if (FinalOrderText.text.Contains("실행"))
                 {
@@ -176,19 +172,19 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
                     JHW_GameManager.instance.NotClickOffense();
                 }
             }
-
-            if(FinalOrderText.text.Contains("인구증가"))
+            else if(FinalOrderText.text.Contains("인구증가"))
             {
                 JHW_GameManager.instance.OnClickWholePopulationUp();
             }
-            if(FinalOrderText.text.Contains("골드획득"))
+            else if(FinalOrderText.text.Contains("골드획득"))
             {
                 JHW_GameManager.instance.OnClickGetGold();
             }
-            if(FinalOrderText.text.Contains("골드업그레이드"))
+            else if(FinalOrderText.text.Contains("골드업그레이드"))
             {
                 JHW_GameManager.instance.OnClickGetGoldRateUP();
             }
+
 
             //else
             //{

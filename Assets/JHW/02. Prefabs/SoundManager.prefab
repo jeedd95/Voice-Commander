@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7672855621696579810
+--- !u!1 &7920309061042962433
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7672855621696579811}
-  - component: {fileID: 7672855621696579836}
-  - component: {fileID: 7672855621696579837}
-  - component: {fileID: 7672855621696579838}
+  - component: {fileID: 7920309061042962432}
+  - component: {fileID: 7920309061042962463}
+  - component: {fileID: 7920309061042962462}
+  - component: {fileID: 7920309061042962461}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -19,13 +19,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7672855621696579811
+--- !u!4 &7920309061042962432
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7672855621696579810}
+  m_GameObject: {fileID: 7920309061042962433}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,30 +33,71 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7672855621696579836
+--- !u!114 &7920309061042962463
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7672855621696579810}
+  m_GameObject: {fileID: 7920309061042962433}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35bbdcadb1ba22a4a81ed813cae155cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MyAudio:
-  - {fileID: 7672855621696579837}
-  - {fileID: 7672855621696579838}
+  - {fileID: 7920309061042962462}
+  - {fileID: 7920309061042962461}
   StartScene_BG: {fileID: 8300000, guid: 996b5102d3b764345b628497e9e5a24f, type: 3}
   Btn_Click: {fileID: 8300000, guid: ae5fa2490d5fece4c82ed3e5aecd5846, type: 3}
---- !u!82 &7672855621696579837
+  MainScene_BG: {fileID: 8300000, guid: f53fecb4f6492534cb653bc9c7388dc7, type: 3}
+  MainScene_Noise: {fileID: 8300000, guid: 197017d1d5b49964aa7bc2ed17479c2d, type: 3}
+  ScoreScene_BG: {fileID: 8300000, guid: cc731c82228e05c46ab7d19b64d95e56, type: 3}
+  MainScene_UnitProduce:
+  - {fileID: 8300000, guid: f6ed218267c6a174eb3dce51e6ad28d2, type: 3}
+  - {fileID: 8300000, guid: d3c1c6274ecf87f49b67427f255cdea3, type: 3}
+  - {fileID: 8300000, guid: 4c63a01cdd8438b4f9ce1b90b2fb12d4, type: 3}
+  - {fileID: 8300000, guid: b09b02454b4af844d93882d212e491b3, type: 3}
+  - {fileID: 8300000, guid: 50c7b85167bcbfb469b601cde81841f5, type: 3}
+  - {fileID: 8300000, guid: d4c484828a9ce3b46ac5b1ca31696b98, type: 3}
+  MainScene_ShotSound:
+  - {fileID: 8300000, guid: 6739c01659ad96d47987f4ddee226b36, type: 3}
+  - {fileID: 8300000, guid: 34b439bf70b80a6409eadecc6be92d68, type: 3}
+  - {fileID: 8300000, guid: a764377339b869e459f5e53fb9258f73, type: 3}
+  - {fileID: 8300000, guid: 6dd7024f00606b44eb5884197a66a893, type: 3}
+  UnitDeadSound_human:
+  - {fileID: 8300000, guid: 81f1a91af0194854faa381a304b8df30, type: 3}
+  - {fileID: 8300000, guid: 6566ab515f6a464418d1f17d691c4eeb, type: 3}
+  - {fileID: 8300000, guid: e81834573d4df4f468eabaf381bd19e7, type: 3}
+  - {fileID: 8300000, guid: 4684667f355e42842ab15d68c48502a8, type: 3}
+  - {fileID: 8300000, guid: d1a1b5697c47e1e45a3b93ec8047e01b, type: 3}
+  - {fileID: 8300000, guid: ecc517e7a0e396e42a4f3012969ff7d3, type: 3}
+  - {fileID: 8300000, guid: 97c597387e0de7d469f84feeb907f33d, type: 3}
+  - {fileID: 8300000, guid: 4b4a8793b8ba95e459dd09718f856151, type: 3}
+  - {fileID: 8300000, guid: 43be654a41ead7049aae1c89a440962d, type: 3}
+  - {fileID: 8300000, guid: 44f2bfb3cae026e48a0609f0c35c45da, type: 3}
+  - {fileID: 8300000, guid: 954121abe5529a646a0dc818b0d685c7, type: 3}
+  - {fileID: 8300000, guid: 3b5dfa5293e68d74ab06b1a5d7c07807, type: 3}
+  - {fileID: 8300000, guid: 907636bc242c9754eb0ce52abd90b46c, type: 3}
+  GoldSound: {fileID: 8300000, guid: 37bb9c131eed9ea43a50b02ab61576c2, type: 3}
+  DefensiveSound: {fileID: 8300000, guid: 52480280bcccb4e40ba6a3082931f1eb, type: 3}
+  OffensiveSound: {fileID: 8300000, guid: ea55e8ad7a5740c4c846b4a3eb499696, type: 3}
+  SpecialStop: {fileID: 8300000, guid: d3c1c6274ecf87f49b67427f255cdea3, type: 3}
+  TankSound: {fileID: 8300000, guid: c0d00096639cf5b46900e6410af9aa7d, type: 3}
+  Helicopter: {fileID: 8300000, guid: dcb7b1e78c06b6a4db0074c1c81e3f2f, type: 3}
+  Raptor: {fileID: 8300000, guid: 05b35a3b34e9f6c40898afd665a7228e, type: 3}
+  Scout: {fileID: 8300000, guid: 2954748bdfc7fd94ebbef8522e6316f8, type: 3}
+  Sniper: {fileID: 8300000, guid: e8afec5ea79db0242ab55d9693958e81, type: 3}
+  Armourd: {fileID: 8300000, guid: 1d26c8548616c3544bec7ca94835b704, type: 3}
+  state: 0
+  flag: 0
+--- !u!82 &7920309061042962462
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7672855621696579810}
+  m_GameObject: {fileID: 7920309061042962433}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -146,13 +187,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &7672855621696579838
+--- !u!82 &7920309061042962461
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7672855621696579810}
+  m_GameObject: {fileID: 7920309061042962433}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}

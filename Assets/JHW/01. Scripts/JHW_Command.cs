@@ -28,20 +28,27 @@ public class JHW_Command : MonoBehaviour
     {
         if(Hp<=0)
         {
-            print("게임 오버");
-            if(flag==false)
-            {
-                DataInsert();
-                flag = true;
-            }
-
-            MainCanvas.enabled = false;
-            MainCam.transform.position = CamPos1.transform.position;
-            MainCam.transform.rotation = CamPos1.transform.rotation;
-            CommandExploEffect.SetActive(true);
-            Invoke("StopTime", 5.3f);
-           // Invoke("MainSceneToScoreBoard", 6f);
+            JHW_SoundManager.instance.flag = false;
+            JHW_SoundManager.instance.state = JHW_SoundManager.State.Idle;
+            GG();
         }
+    }
+
+    void GG()
+    {
+        print("게임 오버");
+        //if (flag == false)
+        //{
+        //    DataInsert();
+        //    flag = true;
+        //}
+
+        MainCanvas.enabled=false;
+        MainCam.transform.position = CamPos1.transform.position;
+        MainCam.transform.rotation = CamPos1.transform.rotation;
+        CommandExploEffect.SetActive(true);
+        Invoke("StopTime", 5.3f);
+        // Invoke("MainSceneToScoreBoard", 6f);
     }
 
     void DataInsert()
@@ -72,6 +79,16 @@ public class JHW_Command : MonoBehaviour
 
     public void MainSceneToScoreBoard()
     {
+        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+        //JHW_SoundManager.instance.flag = false;
+        //JHW_SoundManager.instance.state = JHW_SoundManager.State.ScoreScene;
         SceneManager.LoadScene("JHW_ScoreBoard");
+    }
+
+    public void OnClickGG()
+    {
+        Time.timeScale = 1;
+        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+        Hp = 0;
     }
 }

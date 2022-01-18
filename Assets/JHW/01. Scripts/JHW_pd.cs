@@ -14,7 +14,11 @@ public class JHW_pd : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pd= gameObject.GetComponent<PlayableDirector>();
+        JHW_SoundManager.instance.flag = false;
+
+        JHW_SoundManager.instance.state = JHW_SoundManager.State.Idle;
+
+        pd = gameObject.GetComponent<PlayableDirector>();
     }
 
     // Update is called once per frame
@@ -43,7 +47,8 @@ public class JHW_pd : MonoBehaviour
     }
     public void ToplayScene()
     {
-        
+        JHW_SoundManager.instance.flag = false;
+        JHW_SoundManager.instance.state = JHW_SoundManager.State.MainScene;
         SceneManager.LoadScene("JHW_TestScene+Map");
     }
 

@@ -138,6 +138,11 @@ public class JHW_GameManager : MonoBehaviour
 
     private void Start()
     {
+        JHW_SoundManager.instance.MyAudio[0].Stop();
+
+        JHW_SoundManager.instance.flag = false;
+        JHW_SoundManager.instance.state = JHW_SoundManager.State.MainScene;
+
         for (int i = 0; i < 32; i++)
         {
             allTiles.Add(GameObject.Find("Tiles").transform.GetChild(i));
@@ -777,12 +782,14 @@ public class JHW_GameManager : MonoBehaviour
     public void OnClickPause()
     {
         JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+        JHW_SoundManager.instance.MyAudio[0].Pause();
         PauseMsgBox.gameObject.SetActive(true);
         Time.timeScale = 0;
     }
     public void OnClickPauseDis()
     {
         JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+        JHW_SoundManager.instance.MyAudio[0].Play();
 
         PauseMsgBox.gameObject.SetActive(false);
         Time.timeScale = 1;
@@ -795,7 +802,8 @@ public class JHW_GameManager : MonoBehaviour
 
     public void OnClickGuideNext()
     {
-        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+         JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+        JHW_SoundManager.instance.MyAudio[0].Pause();
 
         for (int i = 0; i < Guides.Length; i++)
         {
@@ -805,12 +813,15 @@ public class JHW_GameManager : MonoBehaviour
                 {
                     Guides[i].SetActive(false);
                     guidenext.SetActive(false);
+                   
                 }
                 else
                 {
                 Guides[i].SetActive(false);
                 Guides[i + 1].SetActive(true);
-                return;
+                   
+
+                    return;
 
                 }
                    
@@ -819,7 +830,9 @@ public class JHW_GameManager : MonoBehaviour
     }
     public void OnClickShowGuide()
     {
-        JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+        //JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Btn_Click);
+        JHW_SoundManager.instance.MyAudio[0].Pause();
+
 
         Guides[0].SetActive(true);
         guidenext.SetActive(true);

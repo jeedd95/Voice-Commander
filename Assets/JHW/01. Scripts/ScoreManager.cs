@@ -26,6 +26,8 @@ public class ScoreManager : MonoBehaviour
         string[] select = { "Level", "score", "playTime" ,"updatedAt","NickName"};
         Where where = new Where();
 
+        return; //오프라인
+
         var bro = Backend.GameData.Get("custom",new Where(),select); //custom이라는 테이블의 모든 데이터 (select조건에 의해)
         if (bro.IsSuccess() == false)
         {
@@ -56,11 +58,22 @@ public class ScoreManager : MonoBehaviour
         MyRank.text = b + " / " + a;
         for (int i = 0; i < json2.Count; i++)
         {
-            ScoreBoard_rank.text += "\n" + json2[i]["rank"];
-            ScoreBoard_gamerInDate.text += "\n" + json2[i]["gamerInDate"].ToString().Substring(0, 10);
-            ScoreBoard_nickname.text += "\n" + json2[i]["nickname"];
-            ScoreBoard_score.text += "\n" + json2[i]["score"];
-            ScoreBoard_playTime.text += "\n" + json2[i]["playTime"];
+            if(i==0)
+            {
+            ScoreBoard_rank.text += "\n\n\n" + json2[i]["rank"];
+            ScoreBoard_gamerInDate.text += "\n\n\n" + json2[i]["gamerInDate"].ToString().Substring(0, 10);
+            ScoreBoard_nickname.text += "\n\n\n" + json2[i]["nickname"];
+            ScoreBoard_score.text += "\n\n\n" + json2[i]["score"];
+            ScoreBoard_playTime.text += "\n\n\n" + json2[i]["playTime"];
+            }
+            else
+            {
+                ScoreBoard_rank.text += "\n" + json2[i]["rank"];
+                ScoreBoard_gamerInDate.text += "\n" + json2[i]["gamerInDate"].ToString().Substring(0, 10);
+                ScoreBoard_nickname.text += "\n" + json2[i]["nickname"];
+                ScoreBoard_score.text += "\n" + json2[i]["score"];
+                ScoreBoard_playTime.text += "\n" + json2[i]["playTime"];
+            }
         }
 
 

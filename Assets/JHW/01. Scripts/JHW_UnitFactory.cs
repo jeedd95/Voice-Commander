@@ -36,8 +36,8 @@ public class JHW_UnitFactory : MonoBehaviour
         //if (!JHW_OrderManager.instance.inputFieldOrder.isFocused)
         //{
         //    CreateUnit();
+       //}
 
-        //}
         //if (Input.GetKeyDown(KeyCode.Alpha2)) //2번키를 누르면 적 랜덤 생성
         //{
         //    CreateUnit2();
@@ -137,9 +137,13 @@ public class JHW_UnitFactory : MonoBehaviour
                 InstantiateUnit(unitIndex); //유닛을 생성한다
                 ValueChanger(unitIndex); //인구수를 올린다 + 쿨타임을 돌린다
                 CoolTimeSetter(unitIndex);
+
+
             }
             else //쿨타임이 준비 안됬을때
             {
+                JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Nagative);
+
                 print("쿨타임 중입니다 : " + (System.Enum.GetName(typeof(JHW_GameManager.UnitType), unitIndex)) + " " + JHW_GameManager.instance.currentCool[unitIndex] + "초 남았습니다");
             }
 
@@ -238,10 +242,14 @@ public class JHW_UnitFactory : MonoBehaviour
         }
         else if (JHW_GameManager.instance.Gold < units.price) //가격 검사 false
         {
+            JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Nagative);
+
             print("돈이 부족합니다");
         }
         else if (JHW_GameManager.instance.currentPopulation + JHW_GameManager.instance._UnitLoad[unitIndex] > JHW_GameManager.instance.wholePopulationLimit) //인구 수 검사 false
         {
+            JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Nagative);
+
             print("최대 인구수가 부족합니다");
         }
         //  }

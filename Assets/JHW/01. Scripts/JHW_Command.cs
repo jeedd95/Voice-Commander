@@ -37,11 +37,11 @@ public class JHW_Command : MonoBehaviour
     void GG()
     {
         print("게임 오버");
-        //if (flag == false)
-        //{
-        //    DataInsert();
-        //    flag = true;
-        //}
+        if (flag == false)
+        {
+          //  DataInsert();
+            flag = true;
+        }
 
         MainCanvas.enabled=false;
         MainCam.transform.position = CamPos1.transform.position;

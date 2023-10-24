@@ -45,8 +45,7 @@ public class Login : MonoBehaviour
         JHW_SoundManager.instance.flag = false;
         JHW_SoundManager.instance.state = JHW_SoundManager.State.LoginScene;
 
-        Backend.Initialize();
-
+        // Backend.Initialize();
     }
 
     private void Update()
@@ -151,6 +150,13 @@ public class Login : MonoBehaviour
             MessageBoxText.text = "닉네임 생성에 실패했습니다\n20자 이상, 닉네임 중복, 앞뒤 공백이 있는 경우 사용할 수 없습니다";
         }
 
+    }
+
+    public void OffLineLogin()
+    {
+        MessageBox.SetActive(true);
+        MessageBoxText.text = "로그인에 성공했습니다 \n 잠시 후 게임이 시작됩니다";
+        Invoke("OnClickToPlayScene", 25f);
     }
 
     public void OnClickToPlayScene()

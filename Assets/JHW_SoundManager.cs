@@ -28,6 +28,7 @@ public class JHW_SoundManager : MonoBehaviour
     public AudioClip ScoreScene_BG;
     public AudioClip[] MainScene_UnitProduce;
     public AudioClip[] MainScene_ShotSound; //¿œπ› √—º“∏Æ
+    public AudioClip Nagative;
 
     public AudioClip[] UnitDeadSound_human;
     public AudioClip[] UnitDeadSound_mechanic;

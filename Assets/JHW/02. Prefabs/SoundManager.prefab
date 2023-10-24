@@ -65,6 +65,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 34b439bf70b80a6409eadecc6be92d68, type: 3}
   - {fileID: 8300000, guid: a764377339b869e459f5e53fb9258f73, type: 3}
   - {fileID: 8300000, guid: 6dd7024f00606b44eb5884197a66a893, type: 3}
+  Nagative: {fileID: 8300000, guid: 916d3fd58cd2666468c416b5c546bfe1, type: 3}
   UnitDeadSound_human:
   - {fileID: 8300000, guid: 81f1a91af0194854faa381a304b8df30, type: 3}
   - {fileID: 8300000, guid: 6566ab515f6a464418d1f17d691c4eeb, type: 3}
@@ -79,6 +80,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 954121abe5529a646a0dc818b0d685c7, type: 3}
   - {fileID: 8300000, guid: 3b5dfa5293e68d74ab06b1a5d7c07807, type: 3}
   - {fileID: 8300000, guid: 907636bc242c9754eb0ce52abd90b46c, type: 3}
+  UnitDeadSound_mechanic:
+  - {fileID: 8300000, guid: b5c9c9c52f73c33429757efb0e441e56, type: 3}
+  - {fileID: 8300000, guid: 0e759f836f88ad347800b11baf4e35da, type: 3}
+  - {fileID: 8300000, guid: 8b1afc823d1fa4442a9029e7fdf4560c, type: 3}
+  - {fileID: 8300000, guid: 452d55c896229a049827f2af5617483d, type: 3}
+  - {fileID: 8300000, guid: 21c06541b06d1714cbfdae76172cc8b8, type: 3}
+  - {fileID: 8300000, guid: 5cc48d1be609aaf4a973c31f73d68e7f, type: 3}
+  - {fileID: 8300000, guid: 68078a179b07df24cba877260d63cad4, type: 3}
   GoldSound: {fileID: 8300000, guid: 37bb9c131eed9ea43a50b02ab61576c2, type: 3}
   DefensiveSound: {fileID: 8300000, guid: 52480280bcccb4e40ba6a3082931f1eb, type: 3}
   OffensiveSound: {fileID: 8300000, guid: ea55e8ad7a5740c4c846b4a3eb499696, type: 3}

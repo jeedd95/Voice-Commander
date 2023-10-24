@@ -218,7 +218,9 @@ public class JHW_UnitManager : MonoBehaviour
         if (navAgent.velocity.sqrMagnitude > 0.1f * 0.1f && navAgent.remainingDistance <= 1.0f) //µµ´ÞÇß´Ù
         {
             print("ÁÖµÐÁö¿ª µµÂø");
+
             SetState(State.CaputureDetect);
+            JHW_GameManager.instance.isCaptureCreateMode = false;
         }
     }
 
@@ -588,7 +590,7 @@ public class JHW_UnitManager : MonoBehaviour
 
             }
 
-            if(unitinfo.unitName== "RifleMan" || unitinfo.unitName == "Sniper" || unitinfo.unitName == "Artillery" || unitinfo.unitName == "Heavy Weapon")
+            if(unitinfo.unitName== "RifleMan" || unitinfo.unitName == "Sniper" || unitinfo.unitName == "Artillery" || unitinfo.unitName == "Heavy Weapon" || unitinfo.unitName == "Scout")
             {
             JHW_SoundManager.instance.PlayOneTimeRandom(JHW_SoundManager.instance.UnitDeadSound_human);
             }

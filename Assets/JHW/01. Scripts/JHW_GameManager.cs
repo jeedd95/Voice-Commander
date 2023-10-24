@@ -376,6 +376,7 @@ public class JHW_GameManager : MonoBehaviour
         if (specialGauge < 0) //스폐셜 게이지가 0밑으로 가면 모든 상태를 move로 바꾸고 Useoffensive도 끈다
         {
             print("스폐셜 게이지가 부족합니다");
+            JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Nagative);
 
             isClickSpecialGauge = false;
             ChangePosture(JHW_UnitManager.State.Move);
@@ -408,7 +409,8 @@ public class JHW_GameManager : MonoBehaviour
         levelText.text = "LEVEL : " + playerLevel;
         MedalText.text = medal.ToString();
         GoldRateUpText.text = GoldRate.ToString();
-        ExpT.text = currentExp + " / " + amountExp;
+        ExpT.text = currentExp.ToString("N1") + " / " + amountExp.ToString("N1");
+
         HpT.text = command.Hp.ToString() + " / " + command.OriginHp.ToString();
         Bomb_CoolT.text = PlayerSkill_BombCurrentCool.ToString("N0");
         if (PlayerSkill_BombCurrentCool <= 0)
@@ -508,11 +510,15 @@ public class JHW_GameManager : MonoBehaviour
             }
             else
             {
+                JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Nagative);
+
                 print("더 이상 최대 인구를 늘릴 수 없습니다");
             }
         }
         else
         {
+            JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Nagative);
+
             print("훈장이 부족합니다");
         }
     }
@@ -527,6 +533,8 @@ public class JHW_GameManager : MonoBehaviour
         }
         else
         {
+            JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Nagative);
+
             print("훈장이 부족합니다");
         }
     }
@@ -544,11 +552,15 @@ public class JHW_GameManager : MonoBehaviour
             }
             else
             {
+                JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Nagative);
+
                 print("더 이상 비율을 늘릴 수 없습니다");
             }
         }
         else
         {
+            JHW_SoundManager.instance.PlayOneTime(JHW_SoundManager.instance.Nagative);
+
             print("훈장이 부족합니다");
         }
     }

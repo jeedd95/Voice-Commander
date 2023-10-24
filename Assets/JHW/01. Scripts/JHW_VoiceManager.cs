@@ -123,11 +123,12 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
             {
                 ProduceUnit();
             }
-            if (FinalOrderText.text.Contains("Á¡·É"))
+             if (FinalOrderText.text.Contains("Á¡·É"))
             {
                 JHW_GameManager.instance.isCaptureCreateMode = true;
                 DestinationSet();
                 ProduceUnit();
+
                 //Match m = regex.Match(FinalOrderText.text);
                 //if (m.Success)
                 //{
@@ -267,7 +268,7 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
             {
                 JHW_UnitFactory.instance.CreateUnit(6);
             }
-            if (FinalOrderText.text.Contains("Çï¸®ÄßÅÍ"))
+            if (FinalOrderText.text.Contains("Çï¸®ÄßÅÍ") || FinalOrderText.text.Contains("Çï±â"))
             {
                 JHW_UnitFactory.instance.CreateUnit(7);
             }
@@ -275,6 +276,8 @@ namespace FrostweepGames.Plugins.GoogleCloud.SpeechRecognition.Examples
             {
                 JHW_UnitFactory.instance.CreateUnit(8);
             }
+
+
         }
 
 
